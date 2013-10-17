@@ -107,9 +107,13 @@ def pohyb():
                     )
             retval = dict(provedeno=True, castka=zustane)
             mail.send(uzivatel.email,
-                mail_subj % TFu('Zaplacena účast na akci'),
-                ('Osobní záloha Ti byla snížena o %s Kč na úhradu akce.\n'
-                'Nyní Ti zbývá na osobní záloze %s Kč.'%(castka, zustane))
+                mail_subj % 
+                    (TFu('Zaplacena účast na akci') if castka<0
+                    else TFu('Vráceny peníze na osobní zálohu')),
+                ('Osobní záloha Ti byla '
+                +('snížena o %s' if castka<0 else 'zvýšena o %s')%abs(castka)+
+                ' Kč na úhradu akce.\n'
+                'Nyní Ti zbývá na osobní záloze %s Kč.'%zustane)
                   + ('\n\nPopis: %s'%popis)
                   + (podpis%uzivatel.email))
         return retval

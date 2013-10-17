@@ -75,6 +75,19 @@ def __init(vs, castka):
               + (podpis%zakaznik.email))
 
 '''
+def mz1():
+    ja = db(db.auth_user.vs=='347').select().first()
+    ja.update_record(zaloha=ja.zaloha+1)
+    del db.pohyb[3046]
+    db.commit()
+
+def init2():     # 17.10.2013
+    for zakaznik in (
+          (168, 1005),
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def fix5():
     db(db.auth_user.vs=='115').update(zaloha=0.0)
     db(db.pohyb.id==3033).update(idma_dati=Uc_sa.oz_sa)
