@@ -5,6 +5,7 @@
 ## File is released under public domain and you can use without limitations
 #########################################################################
 
+import os
 import datetime
 import vfp
 
@@ -118,8 +119,8 @@ mail.settings.login = 'spolecneaktivityos@gmail.com:'+vfp.filetostr(
 #mail.settings.server = 'smtp.mandrillapp.com:587'
 #mail.settings.sender = 'mirek@zvolsky@gmail.com'
 #mail.settings.login = 'mirek@zvolsky@gmail.com:'+vfp.filetostr(
-        os.path.join(os.getcwd(),
-        'applications', 'platby', 'private', 'zvolsky_gmail_mandrill.smtp'))
+#        os.path.join(os.getcwd(),
+#        'applications', 'platby', 'private', 'zvolsky_gmail_mandrill.smtp'))
 
 ## configure auth policy
 auth.settings.registration_requires_verification = True
