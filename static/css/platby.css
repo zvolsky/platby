@@ -1,0 +1,45 @@
+/* vlastní design aplikace */
+body {
+	background-color: #f8f8ff;
+	color: #18173a;
+  font-size: 10pt;
+  font-family: sans-serif;
+	}
+
+.obly {
+	margin: 8px 0;
+	padding: 9px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	}
+
+.modry {
+	background-color: #dbe4f4;
+	}
+
+.zluty {
+	background-color: #e0e020;
+	}
+
+.sedy {
+	background-color: #b2c2b2;
+	color: black;
+	}
+
+.svetlesedy {
+	background-color: #e2e6e2;
+	color: #707070;
+	}
+
+.small {
+  font-size: smaller;
+  }
+
+.hustsi {
+  line-height:100%;
+  }
+
+#rekl {
+  margin: 20px;
+  }

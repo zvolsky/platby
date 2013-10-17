@@ -1,0 +1,21 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<h2>Prosím, zvolte pozorně správnou možnost:</h2>
+
+<div class="obly modry initsel" id="initsel_login"><b>Na tyto stránky se už vracím opakovaně</b> - <a href="{{=URL('user', args=('login',))}}" id="a_login">přihlaš se</a></div>
+
+<div class="obly modry initsel" id="initsel_mail"><b>Jsem zákazníkem sdružení</b> už ze stránek spolecneaktivity.cz a <b>můj osobní symbol je v rozsahu od 101 do 674</b> <small>(na spolecneaktivity.cz je to specifický symbol)</small> - Tvůj profil už je vytvořen a platby v něm evidovány - <a href="{{=URL('user', args=('request_reset_password',))}}" id="a_mail">přístup získáš zde</a> <small>tím, že zaslaný mail Ti umožní si nastavit heslo. Mail pošleme na mailovou adresu, pod kterou jsi registrován na spolecneaktivity.cz.</small></div>
+
+<div class="obly modry initsel" id="initsel_register"><b>Ani jedno z předchozího</b> není můj případ <small>(toto vyber i v případě, že máš osobní symbol ze spolecneaktivity.cz <b>675 a větší</b>)</small> - <a href="{{=URL('user', args=('register',))}}" id="a_register">zaregistruj se</a></div>
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+
+   <script src="{{=URL('static', 'js/jquery.color.js')}}"></script>
+   <script src="{{=URL('static', 'js/platby.js')}}"></script>
+ {{end}}

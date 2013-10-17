@@ -1,0 +1,11 @@
+Pøehled vybranıch transakcí na úètu "2800132182/2010"
+Majitel úètu: Spoleèné aktivity, o.s., K Šafránce 563/3, Praha 9 - Støíkov, 19000, Èeská republika
+Vytvoøeno v aplikaci Internetbanking: %(nyni)s
+Období: %(od)s - %(do)s
+Poèáteèní stav úètu k %(od)s: %(vychozi)s CZK
+Koncovı stav úètu k %(do)s: %(koncova)s CZK
+Suma pøíjmù: +%(prijmy)s CZK
+Suma vıdajù: %(vydaje)s CZK
+
+Pøevod;Datum;Objem;Protiúèet;Kód banky;KS;VS;SS;Uivatelská identifikace;Typ;Provedl;Název protiúètu;Název banky;
+%(zaznamy)s0;Suma;%(suma)s;;;;;;;;;;;

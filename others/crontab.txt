@@ -1,0 +1,2 @@
+# m h  dom mon dow   command
+*/15 * * * * /usr/bin/python2.6 ~/web2py/web2py.py -M -S platby/cron/update_fio

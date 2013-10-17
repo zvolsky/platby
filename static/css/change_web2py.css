@@ -1,0 +1,16 @@
+/* změnit web2py welcome */
+.page-header, .copyright, #poweredBy {
+	display: none;
+	}
+
+a {
+  text-decoration: underline;
+  }
+
+#main {
+	margin-top: 8px;
+	}
+
+#main h2 {
+	font-size: 20px;
+	}
