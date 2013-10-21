@@ -41,7 +41,7 @@ class SOUHLAS_S_VS(object):
 
 ## if SSL/HTTPS is properly configured and you want all HTTP requests to
 ## be redirected to HTTPS, uncomment the line below:
-#request.requires_https()
+request.requires_https()
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
@@ -81,7 +81,7 @@ crud, service, plugins = Crud(db), Service(), PluginManager()
 vs_default = TFu('dostaneš..') # max 10 znaků
 auth.settings.extra_fields['auth_user'] = [
     Field('nick', length=100, default='',
-          comment=TFu('přezdívka na častěji používaném serveru; tuto přezdívku uváděj tomu, komu platíš v hotovosti (pro správné zpracování platby)')),
+          comment=TFu('přezdívka na častěji používaném serveru; tuto přezdívku pak uváděj tomu, komu platíš v hotovosti (pro správné zpracování platby)')),
     Field('organizator', 'boolean', default=False,
           label=TFu('Organizátor placených akcí'),
           comment=TFu('zaškrtni, pokud budeš platit/vybírat peníze jménem Sdružení a předávat si peníze a doklady s pokladníkem')),
@@ -108,6 +108,7 @@ db.auth_user.email.comment = TFu('mail z registrace na fungujeme nebo jiný funk
 name_comment = TFu('údaj nepředáme třetí straně - pomáhá nám identifikovat platby')
 db.auth_user.first_name.comment = name_comment
 db.auth_user.last_name.comment = name_comment
+db.auth_user.password.comment = TFu("**NEPOUŽÍVEJ** stejné heslo jako pro spolecneaktivity.cz nebo fungujeme; šifrovaný přenos do webové pokladny Ti zajišťuje dobrou bezpečnost; ale odchytí-li někdo na wifině Tvé heslo při přihlášení do nezabezpečeného serveru (např. na spolecneaktivity.cz), neměl by mít možnost proniknout pod stejným heslem i do tohoto zabezpečeného systému")
 
 ## configure email
 mail = auth.settings.mailer

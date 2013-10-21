@@ -6,6 +6,7 @@ dočasně, pro prvotní import dat S.A.o.s. z FIO banky
 trvale, pro import nových plateb
 '''
 
+import os
 import urllib2
 from datetime import date, datetime
 import vfp

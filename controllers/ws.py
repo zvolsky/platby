@@ -1,5 +1,6 @@
 # -*- encoding: utf8 -*-
 
+import os
 from datetime import datetime, date, timedelta
 from hashlib import md5
 import vfp
