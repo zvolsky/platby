@@ -12,6 +12,8 @@ mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
 def udaje():
+    __log_ws('udaje')
+
     if len(request.args)==2:
         token = request.args[0]
         dotaz = request.args[1]
@@ -27,7 +29,9 @@ def udaje():
                               zaloha=str(uzivatel.zaloha or 0))
             else:
                 retval = dict(vs='', email='', zaloha='0')
+                __log_res('ok')
             return retval
+    __log_res('failed')
     raise HTTP(403)
 
 def chce():
@@ -41,6 +45,7 @@ def chce():
     vrací se: provedeno False/True,
               castka if True =zustatek, if False and castka<0 =chybí
     '''
+    __log_ws('chce')
 
     is_valid, castka, popis, uzivatel, akce = __valid_params(request.args, db)
     if is_valid and castka>0:
@@ -55,7 +60,9 @@ def chce():
             'O vrácení peněz bude rozhodnuto po akci, '
                 'zejména s ohledem na její finanční výsledek.'%castka)
             + ('\n\nPopis: %s'%popis) + (podpis%uzivatel.email))
+        __log_res('ok')
         return dict(provedeno=True)
+    __log_res('failed')
     raise HTTP(403)
 
 def pohyb():
@@ -69,6 +76,8 @@ def pohyb():
     vrací se: provedeno False/True,
               castka if True =zustatek, if False and castka<0 =chybí
     '''
+
+    __log_ws('pohyb')
 
     is_valid, castka, popis, uzivatel, akce = __valid_params(request.args, db)
     if is_valid:
@@ -88,6 +97,7 @@ def pohyb():
                         + '\n\nPoznámka: Jsi-li přihlášen(a) i na další, zatím '
                           'neuhrazené akce, může být potřeba větší částka.'
                         + (podpis%uzivatel.email))
+            __log_res('rejected (%s)'%castka)
         else:
             if castka>0:  # vracíme na os.zálohu
                 idmd = Uc_sa.oz_fu
@@ -117,7 +127,9 @@ def pohyb():
                 'Nyní Ti zbývá na osobní záloze %s Kč.'%zustane)
                   + ('\n\nPopis: %s'%popis)
                   + (podpis%uzivatel.email))
+            __log_res('ok')
         return retval
+    __log_res('failed')
     raise HTTP(403)
 
 def __valid_params(args, db):
@@ -144,3 +156,13 @@ def __valid_params(args, db):
                     akce = args[4] or ''
                     is_valid = True
     return is_valid, castka, popis, uzivatel, akce
+
+def __log_ws(ws): 
+    vfp.strtofile( "%s %s %s" % (
+      datetime.now().strftime('%d.%m %H:%M'),
+      ws, request.url),
+      'logs/ws_call.log', 1)
+
+def __log_res(result): 
+    vfp.strtofile( " - %s\n" % result,
+      'logs/ws_call.log', 1)

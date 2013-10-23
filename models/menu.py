@@ -30,10 +30,15 @@ if auth.user:
         ]
     if auth.user.organizator:
         response.menu.append((T('Záznamy do pokladny'), False,
-                URL('organizator', 'pokladna'), []))
+              URL('organizator', 'pokladna'), []))        
     if auth.has_membership('admin'):
-        response.menu.append((T('Poslední pohyby'), False,
-                URL('platby', 'nedavne'), []))
+        response.menu.append((T('Přehled'), False,
+              URL('prehledy', 'nedavne', args=1), [
+              (T('pohyby za 2 měsíce'), False,
+                          URL('prehledy', 'nedavne'), []),
+              (T('navýšení zálohy'), False, URL('prehledy', 'zal_plus'), []),
+              (T('za akce Fungujeme'), False, URL('prehledy', 'fungujeme'), []),
+              ]))
 
 DEVELOPMENT_MENU = False
 

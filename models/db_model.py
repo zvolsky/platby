@@ -5,6 +5,7 @@ from mz_wkasa_platby import fix_login, Uc_sa
 
 db.define_table('ucet',
     Field('ucet', length=7),
+    Field('zkratka', length=3),
     Field('nazev', length=100),
     format='%(ucet)s - %(nazev)s'
     )

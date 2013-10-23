@@ -74,6 +74,21 @@ def __init(vs, castka):
               'V případě nejasností kontaktuj pokladníka.' % castka)
               + (podpis%zakaznik.email))
 
+def fix6():
+    db.ucet[1].update_record(zkratka='Pok')
+    db.ucet[2].update_record(zkratka='BÚ')
+    db.ucet[3].update_record(zkratka='Dar')
+    db.ucet[4].update_record(zkratka='Sa')
+    db.ucet[5].update_record(zkratka='>Sa')
+    db.ucet[6].update_record(zkratka='Fu')
+    db.ucet[7].update_record(zkratka='OsZ')
+    db.ucet[8].update_record(zkratka='xxx')
+    db.ucet[9].update_record(zkratka='Org')
+    db.ucet[10].update_record(zkratka='-Ak')
+    db.ucet[11].update_record(zkratka='-Pr')
+    db.ucet[12].update_record(zkratka='+Ak')
+    db.commit()
+
 '''
 def mz1():
     ja = db(db.auth_user.vs=='347').select().first()

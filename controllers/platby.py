@@ -62,15 +62,6 @@ def pohyby():
 def vse():
     return dict(pohyby=db().select(db.pohyb.ALL))
 
-@auth.requires_membership('admin')
-def nedavne():
-    response.view = 'platby/vse.html'
-    datum_od = datetime.now()-timedelta(days=60)
-    datum_od = datum_od.combine(datum_od.date(), time(0,0))
-    return dict(pohyby=db(db.pohyb.datum>=datum_od).select(
-          db.pohyb.ALL, orderby=~db.pohyb.datum))
-        
-
 @auth.requires_login()
 def seber_jirkovi():
     db.zadost.insert(zadost=datetime.now(), ss=auth.user.ss, typ=1)
