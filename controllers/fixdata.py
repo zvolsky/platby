@@ -75,6 +75,18 @@ def __init(vs, castka):
               + (podpis%zakaznik.email))
 
 '''
+def neposilat():
+    db(db.auth_user).update(neposilat=False)
+    db.commit()
+
+def init4():     # 25.10.2013
+    for zakaznik in (
+          (315, 637),
+          (221, 816),
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def init3():     # 25.10.2013
     for zakaznik in (
           (130, 400),

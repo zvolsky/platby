@@ -95,12 +95,15 @@ auth.settings.extra_fields['auth_user'] = [
     Field('ss', length=10, default='',
           label=TFu('Symbol pro spolecneaktivity.cz (SS)'),
           comment=TFu('uveď, chceš-li hradit akce pro tento specifický symbol na spolecneaktivity.cz; pozor: nesprávné zadání způsobí úhradu někomu jinému')),
-    Field('zaloha', 'decimal(11,2)', writable=False, default=0),
+    Field('zaloha', 'decimal(11,2)', label=TFu('Záloha'),
+        writable=False, default=0),
     Field('ode_dne', 'date', readable=False, writable=False,
         default=datetime.date.today(), label=TFu('Ode dne'),
         comment=TFu('jako zákazník Sdružení jsem registrován(a) ode dne')),
     Field('prihlasen', 'date', readable=False, writable=False),
     Field('vyzva', 'date', readable=False, writable=False),
+    Field('neposilat', 'boolean', default=False, label=TFu('Neposílat'),
+        comment=TFu('zaškrtnutím zabráníš zasílání informačních mailů - vzhledem k tomu, že jde o Tvé peníze, toto nedoporučujeme')),
     ]
 auth.define_tables(username=False, signature=False)
 db.auth_user.ss.requires=[
