@@ -344,6 +344,7 @@
 'Project Progress': 'Vývoj projektu',
 'Python': 'Python',
 'Přehled': 'Přehled',
+'Přehledy': 'Přehledy',
 'přezdívka na častěji používaném serveru': 'přezdívka na častěji používaném serveru',
 'Přihlásit se': 'Přihlásit se',
 'Query:': 'Dotaz:',

@@ -74,6 +74,15 @@ def __init(vs, castka):
               'V případě nejasností kontaktuj pokladníka.' % castka)
               + (podpis%zakaznik.email))
 
+'''
+def init3():     # 25.10.2013
+    for zakaznik in (
+          (130, 400),
+          (438, 400),
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def fix6():
     db.ucet[1].update_record(zkratka='Pok')
     db.ucet[2].update_record(zkratka='BÚ')
@@ -89,7 +98,6 @@ def fix6():
     db.ucet[12].update_record(zkratka='+Ak')
     db.commit()
 
-'''
 def mz1():
     ja = db(db.auth_user.vs=='347').select().first()
     ja.update_record(zaloha=ja.zaloha+1)

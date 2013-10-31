@@ -32,7 +32,7 @@ if auth.user:
         response.menu.append((T('Záznamy do pokladny'), False,
               URL('organizator', 'pokladna'), []))        
     if auth.has_membership('admin'):
-        response.menu.append((T('Přehled'), False,
+        response.menu.append((T('Přehledy'), False,
               URL('prehledy', 'nedavne', args=1), [
               (T('pohyby za 2 měsíce'), False,
                           URL('prehledy', 'nedavne'), []),

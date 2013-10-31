@@ -39,7 +39,7 @@ def export_csv(db):
                 ).date()+timedelta(1)
     datum_do = date.today()-timedelta(1)
     csv_nejpozdeji = datetime.combine(datum_do, time(23,59,59))
-    if datum_od>=datum_do:
+    if datum_od>datum_do:
         print "Od posledního generování musí uplynout alespoň jeden den."
         return 0 
 

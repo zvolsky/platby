@@ -5,3 +5,6 @@ def update_fio():
 def reset():
     from import_fio_sa import reset_pointer
     reset_pointer()
+
+if __name__=='__main__':
+    update_fio()

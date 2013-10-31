@@ -124,8 +124,7 @@ def __get_zaloha(ss):
     # duplicitní s export_csv.predej_dluzne, odkud jsem to oprásknul
     zaloha = fdate = None
     try:
-        fname = os.path.join(os.getcwd(),
-                      'applications', 'platby', 'downloads', 'zakaznici.html')
+        fname = os.path.join(request.folder, 'downloads', 'zakaznici.html')
         fdate = datetime.fromtimestamp(os.stat(fname).st_ctime)
         jirkovo = vfp.filetostr(fname)
         soup = BeautifulSoup(jirkovo)

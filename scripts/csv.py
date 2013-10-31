@@ -6,3 +6,6 @@ def csv():
     pocet = export_csv(db)
     db.commit()
     return "csv exportováno %s" % pocet
+
+if __name__=='__main__':
+    csv()

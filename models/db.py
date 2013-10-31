@@ -41,7 +41,11 @@ class SOUHLAS_S_VS(object):
 
 ## if SSL/HTTPS is properly configured and you want all HTTP requests to
 ## be redirected to HTTPS, uncomment the line below:
-request.requires_https()
+if request.is_local:
+    from gluon.custom_import import track_changes
+    track_changes(True)    # auto-reload modules
+else:
+    request.requires_https()
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
@@ -115,13 +119,11 @@ mail = auth.settings.mailer
 mail.settings.server = 'smtp.gmail.com:587'  # 'logging' or ...
 mail.settings.sender = 'spolecneaktivityos@gmail.com'
 mail.settings.login = 'spolecneaktivityos@gmail.com:'+vfp.filetostr(
-        os.path.join(os.getcwd(),
-        'applications', 'platby', 'private', 'saos_gmail.smtp'))
+        os.path.join(request.folder, 'private', 'saos_gmail.smtp'))
 #mail.settings.server = 'smtp.mandrillapp.com:587'
 #mail.settings.sender = 'mirek@zvolsky@gmail.com'
 #mail.settings.login = 'mirek@zvolsky@gmail.com:'+vfp.filetostr(
-#        os.path.join(os.getcwd(),
-#        'applications', 'platby', 'private', 'zvolsky_gmail_mandrill.smtp'))
+#        os.path.join(request.folder, 'private', 'zvolsky_gmail_mandrill.smtp'))
 
 ## configure auth policy
 auth.settings.registration_requires_verification = True

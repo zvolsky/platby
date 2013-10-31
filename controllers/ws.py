@@ -5,8 +5,8 @@ from datetime import datetime, date, timedelta
 from hashlib import md5
 import vfp
 
-first_token = vfp.filetostr(os.path.join(os.getcwd(),
-                  'applications', 'platby', 'private', 'fungujeme.token'))
+first_token = vfp.filetostr(os.path.join(request.folder,
+                  'private', 'fungujeme.token'))
 
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
@@ -29,7 +29,7 @@ def udaje():
                               zaloha=str(uzivatel.zaloha or 0))
             else:
                 retval = dict(vs='', email='', zaloha='0')
-                __log_res('ok')
+            __log_res('ok')
             return retval
     __log_res('failed')
     raise HTTP(403)
@@ -164,5 +164,5 @@ def __log_ws(ws):
       'logs/ws_call.log', 1)
 
 def __log_res(result): 
-    vfp.strtofile( " - %s\n" % result,
+    vfp.strtofile( " - %s\n\n" % result,
       'logs/ws_call.log', 1)
