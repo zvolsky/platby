@@ -75,11 +75,25 @@ def __init(vs, castka):
               + (podpis%zakaznik.email))
 
 '''
+def init6():     # 1.11.2013 Ladik21
+    for zakaznik in (
+          (113, 299),
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
+def init5():     # 31.10.2013 Andrea B.
+    for zakaznik in (
+          (200, 463),
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def neposilat():
     db(db.auth_user).update(neposilat=False)
     db.commit()
 
-def init4():     # 25.10.2013
+def init4():     # 31.10.2013
     for zakaznik in (
           (315, 637),
           (221, 816),

@@ -2,17 +2,6 @@
 {{extend 'layout.html'}}
 
 <div class="obly modry">
-<small>Pro platby preferujeme, abys své osobní číslo uváděl do variabilního symbolu (ale s ohledem na zvyklosti ze Společných aktivit Jiřího Poučka akceptujeme dočasně i když osobní číslo uvedeš do specifického symbolu).</small>
-<h5>{{="Tvůj variabilní symbol pro platby: %s" % auth.user.vs}}</h5>
-<p><i>Jak platit pro <a href="http://fungujeme.aspone.cz">Fungujeme</a>?</i><br /> <b>Pro placení na Fungujeme si změň mail v <a href="{{=URL('default', 'user', args='profile')}}">profilu</a> na shodný, jako jsi použil při registraci na Fungujeme</b> <small>(nyní je nastaveno: {{=auth.user.email}})</small></p>
-<p><i>Jak platit pro Společné aktivity Jiřího Poučka (<a href="http://www.spolecneaktivity.cz">spolecneaktivity.cz</a>)?</i><br /> {{if auth.user.ss:}}
-<b>V <a href="{{=URL('default', 'user', args='profile')}}">profilu</a> máš nastaveno, že chceš platit i za akce ze spolecneaktivity.cz zákazníka {{=auth.user.ss}}.</b>
-{{else:}}
-<b>Chceš-li platit i akce ze spolecneaktivity.cz, musíš mít specifický symbol ze spolecneaktivity.cz a do <a href="{{=URL('default', 'user', args='profile')}}">profilu</a> je potřeba tento specifický symbol zapsat.</b>
-{{pass}}</p>
-</div>
-
-<div class="obly modry">
 <h4>Na záloze máš: {{=zaloha}} Kč</h4>
 
 {{if sa_ss:}}
@@ -20,10 +9,10 @@
 {{if sa_zal[1]!=None:}}
 Výše této části osobní zálohy k {{=sa_zal[0].strftime('%d.%m.%Y %H:%M')}} byla <b>{{=sa_zal[1]}} Kč</b>.<br />{{pass}}
 {{if sa_zal[1]:}}
-Pokud jsi tedy od té doby na Společných aktivitách Jiřího Poučka neplatil za žádnou akci, máš <b>celkem na záloze {{=zaloha+sa_zal[1]}} Kč</b>,
+Pokud jsi tedy od té doby na spolecneaktivity.cz neplatil za žádnou akci, máš <b>celkem na záloze {{=zaloha+sa_zal[1]}} Kč</b>,
 jenže {{=sa_zal[1]}} Kč lze použít jen pro akce na spolecneaktivity.cz - pokud nepožádáš (níže) o převedení zmíněné částky do této evidence.<br />{{pass}}
-<small>Přesnou aktuální výši osobní zálohy u Jirky najdeš zde: 
-<a href="http://www.spolecneaktivity.cz/ucet/platby">podrobné vyúčtování za server spolecneaktivity.cz</a> (to však pravděpodobně vyžaduje odsouhlasit Jirkovy vyděračské podmínky).
+<small>Přesnou aktuální výši osobní zálohy na spolecneaktivity.cz najdeš zde: 
+<a href="http://www.spolecneaktivity.cz/ucet/platby">podrobné vyúčtování za server spolecneaktivity.cz</a>.
 </small></p>
 <p><b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
 abych ji mohl využít i pro akce na "fungujeme".</b></p>
@@ -35,7 +24,8 @@ abych ji mohl využít i pro akce na "fungujeme".</b></p>
 
 </div>
 
-<p><a href="{{=URL('pohyby')}}">Pohyby na záloze</a></p>
+<p><a href="{{=URL('pohyby')}}">Pohyby na záloze</a> --
+<a href="{{=URL('info', 'coajak', args='strucneji')}}">Jak mám platit</a></p>
 
 
 {{block right_sidebar}}

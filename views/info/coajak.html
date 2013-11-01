@@ -1,0 +1,81 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/cs_CZ/all.js#xfbml=1&appId=1390343751204693";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+{{if len(request.args)==0:}}
+Tento web byl vytvořen jako evidence pro organizátory, radu, dozorčí komisi a pokladníka našeho občanského sdružení.<br />
+
+Jako návštěvník(ce) našich akcí na něm nemusíš udělat téměř nic - jen <b>nastavit si nebo zkontrolovat placení :</b>.
+{{pass}}
+
+<div class="obly modry">
+  <h5>Chceš platit za jakoukoli akci ?</h5>
+  <p>Tvoje platba musí mít tyto náležitosti:</p>
+  <ul>
+    <li>být poslána na účet sdružení: <b>2800132182 / 2010</b> <small>(FIO Banka)</small></li>
+    <li>mít variabilní symbol: {{if auth.user:}}
+    <b>{{="%s" % auth.user.vs}}</b> <small>(tento Tvůj osobní symbol rozpoznáme i když ho zapíšeš do specifického symbolu)</small>
+    {{else:}}
+    pro jeho zjištění se musíš přihlásit
+    {{pass}}</li>
+  </ul> 
+</div>
+<p>Platba se celá nejprve zapíše na Tvou osobní zálohu v této evidenci - takže si můžeš akce předplatit a neobtěžovat se jednotlivými malými platbami <small>(za případné vrácení srážíme 30 Kč)</small>.</p>
+
+<div class="obly modry">
+  <h5>Chceš platit za akce serveru Fungujeme ?</h5>
+  <p class="ma_byt">Rozhodující je, abys měl(a) v {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} vyplněn <b>nick a email shodný, jako na serveru Fungujeme</b>.</p>
+  {{if auth.user:}}<p class="nyni_je">Nyní {{if auth.user.nick:}}
+  máš vyplněn nick {{=B(auth.user.nick)}} a 
+  {{else:}}
+  nemáš vyplněn nick a máš uveden
+  {{pass}} email {{=B(auth.user.email)}}.</p>{{pass}} 
+</div>
+
+<div class="obly modry">
+  <h5>Chceš platit za akce serveru spolecneaktivity.cz ?</h5>
+  <p class="ma_byt">V {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} musíš jen mít zapsán svůj <b>specifický symbol</b> ze spolecneaktivity.cz <small>(na nicku ani e-mailu nezáleží)</small>.</p>
+  {{if auth.user:}}<p class="nyni_je">Toto placení {{if auth.user.vs:}}
+  máš nastaveno pro symbol {{=B(auth.user.vs)}}. 
+  {{else:}}
+  zatím nemáš nastaveno.
+  {{pass}}</p>{{pass}} 
+</div>
+
+<ul>Časově placení probíhá takto:
+  <li>Do půl hodiny po příchodu do banky je platba zapsána {{if auth.user:}}<a href="{{=URL('platby', 'pohyby', args='profile')}}">zde</a>{{else:}}zde{{pass}} na Tvé osobní záloze.</li>
+  <li>Při přihlášení na akci Fungujeme je ihned zaplaceno, pokud máš na záloze dost peněz. V opačném případě se občas (např. v noci) doptává robot, jestli už Tvé peníze dorazily. Do té doby se zobrazuješ v sekci Rezervace.</li>
+  <li>Při přihlášení na akci spolecneaktivity.cz se zobrazuješ v sekci Rezervace. Nejde to tak automaticky jako v předchozím případě - protože je potřeba ruční obsluha serveru spolecneaktivity.cz. Platby tam připíšeme vždy jednou za několik dní (a tím se přesuneš mezi účastníky, kteří mají zaplaceno).</li>
+</ul>
+
+<div class="obly modry">
+<p>Dále si {{if auth.user:}}<a href="{{=URL('platby', 'pohyby', args='profile')}}">zde</a>{{else:}}zde{{pass}} můžeš zkontrolovat, kdy jsi poslal(a) peníze na účet, jak byly použity a kolik zbývá na Tvé osobní záloze.</p> 
+
+<p>A budeš-li nějaké placené akce organizovat, nastav si v {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} předvolbu Organizátor placených akcí - přibyde Ti nová volba menu pro zápis Tvých příjmů a výdajů peněz.</p> 
+</div>
+
+{{=A('další text', _href=URL('sdruzeni'))}}
+{{if not auth.user:}} --
+{{=A('pokračovat přihlášením na stránky', _href=URL('default', 'index'))}}
+{{pass}}
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+
+<div class="fb-like" data-href="https://platby.alwaysdata.net/info/coajak" data-colorscheme="light" data-layout="box_count" data-action="recommend" data-show-faces="true" data-send="false"></div>
+
+<br /><small><i>neváhej stisknout Doporučit a podporuj tak naše sdružení aktivně na facebooku; díky</i></small>
+
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

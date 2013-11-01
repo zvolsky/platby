@@ -1,0 +1,25 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<h5><a href="http://www.spolecneaktivity.cz">spolecneaktivity.cz</a></h5>
+
+<p>Web provozuje soukromý podnikatel Jiří Pouček. Na serveru je živý provoz, mnoho návštěvníků i pořádaných akcí.</p>
+
+<p>Je to tedy dobré místo, chceš-li se seznámit - nalézt partnera.</p>
+
+<p>Chceš-li nalézt přátele, je to samozřejmě také dobré místo. Jako lidé, kteří už zkušenost s tímto webem mají, bychom ale poradili, že nevyjasněné vztahy mezi soukromým projektem s ambicemi jeho vlastníka a mezi dobrovolnou prací organizátorů vedly a i nadále povedou k napětí. Očekávej proto spíše, že parta a přátelé, které na akcích nalezneš, se dříve nebo později oddělí do menší uzavřené skupiny.</p>
+
+<p>Pokud máš snahu akce i vyhlašovat a pořádat, výše popsané nebezpečí se Tě týká tím více. Proto doporučujeme od začátku spíše svobodnější prostředí serveru <a href="http://fungujeme.aspone.cz">Fungujeme</a>. Jistě si ale vybereš podle osobního dojmu a sympatií nebo podle toho, kde už někoho znáš nebo jsi začal(a) působit.</p>
+
+<p>Pokud Tě zaujal(a) web <a href="http://www.spolecneaktivity.cz">spolecneaktivity.cz</a>, zveme Tě (máš-li zájem i akce pořádat), abys na něm působil ve spolupráci s naším sdružením. A každopádně nabízíme zázemí našeho sdružení a námi provozovaného druhého komunitního serveru, ať už se věci do budoucna vyvinou jakkoli.</p>
+
+{{=A('předchozí text', _href=URL('fungujeme'))}} --
+{{=A('další text', _href=URL('organizatori'))}}
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

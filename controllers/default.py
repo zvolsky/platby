@@ -1,18 +1,8 @@
 # -*- coding: utf-8 -*-
-# this file is released under public domain and you can use without limitations
-
-#########################################################################
-## This is a sample controller
-## - index is the default action of any application
-## - user is required for authentication and authorization
-## - download is for downloading files uploaded in the db (does streaming)
-## - call exposes all registered services (none by default)
-#########################################################################
-
 
 def index():
     if auth.user_id:
-        redirect(URL('platby', 'prehled'))
+        redirect(URL('info', 'coajak'))
     else:
         return {}
 
@@ -31,10 +21,12 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
-    if request.args(0) in ('login', 'request_reset_password'):
+    if request.args(0)=='login':
         db.auth_user.email.comment = TFu(
-            'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz, nicméně nejprve si nastav heslo pomocí "Zapomněl jste heslo"/"Nastavit nové heslo")'
-            )
+            'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz, nicméně nejprve si nastav heslo pomocí "Zapomněl jste heslo"/"Nastavit nové heslo")')
+    elif request.args(0)=='request_reset_password':
+        db.auth_user.email.comment = TFu(
+            'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 použij mail z registrace na spolecneaktivity.cz)')
     return dict(form=auth())
 
 def download():

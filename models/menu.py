@@ -23,11 +23,24 @@ response.google_analytics_id = None
 ## this is the main application menu add/remove items as required
 #########################################################################
 
+response.menu = []
 if auth.user:
-    response.menu = [
-        (T('Přehled'), False, URL('platby', 'prehled'), []),
-        (T('Pohyby na záloze'), False, URL('platby', 'pohyby'), []),
-        ]
+    response.menu.append((T('Zákazník'), False, URL('info', 'coajak'), [
+            (T('Přehled a žádosti o převody'), False, URL('platby', 'prehled'), []),
+            (T('Pohyby na záloze'), False, URL('platby', 'pohyby'), []),
+            ]))
+else:
+    if not (request.controller=='default' and request.function=='index'):
+        response.menu.append((T('Před přihlášením'), False,
+                URL('default', 'index'), []))
+response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
+            (T('Co a jak'), False, URL('info', 'coajak'), []),
+            (T('O sdružení'), False, URL('info', 'sdruzeni'), []),
+            (T('O Fungujeme'), False, URL('info', 'fungujeme'), []),
+            (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),
+            (T('Pro organizátory'), False, URL('info', 'organizatori'), []),
+            ]))
+if auth.user:
     if auth.user.organizator:
         response.menu.append((T('Záznamy do pokladny'), False,
               URL('organizator', 'pokladna'), []))        

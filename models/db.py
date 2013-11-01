@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#########################################################################
-## This scaffolding model makes your app work on Google App Engine too
-## File is released under public domain and you can use without limitations
-#########################################################################
-
 import os
 import datetime
 import vfp
@@ -67,16 +62,6 @@ response.generic_patterns = ['*'] if request.is_local else []
 # response.optimize_css = 'concat,minify,inline'
 # response.optimize_js = 'concat,minify,inline'
 
-#########################################################################
-## Here is sample code if you need for
-## - email capabilities
-## - authentication (registration, login, logout, ... )
-## - authorization (role based authorization)
-## - services (xml, csv, json, xmlrpc, jsonrpc, amf, rss)
-## - old style crud actions
-## (more options discussed in gluon/tools.py)
-#########################################################################
-
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
@@ -115,7 +100,7 @@ db.auth_user.email.comment = TFu('mail z registrace na fungujeme nebo jiný funk
 name_comment = TFu('údaj nepředáme třetí straně - pomáhá nám identifikovat platby')
 db.auth_user.first_name.comment = name_comment
 db.auth_user.last_name.comment = name_comment
-db.auth_user.password.comment = TFu("**NEPOUŽÍVEJ** stejné heslo jako pro spolecneaktivity.cz nebo fungujeme; šifrovaný přenos do webové pokladny Ti zajišťuje dobrou bezpečnost; ale odchytí-li někdo na wifině Tvé heslo při přihlášení do nezabezpečeného serveru (např. na spolecneaktivity.cz), neměl by mít možnost proniknout pod stejným heslem i do tohoto zabezpečeného systému")
+db.auth_user.password.comment = TFu("raději NEPOUŽÍVEJ stejné heslo jako pro spolecneaktivity.cz nebo Fungujeme")
 
 ## configure email
 mail = auth.settings.mailer
