@@ -36,7 +36,8 @@ def import_obdobi(db, token, od, do):
         url = ('https://www.fio.cz/ib_api/rest/last/%s/transactions.xml'
                 % (token,))
     xml = urllib2.urlopen(url).read()
-    vfp.strtofile(xml,'fio.xml')
+    vfp.strtofile(xml, os.path.join(os.getcwd(),
+                  'applications', 'platby', 'import_wk', 'fio.xml'))
     xml = unicode(xml, 'utf8')
         # jinak se utf8 dostane jako znaky do unicode,
         # takže např. len('Měna') bude =5

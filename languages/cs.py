@@ -58,6 +58,7 @@
 'Breakpoints': 'Body přerušení',
 'breakpoints': 'body přerušení',
 'Buy this book': 'Koupit web2py knihu',
+'BÚ sdružení': 'BÚ sdružení',
 'Cache': 'Cache',
 'cache': 'cache',
 'Cache Keys': 'Klíče cache',

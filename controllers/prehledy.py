@@ -55,3 +55,19 @@ def fungujeme():
               md.on(md.id==db.pohyb.idma_dati),
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
+
+@auth.requires_membership('admin')
+def bu():
+    response.view = 'prehledy/pohyby.html'
+    md = db.ucet.with_alias('md')
+    dal = db.ucet.with_alias('dal')
+    return dict(md=md, dal=dal,
+        pohyby=db((db.pohyb.iddal==Uc_sa.bezny)|
+              (db.pohyb.idma_dati==Uc_sa.bezny)).select(
+          db.pohyb.ALL,
+          db.auth_user.nick,
+          md.zkratka, dal.zkratka,
+          left=(db.auth_user.on(db.auth_user.id==db.pohyb.idauth_user),
+              md.on(md.id==db.pohyb.idma_dati),
+              dal.on(dal.id==db.pohyb.iddal)),
+          orderby=~db.pohyb.datum))

@@ -62,6 +62,8 @@ if auth.has_membership('admin'):
               URL('prehledy', 'zal_plus'), []))
     subprehledy.append((T('za akce Fungujeme'), False,
               URL('prehledy', 'fungujeme'), []))
+    subprehledy.append((T('BÚ sdružení'), False,
+              URL('prehledy', 'bu'), []))
 response.menu.append((T('Přehledy'), False, None, subprehledy))
 
 DEVELOPMENT_MENU = False

@@ -79,6 +79,11 @@ def mikruse():
     # zadost Pavlina H.
     # doregistrovat mikruse
 
+# python web2py.py -M -S platby/fixdata/oprav_fio_1
+def oprav_fio_1():
+    from import_fio_sa import import_pohyby_sa
+    import_pohyby_sa(db, od='2013-11-05', do='2013-11-08')
+
 '''
 def clenove():     # selhalo: mikruse MyNick Zrušený 71 Zrušený 72 Zrušený 73
     nicky = ''
