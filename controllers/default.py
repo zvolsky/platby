@@ -21,12 +21,22 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
+
+    # <!-- mz patch -->
+    
     if request.args(0)=='login':
         db.auth_user.email.comment = TFu(
-            'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz, nicméně nejprve si nastav heslo pomocí "Zapomněl jste heslo"/"Nastavit nové heslo")')
+            'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 z registrace na spolecneaktivity.cz si nejprve nastav heslo pomocí "Zapomněl jste heslo"/"Nastavit nové heslo")')
     elif request.args(0)=='request_reset_password':
         db.auth_user.email.comment = TFu(
             'e-mail, pod nímž jsi zde registrován (při prvním přihlášení zákazníka se spec.sym. 101-674 použij mail z registrace na spolecneaktivity.cz)')
+
+    #       login z menu jde na úvodní stránku;
+    #       správný musí mít další (dummy) parametr 
+    if request.args(0)=='register' and len(request.args)<2:
+        session.flash = TFu("Prosím, vyber správnou možnost přihlášení ze 3 voleb níže na stránce") 
+        redirect(URL('index'))
+
     return dict(form=auth())
 
 def download():

@@ -14,3 +14,6 @@ def jp():
 
 def organizatori():
     return {}
+
+def varovani():
+    return {}

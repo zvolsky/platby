@@ -1,6 +1,5 @@
 {{right_sidebar_enabled = True}}
 {{extend 'layout.html'}}
-
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -11,9 +10,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 {{if len(request.args)==0:}}
-Tento web byl vytvořen jako evidence pro organizátory, radu, dozorčí komisi a pokladníka našeho občanského sdružení.<br />
-
-Jako návštěvník(ce) našich akcí na něm nemusíš udělat téměř nic - jen <b>nastavit si nebo zkontrolovat placení :</b>.
+Jako návštěvník(ce) našich akcí nemusíš na tomto webu udělat téměř nic - jen <b>nastavit si nebo zkontrolovat placení :</b>.
 {{pass}}
 
 <div class="obly modry">
@@ -43,8 +40,8 @@ Jako návštěvník(ce) našich akcí na něm nemusíš udělat téměř nic - j
 <div class="obly modry">
   <h5>Chceš platit za akce serveru spolecneaktivity.cz ?</h5>
   <p class="ma_byt">V {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} musíš jen mít zapsán svůj <b>specifický symbol</b> ze spolecneaktivity.cz <small>(na nicku ani e-mailu nezáleží)</small>.</p>
-  {{if auth.user:}}<p class="nyni_je">Toto placení {{if auth.user.vs:}}
-  máš nastaveno pro symbol {{=B(auth.user.vs)}}. 
+  {{if auth.user:}}<p class="nyni_je">Toto placení {{if auth.user.ss:}}
+  máš nastaveno pro symbol {{=B(auth.user.ss)}}. 
   {{else:}}
   zatím nemáš nastaveno.
   {{pass}}</p>{{pass}} 
@@ -67,12 +64,19 @@ Jako návštěvník(ce) našich akcí na něm nemusíš udělat téměř nic - j
 {{=A('pokračovat přihlášením na stránky', _href=URL('default', 'index'))}}
 {{pass}}
 
+{{block header}}
+  {{if aktualita:}}
+    <div class="aktualita"><p class="center"><span>
+    <span id="aktualne">aktuálně:</span>{{=XML(aktualita)}}</span></p></div>
+  {{pass}}
+{{end}}
+
 {{block right_sidebar}}
 {{include 'incl/bocni.html'}}
 
 <div class="fb-like" data-href="https://platby.alwaysdata.net/info/coajak" data-colorscheme="light" data-layout="box_count" data-action="recommend" data-show-faces="true" data-send="false"></div>
 
-<br /><small><i>neváhej stisknout Doporučit a podporuj tak naše sdružení aktivně na facebooku; díky</i></small>
+<br /><small><i>stisknutím Doporučit podporuješ naše sdružení na facebooku; díky</i></small>
 
 {{end}}
 

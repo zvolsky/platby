@@ -58,6 +58,13 @@ db.define_table('zadost',
     Field('prevedeno', 'decimal(11,2)', label='Převedená částka'),
     )
 
+db.define_table('clenstvi',
+    Field('user_id', 'reference auth_user', label="Uživatel"),
+    Field('group_id', 'reference auth_group', label="Role ve sdružení"),
+    Field('ode_dne', 'date', label="Ode dne"),
+    Field('do_dne', 'date', label="Do dne"),
+    )
+
 fix_login(db, auth, vs_default)  # každému dát osobní symbol, logovat
     
 ## after defining tables, uncomment below to enable auditing

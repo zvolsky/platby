@@ -9,8 +9,10 @@ from spolecneaktivity_cz import unformat_castka
 def prehled():
     ss = sa_ss(auth.user.vs, auth.user.ss)[1] # spec.sym. na Jirkově
     sa_zal = __get_zaloha(ss)
-    zaloha = db.auth_user[auth.user_id].zaloha
-    return dict(zaloha=zaloha, sa_ss=ss, sa_zal=sa_zal)
+    ja = db.auth_user[auth.user_id]
+    bere_jirkovi = db(db.zadost.idauth_user==auth.user.id).select().first()
+    return dict(zaloha=ja.zaloha, sa_ss=ss, sa_zal=sa_zal,
+          bere_jirkovi=bere_jirkovi, clen=auth.has_membership('člen sdružení'))
 
 @auth.requires_login()
 def pohyby():

@@ -1,3 +1,6 @@
+/* změna přednastaveného designu */
+#header {margin-top: 30px;}
+
 /* vlastní design aplikace */
 body {
 	background-color: #f8f8ff;
@@ -7,8 +10,8 @@ body {
 	}
 
 .obly {
-	margin: 8px 0;
-	padding: 9px;
+	margin: 6px 0;
+	padding: 9px 12px 2px 12px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -20,6 +23,10 @@ body {
 
 .zluty {
 	background-color: #e0e020;
+	}
+
+.svetlezluty {
+	background-color: #eeeeb8;
 	}
 
 .sedy {
@@ -52,3 +59,15 @@ body {
   margin-left: 40px;
 	color: #444444;
   }
+
+.aktualita {
+  clear: both;
+  padding: 8px 0 1px 0;
+	background-color: #ffffd8;
+	color: #004;
+  margin-top: 40px;
+	}
+.aktualita #aktualne {
+	color: gray;
+  margin-right: 24px;
+	}

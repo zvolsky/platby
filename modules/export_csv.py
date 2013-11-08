@@ -33,7 +33,7 @@ from spolecneaktivity_cz import sa_login, unformat_castka
 from mz_wkasa_platby import Uc_sa
 import vfp
 
-def export_csv(db):
+def export_csv(db, app_folder):
     rec_last_csv = db(db.systab.kod=='last_csv').select().first()
     datum_od = datetime.strptime(rec_last_csv.hodnota, '%d.%m.%Y'
                 ).date()+timedelta(1)
@@ -50,7 +50,8 @@ def export_csv(db):
                     evidence, db, vypis, sumplus, summinus, csv_nejpozdeji)
     pocet, vypis, sumplus, summinus = predej_dluzne(
                     evidence, db, vypis, sumplus, summinus, pocet, csv_nejpozdeji)
-    make_csv(db, vypis, sumplus, summinus, rec_last_csv, datum_od, datum_do)
+    make_csv(db, vypis, sumplus, summinus, rec_last_csv, datum_od, datum_do,
+            app_folder)
     return pocet
 
 def predej_planovane(evidence, db, vypis, sumplus, summinus, csv_nejpozdeji):
@@ -176,7 +177,8 @@ def __add_csv(pohyb, csv_nejpozdeji):
     summinus1 = float(pohyb.castka) if pohyb.castka<0 else 0.
     return vypis1, sumplus1, summinus1
 
-def make_csv(db, vypis, sumplus, summinus, rec_last_csv, datum_od, datum_do):
+def make_csv(db, vypis, sumplus, summinus, rec_last_csv, datum_od, datum_do,
+              app_folder):
     maska = vfp.filetostr(os.path.join(os.getcwd(),
                   'applications', 'platby', 'others', 'maska.csv'))
     rec_csv_czk = db(db.systab.kod=='csv_czk').select().first()
@@ -192,7 +194,8 @@ def make_csv(db, vypis, sumplus, summinus, rec_last_csv, datum_od, datum_do):
           vydaje=_form_castka(summinus),
           zaznamy=vypis,
           suma=_form_castka(sumplus+summinus)
-          ), datum_od.strftime('%Y_%m%d')+datum_do.strftime('_%m%d')+'.csv')
+          ), os.path.join(app_folder, 'import_wk', 
+          datum_od.strftime('%Y_%m%d')+datum_do.strftime('_%m%d')+'.csv'))
     rec_csv_czk.update_record(hodnota=str(koncova))
     rec_last_csv.update_record(hodnota=datum_do.strftime('%d.%m.%Y'))
     #db.commit() - commit je v kontroléru csv.py

@@ -3,6 +3,9 @@
 from datetime import datetime, timedelta, time
 from mz_wkasa_platby import Uc_sa
 
+def clenove():
+    return {}
+
 @auth.requires_membership('admin')
 def nedavne():
     if len(request.args)>0:

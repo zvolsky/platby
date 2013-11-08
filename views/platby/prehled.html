@@ -14,12 +14,19 @@ jenže {{=sa_zal[1]}} Kč lze použít jen pro akce na spolecneaktivity.cz - pok
 <small>Přesnou aktuální výši osobní zálohy na spolecneaktivity.cz najdeš zde: 
 <a href="http://www.spolecneaktivity.cz/ucet/platby">podrobné vyúčtování za server spolecneaktivity.cz</a>.
 </small></p>
+</div>
+
+<div class="obly modry">
+<p>{{if clen:}}Jsi členem sdružení Společné Aktivity o.s.{{else:}}Zde bude zobrazena informace o členství / přihláška do sdružení.{{pass}}</p> 
+
 <p><b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
 abych ji mohl využít i pro akce na "fungujeme".</b></p>
 {{pass}}
 
-{{if zaloha>0:}}
+{{if zaloha>0 or bere_jirkovi:}}
 <p><a href="{{=URL('vratit_zalohu')}}">Žádám o vrácení zálohy na běžný účet.</a></p>
+{{else:}}
+<p><small>Nezobrazuje se Žádost o vrácení zálohy, protože zde nemáš žádný zůstatek. Pokud máš zůstatek v evidenci na spolecneaktivity.cz, požádej nejprve výše o převedení.</small></p>
 {{pass}}
 
 </div>

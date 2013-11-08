@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-# this file is released under public domain and you can use without limitations
 
-#########################################################################
-## Customize your APP title, subtitle and menus here
-#########################################################################
+aktualita = "Ve Čt 14.11. veřejná schůze občanského sdružení - <a href='http://fungujeme.aspone.cz/akce/detaily/Schuze-rady-Spolecne-aktivity%2c-os'>více zde</a>" 
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
@@ -39,19 +36,33 @@ response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             (T('O Fungujeme'), False, URL('info', 'fungujeme'), []),
             (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),
             (T('Pro organizátory'), False, URL('info', 'organizatori'), []),
+            (T('Pro organizace: Účtovat na spolecneaktivity.cz?'), False, URL('info', 'varovani'), []),
             ]))
-if auth.user:
-    if auth.user.organizator:
-        response.menu.append((T('Záznamy do pokladny'), False,
+subpostak = [
+            (T('Zaslat mail'), False, URL('postak', 'zaslat'), []),
+            ]
+if auth.has_membership('admin'):
+    subpostak.append((T('Hromadný mail'), False,
+              URL('postak', 'zakaznikum'), []))
+response.menu.append((T('Pošťák'), False, URL('postak', 'zaslat'), subpostak))
+
+if auth.user and auth.user.organizator:
+    response.menu.append((T('Záznamy do pokladny'), False,
               URL('organizator', 'pokladna'), []))        
-    if auth.has_membership('admin'):
-        response.menu.append((T('Přehledy'), False,
-              URL('prehledy', 'nedavne', args=1), [
-              (T('pohyby za 2 měsíce'), False,
-                          URL('prehledy', 'nedavne'), []),
-              (T('navýšení zálohy'), False, URL('prehledy', 'zal_plus'), []),
-              (T('za akce Fungujeme'), False, URL('prehledy', 'fungujeme'), []),
-              ]))
+
+subprehledy = [
+            (T('Členové sdružení'), False, URL('prehledy', 'clenove'), []),
+            ]
+if auth.has_membership('admin'):
+    subprehledy.append((T('neformátované za 2 měsíce'), False,
+              URL('prehledy', 'nedavne', args=1), []))
+    subprehledy.append((T('pohyby za 2 měsíce'), False,
+              URL('prehledy', 'nedavne'), []))
+    subprehledy.append((T('navýšení zálohy'), False,
+              URL('prehledy', 'zal_plus'), []))
+    subprehledy.append((T('za akce Fungujeme'), False,
+              URL('prehledy', 'fungujeme'), []))
+response.menu.append((T('Přehledy'), False, None, subprehledy))
 
 DEVELOPMENT_MENU = False
 

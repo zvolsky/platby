@@ -74,7 +74,67 @@ def __init(vs, castka):
               'V případě nejasností kontaktuj pokladníka.' % castka)
               + (podpis%zakaznik.email))
 
+def mikruse():
+    pass
+    # zadost Pavlina H.
+    # doregistrovat mikruse
+
 '''
+def clenove():     # selhalo: mikruse MyNick Zrušený 71 Zrušený 72 Zrušený 73
+    nicky = ''
+    auth.add_group('předseda', '')
+    auth.add_group('dočasný předseda', '')
+    auth.add_group('člen rady', '')
+    auth.add_group('dozorčí komise', '')
+    auth.add_group('pokladník', '')
+    clen_id = auth.add_group('člen sdružení', '')
+    
+    from bs4 import BeautifulSoup
+    import urllib2
+    url = 'file:///' + os.path.join(os.getcwd(), request.folder, 'clenove.htm')
+    html = unicode(urllib2.urlopen(url).read(), 'utf8')
+    soup=BeautifulSoup(html)
+    clenove = soup('table')[5].tbody.find_all('tr')
+    for clen in clenove:
+        udaje = clen.find_all('td')
+        nick = udaje[0].string.strip()
+        usr = db(db.auth_user.nick==nick).select().first()
+        if usr:
+            user_id = usr.id
+        else:
+            nicky += nick + ' '
+            continue
+        od_str=udaje[2].string.strip()
+        od_datetime=datetime.datetime.strptime(od_str, '%d.%m.%Y')
+        od = datetime.date(od_datetime.year, od_datetime.month, od_datetime.day)
+        auth.add_membership(clen_id, user_id)
+        db.clenstvi.insert(user_id=user_id, group_id=clen_id, ode_dne=od)
+    db.commit()
+    return nicky.strip()   # selhalo zařazení
+
+def setfalse():
+    db(db.auth_user).update(ne_ostatnim=False)
+    db.commit()
+
+def init8():     # 4.11.2013
+    for zakaznik in (
+          (582, 180),    # tomas.zemres 
+          (361, 440),    # KED
+          (80113, 500),  # Pavlína H. (675)
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
+def init7():     # 4.11.2013
+    for zakaznik in (
+          (469, 412),  # mnovy
+          (296, 80),   # T0m4s
+          (255, 145),  # PetrK
+          (391, 290),  # alicilka
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def init6():     # 1.11.2013 Ladik21
     for zakaznik in (
           (113, 299),

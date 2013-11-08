@@ -63,8 +63,8 @@
        uncomment to load jquery-ui //-->
   <noscript><link href="{{=URL('static', 'css/web2py_bootstrap_nojs.css')}}" rel="stylesheet" type="text/css" /></noscript>
 
-    {{include 'my/header.html'}} <!-- mz patch -->
-    
+  {{include 'my/header.html'}} <!-- mz patch -->
+
   {{block head}}{{end}}
 </head>
 
@@ -92,6 +92,9 @@
     </div>
   </div><!--/top navbar -->
 
+  <!-- mz patch -->
+  {{block header}}{{end}}
+
   <div class="container">
     <!-- Masthead ================================================== -->
     <header class="mastheader row" id="header">
@@ -104,7 +107,7 @@
                 </h1>
             </div>
         </div>
-	{{pass}}
+  	  {{pass}}
     </header>
 
     <section id="main" class="main row">

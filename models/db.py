@@ -69,8 +69,14 @@ crud, service, plugins = Crud(db), Service(), PluginManager()
 ## create all tables needed by auth if not custom tables
 vs_default = TFu('dostaneš..') # max 10 znaků
 auth.settings.extra_fields['auth_user'] = [
+    Field('email_ver', 'boolean', default=False, label=TFu("Mail není tajný"),
+          comment=TFu('zaškrtni, pokud si myslíš, že případné zobrazení Tvé e-mailové adresy někde na stránkách sdružení a v korespondenci sdružení nemůže vadit')),
+    Field('telefon', length=32, default='', label=TFu("Telefon"),
+          comment=TFu('vyplň, chceš-li vedení sdružení dát možnost Ti v důležitých případech zavolat')),
+    Field('tel_ver', 'boolean', default=False, label=TFu("Tel. není tajný"),
+          comment=TFu('zaškrtni, pokud si myslíš, že případné zobrazení Tvého telefonu někde na stránkách sdružení a v korespondenci sdružení nemůže vadit')),
     Field('nick', length=100, default='',
-          comment=TFu('přezdívka na častěji používaném serveru; tuto přezdívku pak uváděj tomu, komu platíš v hotovosti (pro správné zpracování platby)')),
+          comment=TFu('přezdívka; lze napsat např Manik/MyNick; jde o to, abychom mohli správně zadat Tvoji platbu v hotovosti - jinak Tvé zaplacení nevyrovná úhradu a může Ti vzniknout (evidenční) dluh')),
     Field('organizator', 'boolean', default=False,
           label=TFu('Organizátor placených akcí'),
           comment=TFu('zaškrtni, pokud budeš platit/vybírat peníze jménem Sdružení a předávat si peníze a doklady s pokladníkem')),
@@ -87,16 +93,25 @@ auth.settings.extra_fields['auth_user'] = [
         comment=TFu('jako zákazník Sdružení jsem registrován(a) ode dne')),
     Field('prihlasen', 'date', readable=False, writable=False),
     Field('vyzva', 'date', readable=False, writable=False),
-    Field('neposilat', 'boolean', default=False, label=TFu('Neposílat'),
+    Field('neposilat', 'boolean', default=False, label=TFu('Neposílat info'),
         comment=TFu('zaškrtnutím zabráníš zasílání informačních mailů - vzhledem k tomu, že jde o Tvé peníze, toto nedoporučujeme')),
+    Field('ne_ostatnim', 'boolean', default=False,
+        label=TFu("Stop ostatním"),
+        comment=TFu("zaškrtnutím znemožníš všem ostatním účastníkům akcí poslat Ti vzkaz (rozumí se výběrem Tvého nicku - jiný údaj, jako jméno nebo mail jim neposkytneme)")),
     ]
+'''
+Field('clen', 'boolean', writable=False, default=False,
+    label=TFu("Člen sdružení"),
+    comment=TFu("členství ve sdružení Společné Aktivity, o.s.")),
+'''
+
 auth.define_tables(username=False, signature=False)
 db.auth_user.ss.requires=[
       SOUHLAS_S_VS(auth.user and auth.user.vs or ''),
       IS_EMPTY_OR(IS_NOT_IN_DB(db, db.auth_user.ss)),
       ]
 db.auth_user._format = '%(nick)s - %(vs)s'
-db.auth_user.email.comment = TFu('mail z registrace na fungujeme nebo jiný funkční mail (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz)')
+db.auth_user.email.comment = TFu('kvůli placení na Fungujeme zapiš mail z registrace na Fungujeme (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz)')
 name_comment = TFu('údaj nepředáme třetí straně - pomáhá nám identifikovat platby')
 db.auth_user.first_name.comment = name_comment
 db.auth_user.last_name.comment = name_comment
