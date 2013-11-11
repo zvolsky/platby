@@ -6,8 +6,12 @@
 *- kopie*.*
 ____*.*
 
+maily/
+import_*/
+
 Backup*/
 bk*/
+backup*/
 bin/
 tmp/
 
@@ -29,7 +33,6 @@ cache/*.*
 private/*.*
 errors/*.*
 sessions/*.*
-import_*/
 
 .installed.cfg
 pip-log.txt

@@ -49,6 +49,7 @@ def __setvs(pohyb_id, vs):
                     zakaznik=zakaznik.vs, idauth_user=zakaznik.id)
     return zakaznik
 
+# duplicitně převzato do kontroléru prehledy.py
 def __init(vs, castka):
     zakaznik = db(db.auth_user.vs==vs).select().first()
     if zakaznik:
@@ -74,17 +75,137 @@ def __init(vs, castka):
               'V případě nejasností kontaktuj pokladníka.' % castka)
               + (podpis%zakaznik.email))
 
-def mikruse():
-    pass
-    # zadost Pavlina H.
-    # doregistrovat mikruse
+def ucty_1():
+    db.ucet.insert(ucet='640', zkratka='+Pr', nazev="výnosy ostatní")    #id=13
+    db.ucet.insert(ucet='XXX', zkratka='<Vr', nazev="vrácené os.zálohy") #id=14
+    db.commit()
+
+def oprav_zadosti_1():
+    db.zadost[1] = dict(prevod=datetime.datetime(2013, 10, 15, 22),
+         zadano=570, prevedeno=570) # Du-šan - 269   
+    db.zadost[2] = dict(prevod=datetime.datetime(2013, 10, 15, 22),
+         zadano=2863, prevedeno=2863, ss=347) # Du-šan -> Mirek Zv. - 347    
+    db.zadost[3] = dict(prevod=datetime.datetime(2013, 10, 15, 22),
+         zadano=613, prevedeno=613) # petan1961 - 464   
+    db.zadost[4] = dict(prevod=datetime.datetime(2013, 10, 15, 22),
+         zadano=1292, prevedeno=1292,
+         zadost=datetime.datetime(2013, 10, 15, 12)) # Bobo - 130   
+    db.zadost[5] = dict(prevod=datetime.datetime(2013, 10, 15, 22),
+         zadano=80, prevedeno=80, ss=204,
+         zadost=datetime.datetime(2013, 10, 15, 12)) # Manik -> Nerothar - 204   
+    db.zadost[0] = dict(typ=1, zadano=445, prevedeno=445, ss=295,
+         zadost=datetime.datetime(2013, 10, 15, 12),
+         prevod=datetime.datetime(2013, 10, 15, 22)) # ?   
+    db.zadost[0] = dict(typ=1, zadano=795, prevedeno=795, ss=321,
+         zadost=datetime.datetime(2013, 10, 15, 12),
+         prevod=datetime.datetime(2013, 10, 15, 22)) # ?   
+    db.zadost[0] = dict(typ=1, zadano=370, prevedeno=370, ss=456,
+         zadost=datetime.datetime(2013, 10, 15, 12),
+         prevod=datetime.datetime(2013, 10, 15, 22)) # ? hanah?  
+    db.zadost[0] = dict(typ=1, zadano=1300, prevedeno=1300, ss=657,
+         zadost=datetime.datetime(2013, 10, 15, 12),
+         prevod=datetime.datetime(2013, 10, 15, 22)) # ?   
+    db.zadost[0] = dict(typ=1, zadano=1005, prevedeno=1005, ss=168,
+         zadost=datetime.datetime(2013, 10, 17, 12),
+         prevod=datetime.datetime(2013, 10, 17, 22)) # ?   
+    db.zadost[0] = dict(typ=1, zadano=400, prevedeno=400, ss=438,
+         zadost=datetime.datetime(2013, 10, 25, 12),
+         prevod=datetime.datetime(2013, 10, 25, 22)) # ?   
+    db.zadost[0] = dict(typ=1, zadano=400, prevedeno=400, ss=130,
+         zadost=datetime.datetime(2013, 10, 25, 12),
+         prevod=datetime.datetime(2013, 10, 25, 22)) # ? znova Bobo ????  
+    db.zadost[6] = dict(prevod=datetime.datetime(2013, 10, 31, 22),
+         zadano=816, prevedeno=816) # misulino - 221   
+    db.zadost[7] = dict(prevod=datetime.datetime(2013, 10, 31, 22),
+         zadano=637, prevedeno=637) # Manik - 315   
+    db.zadost[0] = dict(typ=1, zadano=463, prevedeno=463, ss=200,
+         zadost=datetime.datetime(2013, 10, 31, 21),
+         prevod=datetime.datetime(2013, 10, 31, 23)) # Andrea B. - 200  
+    db.zadost[8] = dict(prevod=datetime.datetime(2013, 11, 1, 22),
+         zadano=299, prevedeno=299) # Ladik21 - 113   
+    db.zadost[10] = dict(prevod=datetime.datetime(2013, 11, 4, 12),
+         zadano=412, prevedeno=412) # mnovy - 469   
+    db.zadost[11] = dict(prevod=datetime.datetime(2013, 11, 4, 12),
+         zadano=145, prevedeno=145) # PetrK - 255   
+    db.zadost[12] = dict(prevod=datetime.datetime(2013, 11, 4, 12),
+         zadano=290, prevedeno=290) # alicilka - 391   
+    db.zadost[13] = dict(prevod=datetime.datetime(2013, 11, 4, 12),
+         zadano=80, prevedeno=80) # T0m4s - 296   
+    db.zadost[14] = dict(prevod=datetime.datetime(2013, 11, 6, 12),
+         zadano=180, prevedeno=180) # tomas.zemres - 582   
+    db.zadost[15] = dict(prevod=datetime.datetime(2013, 11, 6, 12),
+         zadano=440, prevedeno=440) # KED - 361
+    db.zadost[9] = dict(prevod=datetime.datetime(2013, 11, 6, 12),
+         zadano=500, prevedeno=500, ss=675) # T0m4s -> Pavlína H. 80113-675    
+    db.zadost[16] = dict(prevod=datetime.datetime(2013, 11, 8, 12),
+         zadano=316, prevedeno=316) # nijel - 114   
+    db.zadost[0] = dict(typ=1, ss=290,
+         zadost=datetime.datetime(2013, 11, 8, 12)) # soptik106 - 290  
+    db.zadost[0] = dict(typ=2, ss=290,
+         zadost=datetime.datetime(2013, 11, 8, 12)) # soptik106 - 290  
+    db.commit()
+
+def oprav_zadosti_2():
+    pavlina = db(db.auth_user.vs=='80113').select().first()
+    if not pavlina.ss:    # Pavlína nemá vyplněno ss, nenajde se podle zadost.ss
+        pavlina.update_record(ss='675')   
+    zadosti = db(db.zadost.id>0).select(
+            db.zadost.ALL, db.auth_user.ALL,
+            left=db.auth_user.on(db.auth_user.ss==db.zadost.ss))
+    for zadost in zadosti:
+        db.zadost[zadost.zadost.id] = dict(idauth_user=zadost.auth_user.id,
+                                      vs=zadost.auth_user.vs)
+    db.commit()
+
+    '''
+    Manik/MyNick 315
+    mikruse 677
+    petan1961 464 petan1961@seznam.cz 
+    potapeni.cz 321 f.pudil@seznam.cz
+    olina 434 olina.krajska@seznam.cz
+    //převedla se jako janine// jvapenikova 540 jvapenikova@seznam.cz
+    nerothar 204 pav.dufek@atlas.cz
+    ----asi odpovídá zrušeným:
+    zr55 22.07.2011
+    zr71 28.07.2011
+    zr72 06.08.2012
+    zr73 16.11.2011
+    NEDOŘEŠENO:
+    evikd 243 - nelze schválit v Jirkově evidenci - poslán mail/vzkaz 
+    katarinka 694 - zatím ji nemáme v evidenci - poslán vzkaz
+    mikruse 677 - zatím ji nemáme v evidenci - poslán vzkaz
+    nevíme od kdy: petan, potápka, olina, nerothar
+    '''
+'''
+def oprav_clenove_1():
+    auth.add_membership(12, 1024)  # Manik/MyNick 315
+    auth.add_membership(12, 1135)  # Nerothar 204
+    auth.add_membership(12, 875)   # petan1961 464
+    auth.add_membership(12, 1018)  # potapeni.cz 321
+    auth.add_membership(12, 905)   # olina 434
+    auth.add_membership(12, 1096)  # evikd 243
+    db.clenstvi.insert(user_id=1024, group_id=12,
+                    ode_dne=datetime.date(2012,3,20))
+    db.clenstvi.insert(user_id=1135, group_id=12)
+    db.clenstvi.insert(user_id=875, group_id=12)
+    db.clenstvi.insert(user_id=1018, group_id=12)
+    db.clenstvi.insert(user_id=905, group_id=12)
+    db.clenstvi.insert(user_id=1096, group_id=12,
+                    ode_dne=datetime.date(2013,11,1))
+    db.commit()
+
+def init9():     # 8.11.2013
+    for zakaznik in (
+          (114, 316),    # nijel 
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
 
 # python web2py.py -M -S platby/fixdata/oprav_fio_1
 def oprav_fio_1():
     from import_fio_sa import import_pohyby_sa
     import_pohyby_sa(db, od='2013-11-05', do='2013-11-08')
 
-'''
 def clenove():     # selhalo: mikruse MyNick Zrušený 71 Zrušený 72 Zrušený 73
     nicky = ''
     auth.add_group('předseda', '')

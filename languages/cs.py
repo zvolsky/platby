@@ -339,6 +339,7 @@
 'Plugins': 'Zásuvné moduly',
 'Plural Form #%s': 'Plural Form #%s',
 'Plural-Forms:': 'Množná čísla:',
+'Podané žádosti': 'Podané žádosti',
 'Pohyby na záloze': 'Pohyby na záloze',
 'pohyby za -2 měsíce (neformátované)': 'pohyby za -2 měsíce (neformátované)',
 'pohyby za 2 měsíce': 'pohyby za 2 měsíce',

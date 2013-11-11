@@ -15,19 +15,26 @@ jenže {{=sa_zal[1]}} Kč lze použít jen pro akce na spolecneaktivity.cz - pok
 <a href="http://www.spolecneaktivity.cz/ucet/platby">podrobné vyúčtování za server spolecneaktivity.cz</a>.
 </small></p>
 </div>
+{{pass}}
 
 <div class="obly modry">
-<p>{{if clen:}}Jsi členem sdružení Společné Aktivity o.s.{{else:}}Zde bude zobrazena informace o členství / přihláška do sdružení.{{pass}}</p> 
+<ul>
+<li><p>{{if clen:}}<b>Jsi členem sdružení</b> Společné Aktivity o.s.{{if clenstvi and clenstvi.ode_dne:}} ode dne {{=clenstvi.ode_dne.strftime('%d.%m.%Y')}}.{{pass}}{{else:}}Zatím <b>nejsi členem našeho sdružení</b> Společné Aktivity o.s.
+{{if not clenstvi:}}<br /><b>Můžeš se přidat</b> k více než 150 účastníkům akcí, kteří jsou členy sdružení.<br />
+<a href="{{=URL('zadam_clenstvi')}}">Žádám o členství ve sdružení Společné Aktivity o.s.</a>{{pass}}{{pass}}
+</p></li> 
 
-<p><b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
-abych ji mohl využít i pro akce na "fungujeme".</b></p>
-{{pass}}
+<li><p>{{if sa_ss:}}
+<b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
+abych ji mohl využít i pro akce na Fungujeme.</b>
+{{if int(sa_ss)>=675:}}<br /><small>Současně prosím pokladníkovi (kontakt uveden dole) pošli i vzkaz na spolecneaktivity.cz, aby bylo ověřeno, že se nikdo cizí nepokouší použít Tvé peníze.</small>{{pass}}
+{{else:}}<small>Případný převod zálohy ze spolecneaktivity.cz (pro placení i na Fungujeme) je možný po uvedení specifického symbolu v <a href="{{=URL('default', 'user', args='profile')}}">profilu</a>.</small>
+{{pass}}</p></li>
 
-{{if zaloha>0 or bere_jirkovi:}}
-<p><a href="{{=URL('vratit_zalohu')}}">Žádám o vrácení zálohy na běžný účet.</a></p>
-{{else:}}
-<p><small>Nezobrazuje se Žádost o vrácení zálohy, protože zde nemáš žádný zůstatek. Pokud máš zůstatek v evidenci na spolecneaktivity.cz, požádej nejprve výše o převedení.</small></p>
-{{pass}}
+<li><p>{{if auth.user.zaloha or sa_ss:}}<a href="{{=URL('vratit_zalohu')}}">Žádám o vrácení zálohy na běžný účet.</a>
+{{else:}}<small>Podobně se po zadání specifického symbolu ze spolecneaktivity.cz zobrazí i možnost žádat o vrácení zálohy na běžný účet</small>.{{pass}} 
+</p></li>
+</ul>
 
 </div>
 

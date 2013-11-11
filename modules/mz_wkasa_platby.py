@@ -17,6 +17,8 @@ class Uc_sa(object):
     akce = 10     # 518-01 náklady akcí
     provoz = 11   # 548-03 náklady provozní
     vynos = 12    # 602 výnos za akce
+    vynos_jiny = 13 # 640 výnosy ostatní
+    vraceno = 14  # XXX vrácené zálohy
 
     gl_ozwk = (5,7)   # osobní účet ve správě na wKasa
     gl_sdr = (1,2,9)  # účty sdružení

@@ -12,13 +12,13 @@ pass}}
     =TR(TD("Celkem jsi sdružení platil(a):"), TD(B(Celkem.vlozeno), _style="text-align: right;"))
     pass
 if Celkem.vraceno:
-    =TR(TD("Z toho Ti bylo vráceno zpět:"), TD(B(Celkem.vraceno), _style="text-align: right;"))
+    =TR(TD("Z toho Ti bylo vráceno zpět:"), TD(Celkem.vraceno, _style="text-align: right;"))
     pass
 if Celkem.sa_vlozeno:
-    =TR(TD("Na spolecneaktivity.cz jsi celkem umístil(a):"), TD(B(Celkem.sa_vlozeno), _style="text-align: right;"))
+    =TR(TD("Na spolecneaktivity.cz jsi celkem umístil(a):"), TD(Celkem.sa_vlozeno, _style="text-align: right;"))
     pass
 if Celkem.z_sa_prevedeno:
-    =TR(TD("Ze spolecneaktivity.cz do této evidence převzato:"), TD(B(Celkem.z_sa_prevedeno), _style="text-align: right;"))
+    =TR(TD("Ze spolecneaktivity.cz do této evidence převzato:"), TD(Celkem.z_sa_prevedeno, _style="text-align: right;"))
     pass
 if Celkem.sa_vlozeno or Celkem.z_sa_prevedeno:
     =TR(TD(SPAN(("zbytek byl spotřebován" if Celkem.z_sa_prevedeno else "což bylo spotřebováno")+" na spolecneaktivity.cz na akce"+(", zbývá tam na záloze nebo Ti bylo vráceno" if Celkem.vraceno else " nebo tam zbývá na záloze"), _class="small")))
@@ -28,10 +28,10 @@ else:
     txt_sa = ''
     pass
 if Celkem.ozwk_vlozeno:
-    =TR(TD("Na zálohu",txt_sa," vloženo:"), TD(B(Celkem.ozwk_vlozeno), _style="text-align: right;"))
+    =TR(TD("Na zálohu",txt_sa," vloženo:"), TD(Celkem.ozwk_vlozeno, _style="text-align: right;"))
     pass
 if Celkem.ozwk_cerpano:
-    =TR(TD("Ze zálohy čerpáno:"), TD(B(Celkem.ozwk_cerpano), _style="text-align: right;"))
+    =TR(TD("Ze zálohy čerpáno:"), TD(Celkem.ozwk_cerpano, _style="text-align: right;"))
     pass
 =TR(TD(B("Stav zálohy"),txt_sa,":"), TD(B(zaloha), _style="text-align: right;"))
 }}

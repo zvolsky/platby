@@ -10,9 +10,14 @@ def prehled():
     ss = sa_ss(auth.user.vs, auth.user.ss)[1] # spec.sym. na Jirkově
     sa_zal = __get_zaloha(ss)
     ja = db.auth_user[auth.user_id]
-    bere_jirkovi = db(db.zadost.idauth_user==auth.user.id).select().first()
+    txt_clen = 'člen sdružení'
+    clen_id = db(db.auth_group.role==txt_clen).select().first().id
+    clenstvi = db((db.clenstvi.user_id==auth.user_id)&
+          (db.clenstvi.group_id==clen_id)
+          ).select(orderby=~db.clenstvi.ode_dne).first()
     return dict(zaloha=ja.zaloha, sa_ss=ss, sa_zal=sa_zal,
-          bere_jirkovi=bere_jirkovi, clen=auth.has_membership('člen sdružení'))
+          clen=auth.has_membership(txt_clen),
+          clenstvi=clenstvi)
 
 @auth.requires_login()
 def pohyby():
@@ -66,7 +71,14 @@ def vse():
 
 @auth.requires_login()
 def seber_jirkovi():
-    db.zadost.insert(zadost=datetime.now(), ss=auth.user.ss, typ=1)
+    db.zadost.insert(zadost=datetime.now(),
+                    idauth_user=auth.user_id, vs=auth.user.vs, typ=1)
+    return {}
+
+@auth.requires_login()
+def zadam_clenstvi():
+    db.zadost.insert(zadost=datetime.now(),
+                    idauth_user=auth.user_id, vs=auth.user.vs, typ=3)
     return {}
 
 @auth.requires_login()
@@ -74,7 +86,8 @@ def vratit_zalohu():
     pohyb = db((db.pohyb.zakaznik==auth.user.vs)
             &(db.pohyb.cislo_uctu!=None)
             &(db.pohyb.cislo_uctu!='')
-            ).select().last()
+            &(db.pohyb.idma_dati==Uc_sa.bezny)
+            ).select(orderby=~db.pohyb.datum).first()
     form = SQLFORM.factory(
             Field('cislo_uctu', length=30,
                     label = TFu("Číslo účtu"),
@@ -86,9 +99,11 @@ def vratit_zalohu():
                     requires=IS_NOT_EMPTY()),
             )
     if form.process().accepted:
-        if sa_ss(auth.user.ss):
-            db.zadost.insert(zadost=datetime.now(), ss=auth.user.ss, typ=1)
-        db.zadost.insert(zadost=datetime.now(), ss=auth.user.ss, typ=2,
+        if sa_ss(auth.user.vs, auth.user.ss):
+            db.zadost.insert(zadost=datetime.now(),
+                        idauth_user=auth.user_id, vs=auth.user.vs, typ=1)
+        db.zadost.insert(zadost=datetime.now(), 
+                        idauth_user=auth.user_id, vs=auth.user.vs, typ=2,
               cislo_uctu=form.vars.cislo_uctu, kod_banky=form.vars.kod_banky)
         db.commit()
         session.flash = TFu('zálohu po odečtení poplatku zašleme na %s/%s'
