@@ -12,7 +12,7 @@ jakmile je jich vyhledáno <ncount, znamená to, že (po jejich odeslání) jsme
     u konce - přejmenujeme soubory, čímž se zabrání opakovanému/dalšímu posílání
     
 crontab např. (200/hod. if ncount=25):
-5,10,20,25,35,40,50,55 5-8 * * * python web2py.py -M -S platby -R applications/platby/scripts/send_plan_maily.py 
+5,10,15,25,30,35,45,50,55 5-8 * * * python web2py.py -M -S platby -R applications/platby/scripts/send_plan_maily.py 
 '''
 
 import os
@@ -40,9 +40,11 @@ def send_plan_maily():
             (db.auth_user.id<pozice)).select(
             db.auth_user.id, db.auth_user.email,
             orderby=~db.auth_user.id, limitby=(0,ncount))
+    vfp.strtofile(str(id)+'\n')
     #debug:
-    zakaznici = db(db.auth_user.vs=='347').select()
+    #zakaznici = db(db.auth_user.vs=='347').select()
     for zakaznik in zakaznici:
+        vfp.strtofile(str(zakaznik.id)+'\n','xxxx.log',1)
         mandrill_send(subject, obsah, prijemci=[{'email': zakaznik.email}],
                 styl='html' if is_html else 'text')
         pozice = db.auth_user.id 

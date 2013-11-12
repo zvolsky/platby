@@ -75,6 +75,76 @@ def __init(vs, castka):
               'V případě nejasností kontaktuj pokladníka.' % castka)
               + (podpis%zakaznik.email))
 
+def mikruse():
+    from datetime import date
+    user_id = db.auth_user.insert(nick='mikruse',
+            email='XXXXXXXXX',
+            vs='XXXXXXX', ss='XXXXXXXX',
+            )
+    clen_id = db(db.auth_group.role=='člen sdružení').select().first().id 
+    auth.add_membership(clen_id, user_id)
+    db.clenstvi.insert(user_id=user_id, group_id=clen_id,
+                    ode_dne=date(2013,10,XXXXXXXXXX))
+
+def antipavel_1():
+    falesne = db((db.pohyb.datum==datetime.date(2013,11,11))&(
+              db.pohyb.id_pokynu=='hotov.příjem')).select()
+    for falesny in falesne:
+        falesny.update_record(datum=datetime.date(2013,11,6))
+    db.commit()
+    return len(falesne) 
+
+def antikraken_p146():
+    falesne = db((db.pohyb.ss=='9182')&(db.pohyb.idma_dati==Uc_sa.oz)).select()
+    for falesny in falesne:
+        falesny.update_record(popis=falesny.popis +
+                  '_Badminton_c.146_v_Letnanech')
+    db.commit()
+    return len(falesne) 
+def antikraken_p147():
+    falesne = db((db.pohyb.ss=='9192')&(db.pohyb.idma_dati==Uc_sa.oz)).select()
+    for falesny in falesne:
+        falesny.update_record(popis=falesny.popis +
+                  '_Badminton_c.147_v_Letnanech')
+    db.commit()
+    return len(falesne) 
+                            
+def antikraken_pravidelny():
+    falesne = db(db.pohyb.popis.like('%_Pravidelny_badminton%')).select()
+    for falesny in falesne:
+        falesny.update_record(popis=falesny.popis.replace('Pravidelny_b','B',1))
+    db.commit()
+    return len(falesne) 
+                            
+def antikraken_143():
+    akce = 'Ucast_na_akci_Badminton_c.143_v_Letnanech' 
+    falesne = db(db.pohyb.popis==akce).select()
+    for falesny in falesne:
+        poskozeny = db(db.auth_user.id==falesny.idauth_user).select().first()
+        poskozeny.update_record(zaloha=poskozeny.zaloha + falesny.castka)
+    db(db.pohyb.popis==akce).delete()
+    db.commit()
+    return str(len(falesne))
+def antikraken_145():
+    akce = 'Ucast_na_akci_Badminton_c.145_v_Letnanech' 
+    falesne = db(db.pohyb.popis==akce).select()
+    for falesny in falesne:
+        poskozeny = db(db.auth_user.id==falesny.idauth_user).select().first()
+        poskozeny.update_record(zaloha=poskozeny.zaloha + falesny.castka)
+    db(db.pohyb.popis==akce).delete()
+    db.commit()
+    return str(len(falesne))
+def antikraken_144():
+    akce = 'Ucast_na_akci_Badminton_c.144_v_Letnanech' 
+    falesne = db(db.pohyb.popis==akce).select()
+    for falesny in falesne:
+        poskozeny = db(db.auth_user.id==falesny.idauth_user).select().first()
+        poskozeny.update_record(zaloha=poskozeny.zaloha + falesny.castka)
+    db(db.pohyb.popis==akce).delete()
+    db.commit()
+    return str(len(falesne))
+
+'''
 def ucty_1():
     db.ucet.insert(ucet='640', zkratka='+Pr', nazev="výnosy ostatní")    #id=13
     db.ucet.insert(ucet='XXX', zkratka='<Vr', nazev="vrácené os.zálohy") #id=14
@@ -157,7 +227,6 @@ def oprav_zadosti_2():
                                       vs=zadost.auth_user.vs)
     db.commit()
 
-    '''
     Manik/MyNick 315
     mikruse 677
     petan1961 464 petan1961@seznam.cz 
@@ -175,8 +244,8 @@ def oprav_zadosti_2():
     katarinka 694 - zatím ji nemáme v evidenci - poslán vzkaz
     mikruse 677 - zatím ji nemáme v evidenci - poslán vzkaz
     nevíme od kdy: petan, potápka, olina, nerothar
-    '''
-'''
+    olina asi vystoupila na vlastní žádost 
+
 def oprav_clenove_1():
     auth.add_membership(12, 1024)  # Manik/MyNick 315
     auth.add_membership(12, 1135)  # Nerothar 204
@@ -453,3 +522,6 @@ def init_systab():
     db.commit()
     return 'systab: nastaveno'
 '''
+
+if __name__=='__main__':
+    antikraken()

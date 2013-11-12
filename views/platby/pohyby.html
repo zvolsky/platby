@@ -37,6 +37,21 @@ if Celkem.ozwk_cerpano:
 }}
 </table><hr />
 		
+{{problem=False
+if pohyby:
+	for pohyb in pohyby:
+      if pohyb.ss.isdigit() and int(pohyb.ss)>8999:
+          problem=True 
+          break
+      pass
+  pass
+pass}}
+{{if problem:}}
+  <p>Pro každou akci se zobrazí dvojice, např. +150(hotovostní příjem), -150(inkaso z osob.zálohy); resp. při předplácení např. +600, -150, -150, ..<br />
+Inkasa za badmintony 1.10.-6.11. jsou prováděna opožděně - proto jsou řádky zpřeházeny. Omlouváme se.</p>
+  <hr />
+{{pass}}   
+
 {{if pohyby:
 	tablecontent = []
 	for pohyb in pohyby:
@@ -64,8 +79,11 @@ if Celkem.ozwk_cerpano:
     pass
     vypis_ks = pohyb.ks if interni_ucet=='B' else '' 
     vypis_vs = pohyb.vs if interni_ucet=='B' else '' 
-    vypis_ucet = cislo_uctu if (interni_ucet=='B' or len(request.args)>0
-                  ) else ''  # len(.args)>0 ... bývá tam totiž vidět nick
+    vypis_ucet = cislo_uctu if (interni_ucet=='B'
+          ) else (pohyb.id_pokynu or '')
+              # v podmínce IFu bylo ještě:  ... or len(request.args)>0
+              #  s komentářem: bývá tam totiž vidět nick
+              #  odstranil jsem (s obavami) 12.11.
     vypis_castka = B(pohyb.castka) if pohyb.castka>0 else pohyb.castka
     interni_ucet = B(interni_ucet) if interni_ucet=='P' else interni_ucet
 		tablecontent.append(TR(

@@ -5,9 +5,12 @@ u'''
 odešle mail pomocí mandrill
 '''
 
+import os
 import mandrill
+import vfp
 
-mandrill_key = vfp.filetostr(os.path.join(request.folder,
+appdir = os.path.join(os.getcwd(), 'applications', 'platby') 
+mandrill_key = vfp.filetostr(os.path.join(appdir,
           'private', 'zvolsky_gmail_mandrill.smtp'))
 
 def mandrill_send(subject, txt, prijemci=
@@ -37,7 +40,7 @@ def mandrill_send(subject, txt, prijemci=
 #  -v controléru postak.py i ve scriptu pro odesílání scripts/send_plan_maily.py
 
 def __init_plan_maily(): 
-    maildir = os.path.join(request.folder, 'maily') 
+    maildir = os.path.join(appdir, 'maily') 
     planovany = os.path.join(maildir, 'chystany.hlavicka')
     planovany2 = os.path.join(maildir, 'chystany.obsah')
     return maildir, planovany, planovany2  
