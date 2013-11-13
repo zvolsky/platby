@@ -9,6 +9,6 @@
       kdo = '~ '+kdo
       pass
   pass
-	=TR(TD(pohyb.pohyb.datum.strftime('%d.%m.%Y')), TD(pohyb.md.zkratka), TD(pohyb.dal.zkratka), TD(B(pohyb.pohyb.castka), _style="text-align: right;"), TD(kdo), TD(pohyb.pohyb.ss or '', _style="text-align: right;"), TD(not pohyb.pohyb.cislo_uctu and pohyb.pohyb.nazev_banky or pohyb.pohyb.popis or ''),)
+	=TR(TD(pohyb.pohyb.datum.strftime('%d.%m.%Y')), TD(pohyb.md.zkratka), TD(pohyb.dal.zkratka), TD(B(pohyb.pohyb.castka), _style="text-align: right;"), TD(kdo), TD(pohyb.pohyb.ss or '', _style="text-align: right;"), TD(not pohyb.pohyb.cislo_uctu and pohyb.pohyb.nazev_banky or pohyb.pohyb.popis or ''), auth.has_membership('pokladna') and TD(A("edit", _href="%s"%URL('edit_pohyb', args=pohyb.pohyb.id, vars={'next':request.function}))) or '')
   pass}}
 </table></div>

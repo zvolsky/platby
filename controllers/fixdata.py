@@ -86,6 +86,7 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+'''
 def vraceni2():
     db.zadost[33] = dict(vyridil=auth.user_id, zadano=840.0, prevedeno=840.0,
               prevod=datetime.datetime(2013,11,12,17,30))
@@ -97,7 +98,6 @@ def vraceni():
     db(db.auth_user.vs=='430').update(zaloha=0)
     db.commit()
 
-'''
 def zadost():
     del db.zadost[28]
     db.commit()

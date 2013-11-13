@@ -111,6 +111,31 @@ def bu():
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
 
+@auth.requires_membership('admin')
+def chybi():
+    response.flash = "chybějící podvojný účet je nutno doplnit před daňovým přiznáním"
+    response.view = 'prehledy/pohyby.html'
+    md = db.ucet.with_alias('md')
+    dal = db.ucet.with_alias('dal')
+    return dict(md=md, dal=dal,
+        pohyby=db((db.pohyb.iddal==None)|
+              (db.pohyb.idma_dati==None)).select(
+          db.pohyb.ALL,
+          db.auth_user.nick,
+          md.zkratka, dal.zkratka,
+          left=(db.auth_user.on(db.auth_user.id==db.pohyb.idauth_user),
+              md.on(md.id==db.pohyb.idma_dati),
+              dal.on(dal.id==db.pohyb.iddal)),
+          orderby=~db.pohyb.datum))
+
+@auth.requires_membership('pokladna')
+def edit_pohyb():
+    if len(request.args)>0:
+        form = SQLFORM(db.pohyb, request.args[0])
+        if form.process().accepted:
+            redirect(URL(request.vars['next']))
+        return dict(form=form)
+
 @auth.requires_membership('pokladna')
 def vyridit():
     if len(request.args)>=2:
