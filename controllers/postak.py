@@ -23,6 +23,11 @@ def zakaznikum():
     planovano = os.path.isfile(planovany)
     form = __get_mailform()
     if planovano:
+        stav = db(db.systab.kod=='postak').select()
+        if stav and int(stav.first().hodnota)>0:
+            session.flash = "Pošťák ještě neposlal maily všem, vyčkej nebo volej Mirek Zv. 732457966"
+            #redirect(URL('default', 'index')) # dvojí redirekce nezobrazí flash
+            redirect(URL('info', 'coajak'))    # ale toto mají všichni admini           
         form.vars.is_html, dummy, form.vars.subject = __parse_mailheader(
                                                       planovany)
         try:

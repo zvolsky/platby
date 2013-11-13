@@ -86,6 +86,29 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+'''
+def zadost():
+    del db.zadost[28]
+    db.commit()
+
+def mailx3():
+    db.systab[4] = dict(hodnota='1216')
+    db.commit()
+
+def mailx2():
+    del db.systab[5]
+    db.commit()
+
+def tel():
+    db(db.auth_user.telefon==None).update(telefon='')
+    db(db.auth_user.tel_ver==None).update(tel_ver=False)
+    db(db.auth_user.email_ver==None).update(email_ver=False)
+    db.commit()
+
+def mailx():
+    del db.systab[3]
+    db.commit()
+
 def antipavel_1():
     falesne = db((db.pohyb.datum==datetime.date(2013,11,11))&(
               db.pohyb.id_pokynu=='hotov.příjem')).select()
@@ -144,7 +167,6 @@ def antikraken_144():
     db.commit()
     return str(len(falesne))
 
-'''
 def ucty_1():
     db.ucet.insert(ucet='640', zkratka='+Pr', nazev="výnosy ostatní")    #id=13
     db.ucet.insert(ucet='XXX', zkratka='<Vr', nazev="vrácené os.zálohy") #id=14

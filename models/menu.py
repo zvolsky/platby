@@ -53,6 +53,9 @@ if auth.user and auth.user.organizator:
 subprehledy = [
             (T('Členové sdružení'), False, URL('prehledy', 'clenove'), []),
             ]
+if auth.has_membership('admin'):
+    subprehledy.append((T('Zákazníci'), False,
+              URL('prehledy', 'zakaznici'), []))        
 if auth.user:
     subprehledy.append((T('Podané žádosti'), False,
               URL('prehledy', 'zadosti'), []))        

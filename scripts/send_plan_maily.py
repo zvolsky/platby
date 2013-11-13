@@ -30,6 +30,8 @@ def send_plan_maily():
     if pozice_rec:
         pozice = int(pozice_rec.first().hodnota)
     else:
+        db.systab.insert(kod=='postak', hodnota='0')
+        db.commit()
         pozice = 0
     if not pozice:    # začni rozesílat
         pozice = 999999999   # >>max 
@@ -40,22 +42,22 @@ def send_plan_maily():
             (db.auth_user.id<pozice)).select(
             db.auth_user.id, db.auth_user.email,
             orderby=~db.auth_user.id, limitby=(0,ncount))
-    vfp.strtofile(str(id)+'\n')
     #debug:
     #zakaznici = db(db.auth_user.vs=='347').select()
     for zakaznik in zakaznici:
-        vfp.strtofile(str(zakaznik.id)+'\n','xxxx.log',1)
+        #vfp.strtofile(str(zakaznik.id)+'\n',
+        #        os.path.join(os.getcwd(),'logs','xxxxxxxxxx.log'),1)
         mandrill_send(subject, obsah, prijemci=[{'email': zakaznik.email}],
                 styl='html' if is_html else 'text')
-        pozice = db.auth_user.id 
-        db.systab.update_or_insert(kod='postak', hodnota=str(pozice))
+        pozice = zakaznik.id
+        db(db.systab.kod=='postak').update(hodnota=str(pozice)) 
         db.commit()
     if len(zakaznici)<ncount:   # další už nejsou
         new_filestem = 'mail_' + datetime.datetime.now().strftime('%Y%m%d_%H%M') 
         vfp.rename(planovany, new_filestem + '.hlavicka')
         vfp.rename(planovany2, new_filestem + '.obsah')
         # db update až po přejmenování = jistota proti opakovanému rozeslání
-        db.systab.update_or_insert(kod='postak', hodnota='0')
+        db(db.systab.kod=='postak').update(hodnota='0') 
         db.commit()
 
 if __name__=='__main__':

@@ -11,6 +11,28 @@ def clenove():
           orderby=db.auth_user.nick.lower())
     return dict(clenove=clenove)
 
+@auth.requires_membership('admin')
+def zakaznici():
+    return dict(grid=SQLFORM.grid(db.auth_user,
+              fields=(db.auth_user.vs, db.auth_user.ss,
+                  db.auth_user.organizator,
+                  db.auth_user.nick, db.auth_user.zaloha,
+                  db.auth_user.first_name, db.auth_user.last_name,
+                  db.auth_user.email, db.auth_user.email_ver,
+                  db.auth_user.telefon, db.auth_user.tel_ver,
+                  db.auth_user.prihlasen,
+                  db.auth_user.neposilat, db.auth_user.ne_ostatnim,
+                  db.auth_user.id
+                  ),
+              deletable=auth.has_membership('pokladna'),
+              editable=auth.has_membership('pokladna'),
+              create=auth.has_membership('pokladna'),
+              csv=auth.has_membership('pokladna'),
+              paginate=100,
+              orderby=db.auth_user.nick.lower(),
+              maxtextlengths={'auth_user.email' : 30}
+              ))
+
 @auth.requires_login()
 def zadosti():
     vyznam = {1:'převést zálohu sem',
@@ -138,7 +160,7 @@ def zalohu_vratit():
         form.vars.kod_banky = zadost.kod_banky
         if form.process().accepted:
             zaloha = form.vars.zaloha  # tj. kolik ze zálohy vzít vč. poplatku
-            if zaloha<zakaznik.zaloha:
+            if zaloha>zakaznik.zaloha:
                 session.flash = "přerušeno - zákazník nemá tolik na záloze"
                 redirect(URL('zadosti'))
             if zaloha<form.vars.strhnout:

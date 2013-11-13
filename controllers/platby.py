@@ -71,8 +71,12 @@ def vse():
 
 @auth.requires_login()
 def seber_jirkovi():
+    if len(request.args)>0:
+        usr = db(db.auth_user.vs==request.args[0]).select().first()
+    else:
+        usr = auth.user
     db.zadost.insert(zadost=datetime.now(),
-                    idauth_user=auth.user_id, vs=auth.user.vs, typ=1)
+                    idauth_user=usr.id, vs=usr.vs, typ=1)
     return {}
 
 @auth.requires_login()
@@ -83,7 +87,11 @@ def zadam_clenstvi():
 
 @auth.requires_login()
 def vratit_zalohu():
-    pohyb = db((db.pohyb.zakaznik==auth.user.vs)
+    if len(request.args)>0:
+        usr = db(db.auth_user.vs==request.args[0]).select().first()
+    else:
+        usr = auth.user
+    pohyb = db((db.pohyb.zakaznik==usr.vs)
             &(db.pohyb.cislo_uctu!=None)
             &(db.pohyb.cislo_uctu!='')
             &(db.pohyb.idma_dati==Uc_sa.bezny)
@@ -99,11 +107,11 @@ def vratit_zalohu():
                     requires=IS_NOT_EMPTY()),
             )
     if form.process().accepted:
-        if sa_ss(auth.user.vs, auth.user.ss):
+        if sa_ss(usr.vs, usr.ss):
             db.zadost.insert(zadost=datetime.now(),
-                        idauth_user=auth.user_id, vs=auth.user.vs, typ=1)
+                        idauth_user=usr.id, vs=usr.vs, typ=1)
         db.zadost.insert(zadost=datetime.now(), 
-                        idauth_user=auth.user_id, vs=auth.user.vs, typ=2,
+                        idauth_user=usr.id, vs=usr.vs, typ=2,
               cislo_uctu=form.vars.cislo_uctu, kod_banky=form.vars.kod_banky)
         db.commit()
         session.flash = TFu('zálohu po odečtení poplatku zašleme na %s/%s'
