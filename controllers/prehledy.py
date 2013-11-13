@@ -175,6 +175,10 @@ def zalohu_vratit():
                       zakaznik=zadost.vs, vs=zadost.vs,
                       id_pokynu='vr zal p')
             prevedeno = zaloha-form.vars.strhnout
+            '''
+            # pohyb se zapsat nesmí, protože z banky (nebo z pokladny?) přijde
+            #   vzápětí skutečný pohyb, takže by se dublovaly a záloha by šla
+            #   do mínusu
             if prevedeno>0:
                 db.pohyb.insert(idauth_user=zadost.idauth_user,
                       idma_dati=Uc_sa.oz, iddal=Uc_sa.vraceno,
@@ -183,6 +187,7 @@ def zalohu_vratit():
                       zakaznik=zadost.vs, vs=zadost.vs, ss=zadost.vs, ks='0308',
                       cislo_uctu=zadost.cislo_uctu, kod_banky=zadost.kod_banky,
                       id_pokynu='vr zal bu')
+            '''
             zakaznik.update_record(zaloha=zakaznik.zaloha-zaloha)
             zadost.update_record(zadano=zaloha, prevedeno=prevedeno)
             mail_subj = Uc_sa.mail_subj
