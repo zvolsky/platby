@@ -50,6 +50,7 @@ def __setvs(pohyb_id, vs):
     return zakaznik
 
 # duplicitně převzato do kontroléru prehledy.py
+#                     a také do jednorázového scriptu bb.py 
 def __init(vs, castka):
     zakaznik = db(db.auth_user.vs==vs).select().first()
     if zakaznik:
