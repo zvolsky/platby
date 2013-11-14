@@ -79,7 +79,7 @@ def __init(vs, castka):
 def mikruse():
     from datetime import date
     user_id = db.auth_user.insert(nick='mikruse',
-            email='XXXXXXXXX',
+            email='',
             vs='XXXXXXX', ss='XXXXXXXX',
             )
     clen_id = db(db.auth_group.role=='člen sdružení').select().first().id 

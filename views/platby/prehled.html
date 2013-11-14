@@ -24,12 +24,13 @@ jenže {{=sa_zal[1]}} Kč lze použít jen pro akce na spolecneaktivity.cz - pok
 <a href="{{=URL('zadam_clenstvi')}}">Žádám o členství ve sdružení Společné Aktivity o.s.</a>{{pass}}{{pass}}
 </p></li> 
 
-<li><p>{{if sa_ss:}}
+<!--<li><p>{{if sa_ss:}}
 <b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
 abych ji mohl využít i pro akce na Fungujeme.</b>
 {{if int(sa_ss)>=675:}}<br /><small>Současně prosím pokladníkovi (kontakt uveden dole) pošli i vzkaz na spolecneaktivity.cz, aby bylo ověřeno, že se nikdo cizí nepokouší použít Tvé peníze.</small>{{pass}}
 {{else:}}<small>Případný převod zálohy ze spolecneaktivity.cz (pro placení i na Fungujeme) je možný po uvedení specifického symbolu v <a href="{{=URL('default', 'user', args='profile')}}">profilu</a>.</small>
-{{pass}}</p></li>
+{{pass}}</p></li>-->
+<li><small>Žádosti o převod ze spolecneaktivity.cz jsou už bezpředmětné. 13.11. Jiří Pouček oznámil, že 18.11.2013 smaže finanční data sdružení z webu spolecneaktivity.cz. Aby byl zachován online přístup účastníků akcí k osobní záloze, jsou do této pokladny už převedeny zálohy všech.</small></li>
 
 <li><p>{{if auth.user.zaloha or sa_ss:}}<a href="{{=URL('vratit_zalohu')}}">Žádám o vrácení zálohy na běžný účet.</a>
 {{else:}}<small>Podobně se po zadání specifického symbolu ze spolecneaktivity.cz zobrazí i možnost žádat o vrácení zálohy na běžný účet</small>.{{pass}} 

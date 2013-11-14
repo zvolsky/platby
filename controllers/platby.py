@@ -108,8 +108,11 @@ def vratit_zalohu():
             )
     if form.process().accepted:
         if sa_ss(usr.vs, usr.ss):
+            pass
+            '''
             db.zadost.insert(zadost=datetime.now(),
                         idauth_user=usr.id, vs=usr.vs, typ=1)
+            '''
         db.zadost.insert(zadost=datetime.now(), 
                         idauth_user=usr.id, vs=usr.vs, typ=2,
               cislo_uctu=form.vars.cislo_uctu, kod_banky=form.vars.kod_banky)
