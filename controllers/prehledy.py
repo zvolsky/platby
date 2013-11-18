@@ -1,6 +1,7 @@
 # coding: utf8
 
 from datetime import datetime, timedelta, time, date
+# import locale   # v zakaznici()
 from mz_wkasa_platby import Uc_sa
 
 def clenove():

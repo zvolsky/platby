@@ -88,6 +88,25 @@ def mikruse():
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
 '''
+def bdm_1():
+    __setvs(3113, 80113)
+    __setvs(3001, 80113)
+    __setvs(3000, 301)
+    db.commit()
+
+def pepa():
+    del db.zadost[35]
+    del db.zadost[36]
+    db.commit()
+
+def initsil():     # 14.11.2013 změna Silvestra
+    for zakaznik in (
+          (490, 50),    # zuzanice 
+          (257, 50),    # roman.cervenka
+          ):
+        __init(zakaznik[0], zakaznik[1])  
+    db.commit()
+
 def vraceni2():
     db.zadost[33] = dict(vyridil=auth.user_id, zadano=840.0, prevedeno=840.0,
               prevod=datetime.datetime(2013,11,12,17,30))
