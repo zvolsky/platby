@@ -88,6 +88,12 @@ def mikruse():
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
 '''
+def pavlovi(): 
+    del db.pohyb[3507]
+    nerothar = db(db.auth_user.vs=='204').select().first()
+    nerothar.update_record(zaloha=nerothar.zaloha+150)
+    db.commit()
+
 def bdm_1():
     __setvs(3113, 80113)
     __setvs(3001, 80113)

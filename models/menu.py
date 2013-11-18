@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Ve Čt 14.11. veřejná schůze občanského sdružení - <a href='http://fungujeme.aspone.cz/akce/detaily/Schuze-rady-Spolecne-aktivity%2c-os'>více zde</a>" 
+aktualita = "Jiří Pouček ukončil výpovědí působnost sdružení na spolecneaktivity.cz a smazal všechny agendy. Informace o platbách a zálohách proto najdete už jedině zde." 
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
