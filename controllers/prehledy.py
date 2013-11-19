@@ -175,15 +175,22 @@ def zalohu_vratit():
                         requires=IS_NOT_EMPTY()),
                 Field('zaloha', 'decimal(11,2)',
                         label="Zálohu snížit o (vč.poplatku)"),
-                Field('strhnout', 'decimal(11,2)', label="Z toho poplatek")
+                Field('strhnout', 'decimal(11,2)', label="Z toho poplatek"),
+                Field('vs', length=30, label='VarSym'),
+                Field('ss', length=30, label='SpecSym'),
                 )
         zadost = db.zadost[request.args(0)]
         zakaznik = db.auth_user[zadost.idauth_user]
         zaloha = zakaznik.zaloha 
         form.vars.zaloha = zaloha
-        form.vars.strhnout = min(30., form.vars.zaloha)
+        form.vars.strhnout = 30.0 # nefunguje: min((30., form.vars.zaloha))
         form.vars.cislo_uctu = zadost.cislo_uctu
         form.vars.kod_banky = zadost.kod_banky
+        form.vars.vs = zadost.vs
+        form.vars.ss = zadost.ss
+        form.vars.vs.writable=False
+        form.vars.ss.writable=False
+        
         if form.process().accepted:
             zaloha = form.vars.zaloha  # tj. kolik ze zálohy vzít vč. poplatku
             if zaloha>zakaznik.zaloha:
