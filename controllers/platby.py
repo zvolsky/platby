@@ -114,7 +114,7 @@ def vratit_zalohu():
                         idauth_user=usr.id, vs=usr.vs, typ=1)
             '''
         db.zadost.insert(zadost=datetime.now(), 
-                        idauth_user=usr.id, vs=usr.vs, typ=2,
+                        idauth_user=usr.id, vs=usr.vs, ss=usr.ss, typ=2,
               cislo_uctu=form.vars.cislo_uctu, kod_banky=form.vars.kod_banky)
         db.commit()
         session.flash = TFu('zálohu po odečtení poplatku zašleme na %s/%s'

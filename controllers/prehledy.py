@@ -188,8 +188,6 @@ def zalohu_vratit():
         form.vars.kod_banky = zadost.kod_banky
         form.vars.vs = zadost.vs
         form.vars.ss = zadost.ss
-        form.vars.vs.writable=False
-        form.vars.ss.writable=False
         
         if form.process().accepted:
             zaloha = form.vars.zaloha  # tj. kolik ze zálohy vzít vč. poplatku
