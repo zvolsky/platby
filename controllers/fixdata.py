@@ -66,7 +66,7 @@ def __init(vs, castka):
               ss=vs,
               id_pokynu='z sa.cz'
               )
-        zakaznik.update_record(zaloha=zakaznik.zaloha + castka)
+        zakaznik.update_record(zaloha=float(zakaznik.zaloha) + float(castka))
         mail.send(zakaznik.email,
             mail_subj % TFu('Připsána záloha ze spolecneaktivity.cz'),
               ('Byla vynulována Tvoje osobní záloha %s Kč na webu Jiřího Poučka spolecenaktivity.cz.\n'

@@ -60,6 +60,11 @@ def __init(vs, castka):
               id_pokynu='z sa.cz'
               )
         zakaznik.update_record(zaloha=float(zakaznik.zaloha) + castka)
+        # už se nepoužije, ale vhodnější by bylo
+        # zakaznik.update_record(zaloha=zakaznik.zaloha + Decimal(castka))
+        # decimal+-float, float+-decimal není podporováno
+        # přiřazením float do zakaznik.zaloha by bylo zakaznik.zaloha float,
+        # ačkoli při uložení do databáze se to automaticky převede na Decimal
     else:
         print 'failed -', vs
 

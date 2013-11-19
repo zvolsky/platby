@@ -2,6 +2,7 @@
 
 import os
 import datetime
+from decimal import Decimal
 import vfp
 
 def TFu(txt):

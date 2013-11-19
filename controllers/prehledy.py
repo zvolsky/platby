@@ -274,7 +274,10 @@ def __init(vs, castka):
               ss=vs,
               id_pokynu='z sa.cz'
               )
-        zakaznik.update_record(zaloha=zakaznik.zaloha + castka)
+        zakaznik.update_record(zaloha=zakaznik.zaloha + Decimal(castka))
+          # decimal+-float, float+-decimal není podporováno
+          # přiřazením float do zakaznik.zaloha by bylo zakaznik.zaloha float,
+          # ačkoli při uložení do databáze se to automaticky převede na Decimal
         mail_subj = Uc_sa.mail_subj
         podpis = Uc_sa.podpis
         mail.send(zakaznik.email,
