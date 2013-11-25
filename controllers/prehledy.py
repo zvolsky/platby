@@ -219,7 +219,9 @@ def zalohu_vratit():
                       cislo_uctu=zadost.cislo_uctu, kod_banky=zadost.kod_banky,
                       id_pokynu='vr zal bu')
             '''
-            zakaznik.update_record(zaloha=zakaznik.zaloha-zaloha)
+            zakaznik.update_record(zaloha=zakaznik.zaloha-form.vars.strhnout)
+                  # dříve tu bylo -zaloha(=-form.vars.zaloha), jenže tím se
+                  #  strhávalo duplicitně, ještě i poté, co platba došla z banky
             zadost.update_record(zadano=zaloha, prevedeno=prevedeno)
             mail_subj = Uc_sa.mail_subj
             podpis = Uc_sa.podpis

@@ -43,6 +43,7 @@ def setvs():
             return (zakaznik.vs, zakaznik.nick)
 
 def __setvs(pohyb_id, vs):
+    '''pozor, __setvs() zatím neaktualizuje zálohu, je potřeba upravit!'''
     zakaznik = db(db.auth_user.vs==vs).select().first()
     if zakaznik:
         db.pohyb[pohyb_id] = dict(
@@ -87,15 +88,69 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+def zaloha():
+    db(db.auth_user.zaloha<0).update(zaloha=0)
+    db.commit()
+
+def katarinka6():
+    db.zadost[43] = dict(vyridil_id=992, zadano=100., prevedeno=100.,
+                    prevod=datetime.datetime.now())
+    db.commit()
+
 '''
+def katarinka():
+    user_id = db.auth_user.insert(email='katie.vanova@gmail.com',
+            nick='katarinka', ss='694')
+    auth.add_membership(12, user_id)
+    db.clenstvi.insert(group_id=12, user_id=user_id)
+    db.commit()
+
+def katarinka2():
+    mx = db.auth_user.vs.max()
+    last_vs = db(db.auth_user.vs!=vs_default).select(mx).first()[mx]
+    new_vs = str(int(last_vs) + 1)
+    db(db.auth_user.id==1251).update(vs=new_vs)
+    db.commit()
+
+def katarinka3():
+    db.pohyb.insert(idauth_user=1251, castka=100, zakaznik='80116', vs='80116',
+          ss='694', id_pokynu='z sa.cz', popis="převod ze spolecneaktivity.cz",
+          idma_dati=4, iddal=7)
+    db.commit()
+
+def katarinka4():
+    db.pohyb[3591] = dict(datum=datetime.datetime.now())
+    db.commit()
+
+def katarinka5():
+    db.pohyb[3148] = dict(zakaznik='80116', idauth_user=1251,)
+    db.pohyb[3152] = dict(zakaznik='80116', idauth_user=1251,
+                      popis="pro spolecneaktivity.cz")
+    db.commit()
+
+def olina():
+    auth.del_membership(12, 905)
+    db(db.clenstvi.user_id==905).update(do_dne=datetime.date(2013, 5, 19))
+    db.commit()
+
+def marek():
+    db.pohyb[2982] = dict(ks='33')
+    db.pohyb[2983] = dict(ks='30')
+    db.pohyb[2955] = dict(ks='33')
+    db.commit()
+
 def pavlovi(): 
     del db.pohyb[3507]
     nerothar = db(db.auth_user.vs=='204').select().first()
     nerothar.update_record(zaloha=nerothar.zaloha+150)
     db.commit()
 
+def bdm_1b():  # navýšení zálohy, kterou nepřidalo __setvs()
+    __init(80113, 300)  
+    __init(301, 150)
+    db.commit()
 def bdm_1():
-    __setvs(3113, 80113)
+    __setvs(3113, 80113) #pozor, __setvs() neaktualizuje zálohu (ke 20.11.)  
     __setvs(3001, 80113)
     __setvs(3000, 301)
     db.commit()
