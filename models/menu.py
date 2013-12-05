@@ -64,6 +64,8 @@ if auth.has_membership('admin'):
               None, [
               (T('pokladna'), False,
                         URL('jednoduche', 'pokladna'), []),
+              (TFu('výběry z bankomatu'), False,
+                        URL('jednoduche', 'atm'), []),
               (TFu('BÚ sdružení (2 měsíce)'), False,
                         URL('jednoduche', 'bu2'), []),
               (TFu('BÚ sdružení (vše)'), False,

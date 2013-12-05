@@ -55,3 +55,22 @@ def pokladna():
               md.on(md.id==db.pohyb.idma_dati),
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
+
+@auth.requires_membership('admin')
+def atm():
+    response.view = 'jednoduche/pohyby.html'
+    md, dal, org = aliases(db) 
+    return dict(sledovany=Uc_sa.pokladna,
+        pohyby=db(((db.pohyb.iddal==Uc_sa.pokladna)&
+              (db.pohyb.idma_dati==Uc_sa.bezny))|
+              ((db.pohyb.iddal==Uc_sa.bezny)&
+              (db.pohyb.idma_dati==Uc_sa.pokladna))).select(
+          db.pohyb.ALL,
+          db.auth_user.nick,
+          org.nick,
+          md.zkratka, dal.zkratka,
+          left=(db.auth_user.on(db.auth_user.id==db.pohyb.idauth_user),
+              org.on(org.id==db.pohyb.idorganizator),
+              md.on(md.id==db.pohyb.idma_dati),
+              dal.on(dal.id==db.pohyb.iddal)),
+          orderby=~db.pohyb.datum))
