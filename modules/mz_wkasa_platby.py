@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-from datetime import date
+from datetime import datetime, timedelta, time, date
+
+def zpatky(dni):
+    datum_od = datetime.now()-timedelta(days=dni)
+    return datum_od.combine(datum_od.date(), time(0,0))
+
+def aliases(db):
+    return (db.ucet.with_alias('md'), db.ucet.with_alias('dal'),
+            db.auth_user.with_alias('org'))
 
 class Uc_sa(object):
     u'''zatím natvrdo podúčty účetnictví Společné Aktivity o.s.'''

@@ -60,18 +60,32 @@ if auth.user:
     subprehledy.append((T('Podané žádosti'), False,
               URL('prehledy', 'zadosti'), []))        
 if auth.has_membership('admin'):
-    subprehledy.append((T('neformátované za 2 měsíce'), False,
-              URL('prehledy', 'nedavne', args=1), []))
-    subprehledy.append((T('pohyby za 2 měsíce'), False,
-              URL('prehledy', 'nedavne'), []))
-    subprehledy.append((T('navýšení zálohy'), False,
-              URL('prehledy', 'zal_plus'), []))
-    subprehledy.append((T('za akce Fungujeme'), False,
-              URL('prehledy', 'fungujeme'), []))
-    subprehledy.append((T('BÚ sdružení'), False,
-              URL('prehledy', 'bu'), []))
-    subprehledy.append((T('chybí účet'), False,
-              URL('prehledy', 'chybi'), []))
+    subprehledy.append((T('Jednoduché'), False,
+              None, [
+              (T('pokladna'), False,
+                        URL('jednoduche', 'pokladna'), []),
+              (TFu('BÚ sdružení (2 měsíce)'), False,
+                        URL('jednoduche', 'bu2'), []),
+              (TFu('BÚ sdružení (vše)'), False,
+                        URL('jednoduche', 'bu'), []),
+              ]))
+    subprehledy.append((T('Podvojné'), False,
+              None, [
+              (T('neformátované za 2 měsíce'), False,
+                        URL('podvojne', 'nedavne', args=1), []),
+              (T('pohyby za 2 měsíce'), False,
+                        URL('podvojne', 'nedavne'), []),
+              (T('navýšení zálohy'), False,
+                        URL('podvojne', 'zal_plus'), []),
+              (T('za akce Fungujeme'), False,
+                        URL('podvojne', 'fungujeme'), []),
+              (T('BÚ sdružení'), False,
+                        URL('podvojne', 'bu'), []),
+              (T('pokladna'), False,
+                        URL('podvojne', 'pokladna'), []),
+              (T('chybí účet'), False,
+                        URL('podvojne', 'chybi'), []),
+              ]))
 response.menu.append((T('Přehledy'), False, None, subprehledy))
 
 DEVELOPMENT_MENU = False

@@ -88,6 +88,19 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+
+'''
+def sobin():
+    db((db.pohyb.id<3676)&(db.pohyb.idorganizator==992)).update(idorganizator=980)
+    db.commit()
+
+def odhlasit():
+    db.auth_user[811] = dict(neposilat=True, ne_ostatnim=True) # nahoda.nahoda ahostinska@.. 528
+    db.auth_user[905] = dict(neposilat=True, ne_ostatnim=True) # Olina 434
+    db.auth_user[1140] = dict(neposilat=True, ne_ostatnim=True) # Kikina kristina.h.kudlova@.. 199
+    db.auth_user[1203] = dict(neposilat=True, ne_ostatnim=True) # MajkaN aq2o@yahoo.co.uk 136
+    db.commit()
+
 def zaloha():
     db(db.auth_user.zaloha<0).update(zaloha=0)
     db.commit()
@@ -97,7 +110,6 @@ def katarinka6():
                     prevod=datetime.datetime.now())
     db.commit()
 
-'''
 def katarinka():
     user_id = db.auth_user.insert(email='katie.vanova@gmail.com',
             nick='katarinka', ss='694')

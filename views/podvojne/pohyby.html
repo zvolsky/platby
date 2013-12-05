@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+<div class="obly modry"><table>
+{{for pohyb in pohyby:
+  kdo = pohyb.auth_user.nick
+  if not kdo:
+    kdo = not pohyb.pohyb.kod_banky and pohyb.pohyb.cislo_uctu or ''
+    if kdo:
+      kdo = '~ '+kdo
+      pass
+  pass
+	=TR(TD(pohyb.pohyb.datum.strftime('%d.%m.%Y')), TD(pohyb.md.zkratka), TD(pohyb.dal.zkratka), TD(B(pohyb.pohyb.castka), _style="text-align: right;"), TD(pohyb.org.nick or ''), TD(kdo), TD(pohyb.pohyb.zakaznik or pohyb.pohyb.ss or '', _style="text-align: right;"), TD(not pohyb.pohyb.cislo_uctu and pohyb.pohyb.nazev_banky or pohyb.pohyb.popis or ''), auth.has_membership('pokladna') and TD(A("edit", _href="%s"%URL('prehledy', 'edit_pohyb', args=pohyb.pohyb.id, vars={'section':'podvojne', 'next':request.function}))) or '')
+  pass}}
+</table></div>
