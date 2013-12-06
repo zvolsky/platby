@@ -207,6 +207,22 @@ def vyrizeno():
                                           prevedeno=request.args[2])
     redirect(URL('zadosti'))
 
+@auth.requires_membership('admin')
+def duplicity():
+    count = db.pohyb.id.count()
+    seznam = db((db.pohyb.idauth_user!=None)
+                  & (db.pohyb.idma_dati==Uc_sa.oz)
+                  & (db.pohyb.ss>='9000')
+            ).select(
+            db.pohyb.idauth_user, db.pohyb.idma_dati, 
+                  db.pohyb.castka, db.pohyb.ss,
+                  db.auth_user.nick, db.auth_user.vs, count,
+            orderby=db.pohyb.idauth_user|db.pohyb.castka|db.pohyb.ss,
+            groupby=db.pohyb.idauth_user|db.pohyb.castka|db.pohyb.ss,
+            having=(count>1),
+            left=db.auth_user.on(db.auth_user.id==db.pohyb.idauth_user))
+    return dict(seznam=seznam, count=count)
+
 # ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
 @auth.requires_membership('pokladna')
 def edit_pohyb():
