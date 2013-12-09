@@ -87,6 +87,7 @@ Inkasa za badmintony 1.10.-6.11. jsou prováděna opožděně - proto jsou řád
     vypis_castka = B(pohyb.castka) if pohyb.castka>0 else pohyb.castka
     interni_ucet = B(interni_ucet) if interni_ucet=='P' else interni_ucet
 		tablecontent.append(TR(
+				auth.has_membership('pokladna') and TD(pohyb.id) or '',
 				TD(pohyb.datum.strftime('%d.%m.%Y')),
 				TD(pohyb.datum.strftime('%H:%M') if auth.has_membership('admin') else '', _class='slabe'),
 				TD(vypis_castka, _style="text-align: right;"),
@@ -95,8 +96,8 @@ Inkasa za badmintony 1.10.-6.11. jsou prováděna opožděně - proto jsou řád
 				TD(vypis_vs),
 				TD(pohyb.ss, _style="text-align: right;"),
 				TD(vypis_ks),
-				TD(popis or (not pohyb.cislo_uctu and (pohyb.nazev_banky
-                    or pohyb.popis)) or ''),
+				TD(popis or ((not pohyb.cislo_uctu or not pohyb.kod_banky)
+                and (pohyb.nazev_banky or pohyb.popis)) or ''),
 				))
 		pass
 	=TABLE(tablecontent)

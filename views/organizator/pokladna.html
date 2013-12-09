@@ -72,6 +72,9 @@ Pokud se spleteš, zavolej nebo napiš pokladníkovi: 732457966 zvolsky@seznam.c
         uzivatel = ''
       pass
       }}
+      {{if auth.has_membership('pokladna'):}}
+          {{=TD(zapis.pohyb.id)}}
+          {{pass}}
       {{=TD(status)}}
       {{=TD(datum)}}
       {{=TD(pokyn)}}

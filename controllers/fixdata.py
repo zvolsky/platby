@@ -90,6 +90,21 @@ def mikruse():
 
 
 '''
+def dup147():
+    db(db.pohyb.popis=='Ucast_na_akci_Badminton_c.147_v_Letnanech_Badminton_c.147_v_Letnanech').update(
+          popis='Ucast_na_akci_Badminton_c.147_v_Letnanech')
+    db.pohyb[3001] = dict(popis='badminton č.139')
+    db.pohyb[3113] = dict(popis='badminton č.143')
+    db.commit()
+
+def manik():
+    del db.pohyb[3724] 
+    del db.pohyb[3725] 
+    del db.pohyb[3726]
+    manik = db(db.auth_user.vs=='315').select().first()
+    manik.update_record(zaloha=manik.zaloha-900) 
+    db.commit()
+
 def sobin():
     db((db.pohyb.id<3676)&(db.pohyb.idorganizator==992)).update(idorganizator=980)
     db.commit()
