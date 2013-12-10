@@ -138,7 +138,7 @@ def __valid_params(args, db):
     popis = ''
     uzivatel = None
     akce = ''
-    if len(args)==6:
+    if len(args)>=6:
         token = args[0]
         vs = args[1]
         scastka = args[2]
@@ -150,6 +150,10 @@ def __valid_params(args, db):
                 except ValueError:
                     castka = 0
                 popis = args[5]
+                if popis[:14].lower()=='ucast_na_akci_':
+                    popis = popis[14:]
+                for za_lomitkem in xrange(6, len(args)):
+                    popis += '/' + args[za_lomitkem]
                 uzivatel = db(db.auth_user.vs==vs).select().first()
                 if (castka and popis and uzivatel
                                     and uzivatel.email==args[3]):
