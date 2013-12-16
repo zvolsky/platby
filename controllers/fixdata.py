@@ -88,8 +88,27 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
-
 '''
+def svec():
+    db.pohyb[3781] = dict(idauth_user=1223)  # vs 116 roger24@post.cz
+    manik = db(db.auth_user.vs=='116').select().first()
+    manik.update_record(zaloha=manik.zaloha+150) 
+    del db.auth_user[1254]   # vs 80119 id 1254 
+    db.commit()
+
+def effa2():
+    del db.pohyb[3771] 
+    manik = db(db.auth_user.vs=='295').select().first()
+    manik.update_record(zaloha=manik.zaloha+440) 
+    db.commit()
+
+def effa():
+    del db.pohyb[3657] 
+    del db.pohyb[3658] 
+    manik = db(db.auth_user.vs=='295').select().first()
+    manik.update_record(zaloha=manik.zaloha+680) 
+    db.commit()
+
 def dup147():
     db(db.pohyb.popis=='Ucast_na_akci_Badminton_c.147_v_Letnanech_Badminton_c.147_v_Letnanech').update(
           popis='Ucast_na_akci_Badminton_c.147_v_Letnanech')
