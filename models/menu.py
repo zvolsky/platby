@@ -56,6 +56,8 @@ subprehledy = [
 if auth.has_membership('admin'):
     subprehledy.append((T('Zákazníci'), False,
               URL('prehledy', 'zakaznici'), []))        
+subprehledy.append((T('Čísla a ceny akcí'), False,
+        URL('home', 'xml', '', scheme='http', host='fungujeme.aspone.cz'), []))        
 if auth.user:
     subprehledy.append((T('Podané žádosti'), False,
               URL('prehledy', 'zadosti'), []))        

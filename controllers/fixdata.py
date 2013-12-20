@@ -88,7 +88,27 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+def zavinac():
+    auth.del_membership(12, 1238)
+    db.clenstvi[41] = dict(do_dne=datetime.date(2013,11,14)) 
+    db.commit()
+
 '''
+def mp():                   # MisaP vrácení zálohy, pozdě jsem potvrdil vyřízení
+    db.zadost[47] = dict(zadano=475, prevedeno=445) 
+    db.pohyb[3882] = dict(castka=30)     # poplatek 
+    db.auth_user[959] = dict(zaloha=0)   # MisaP 
+    db.commit()
+
+def an():                   # AndreaN platba 18.12. bez VS
+    manik = db(db.auth_user.vs=='152').select().first()
+    manik.update_record(zaloha=manik.zaloha+1000) 
+    db.commit()
+
+def tho():
+    db.auth_user[1247] = dict(zaloha=0)   # thorndike 
+    db.commit()
+
 def svec():
     db.pohyb[3781] = dict(idauth_user=1223)  # vs 116 roger24@post.cz
     manik = db(db.auth_user.vs=='116').select().first()

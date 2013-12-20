@@ -600,4 +600,5 @@
 'Záloha': 'Záloha',
 'Záznamy do pokladny': 'Záznamy do pokladny',
 'Členové sdružení': 'Členové sdružení',
+'Čísla a ceny akcí': 'Čísla a ceny akcí',
 }
