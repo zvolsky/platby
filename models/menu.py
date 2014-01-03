@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Jiří Pouček ukončil výpovědí působnost sdružení na spolecneaktivity.cz a smazal všechny agendy. Informace o platbách a zálohách proto najdete už jedině zde." 
+aktualita = "Fungujeme už má svoji doménu: www.fungujemeaktivne.cz" 
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')

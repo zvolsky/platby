@@ -63,7 +63,7 @@ def pohyby():
             if ukaz_minus:                
                 pohyb.castka = -pohyb.castka
     return dict(zaloha=zaloha, pohyby=pohyby, Celkem=Celkem,
-            Uc_sa=Uc_sa, nick=nick)
+            Uc_sa=Uc_sa, nick=nick, uzivatel_id=uzivatel_id)
 
 @auth.requires_membership('admin')
 def vse():
@@ -139,11 +139,30 @@ def vyridit():
         return "selhalo"
 
 @auth.requires_membership('pokladna')
-def zaloha():
+def zaloha():  # nastaví požadovanou zálohu
     if len(request.args)==2:
         db(db.auth_user.vs==request.args(0)).update(
                                     zaloha=float(request.args(1)))
         redirect(URL('pohyby', args=request.args(0)))
+    return 'bad parameters'
+
+@auth.requires_membership('pokladna')
+def zrus():    # volba del v platby/pohyby - zruší pohyb a změní zálohu
+    if len(request.args)==2:
+        uzivatel = db.auth_user[request.args(0)]
+        if uzivatel:
+            pohyb = db.pohyb[request.args(1)] 
+            if pohyb.idauth_user==db.auth_user.id:  # jistota
+                zmena = 0
+                if pohyb.iddal==Uc_sa.oz:  
+                    zmena = -pohyb.castka
+                elif pohyb.idma_dati==Uc_sa.oz:
+                    zmena = pohyb.castka
+                if zmena:  
+                    uzivatel.update_record(zaloha=uzivatel.zaloha+zmena)
+                del db.pohyb[request.args(1)]
+                session.flash = "Změna zálohy o: %s"%zmena
+        redirect(URL('pohyby', args=uzivatel.vs))
     return 'bad parameters'
 
 def __get_zaloha(ss):

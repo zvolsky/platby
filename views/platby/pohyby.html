@@ -98,6 +98,8 @@ Inkasa za badmintony 1.10.-6.11. jsou prováděna opožděně - proto jsou řád
 				TD(vypis_ks),
 				TD(popis or ((not pohyb.cislo_uctu or not pohyb.kod_banky)
                 and (pohyb.nazev_banky or pohyb.popis)) or ''),
+        auth.has_membership('pokladna') and
+          TD(A('del', _href=URL('platby', 'zrus', args=(uzivatel_id, pohyb.id)))) or '',
 				))
 		pass
 	=TABLE(tablecontent)
