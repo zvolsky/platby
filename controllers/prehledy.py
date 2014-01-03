@@ -231,3 +231,10 @@ def edit_pohyb():
         if form.process().accepted:
             redirect(URL(request.vars['section'], request.vars['next']))
         return dict(form=form)
+
+# ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
+@auth.requires_membership('pokladna')
+def del_pohyb():
+    if len(request.args)>0:
+        del db.pohyb[request.args[0]]
+        redirect(URL(request.vars['section'], request.vars['next']))
