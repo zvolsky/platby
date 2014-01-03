@@ -21,19 +21,22 @@ if Celkem.z_sa_prevedeno:
     =TR(TD("Ze spolecneaktivity.cz do této evidence převzato:"), TD(Celkem.z_sa_prevedeno, _style="text-align: right;"))
     pass
 if Celkem.sa_vlozeno or Celkem.z_sa_prevedeno:
-    =TR(TD(SPAN(("zbytek byl spotřebován" if Celkem.z_sa_prevedeno else "což bylo spotřebováno")+" na spolecneaktivity.cz na akce"+(", zbývá tam na záloze nebo Ti bylo vráceno" if Celkem.vraceno else " nebo tam zbývá na záloze"), _class="small")))
-    =TR(TD(A("vyúčtování za server spolecneaktivity.cz", _href="http://www.spolecneaktivity.cz/ucet/platby"), _style="text-align: right;"))
-    txt_sa = SPAN(" (nezahrnuje případnou zálohu na spolecneaktivity.cz)", _class="small")
-else:
-    txt_sa = ''
+    =TR(TD(SPAN("zbytek byl spotřebován na spolecneaktivity.cz na akce", _class="small right")))
     pass
+#if Celkem.sa_vlozeno or Celkem.z_sa_prevedeno:
+#    =TR(TD(SPAN(("zbytek byl spotřebován" if Celkem.z_sa_prevedeno else "což bylo spotřebováno")+" na spolecneaktivity.cz na akce"+(", zbývá tam na záloze nebo Ti bylo vráceno" if Celkem.vraceno else " nebo tam zbývá na záloze"), _class="small")))
+#    =TR(TD(A("vyúčtování za server spolecneaktivity.cz", _href="http://www.spolecneaktivity.cz/ucet/platby"), _style="text-align: right;"))
+#    txt_sa = SPAN(" (nezahrnuje případnou zálohu na spolecneaktivity.cz)", _class="small")
+#else:
+#    txt_sa = ''
+#    pass
 if Celkem.ozwk_vlozeno:
-    =TR(TD("Na zálohu",txt_sa," vloženo:"), TD(Celkem.ozwk_vlozeno, _style="text-align: right;"))
+    =TR(TD("Na zálohu vloženo:"), TD(Celkem.ozwk_vlozeno, _style="text-align: right;"))
     pass
 if Celkem.ozwk_cerpano:
     =TR(TD("Ze zálohy čerpáno:"), TD(Celkem.ozwk_cerpano, _style="text-align: right;"))
     pass
-=TR(TD(B("Stav zálohy"),txt_sa,":"), TD(B(zaloha), _style="text-align: right;"))
+=TR(TD(B("Stav zálohy"),":"), TD(B(zaloha), _style="text-align: right;"))
 }}
 </table><hr />
 		

@@ -88,12 +88,41 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+'''
+def odmeny():
+    """
+    1) za weby: du-san 4000 (rozděluje: 3000 on, 1000 Manik), mirek zvolsky 1000
+    2) za organizacni cinnost: nerothar 1000 (bdm), roman cervenka 1500 (silvestr)
+    3) za praci pro sdruzeni: effa 2000, potapeni.cz 2000, bobo 2000. (Rada), Du-san 1000, Nerothar 1000 (dk)
+    """
+    odmenu(1070, 269, 4000)  #du-san
+    odmenu(1024, 315, 1000)  #manik
+    odmenu(992, 347, 1000)   #mirek zv.
+    odmenu(1135, 204, 2000)  #nerothar
+    odmenu(1082, 257, 1500)  #roman.cervenka
+    odmenu(1044, 295, 2000)  #effa
+    odmenu(1018, 321, 2000)  #potapeni.cz
+    odmenu(1209, 130, 2000)  #bobo
+    db.commit()
+
+def odmenu(userid, zakaznik, castka, popis='odměna za práci pro sdružení'):
+    db.pohyb[0] = dict(idauth_user=userid, castka=castka,
+                          zakaznik=str(zakaznik), popis=popis,
+                          datum=datetime.datetime(2013,12,31,10),
+                          idma_dati=Uc_sa.odmeny, iddal=Uc_sa.oz)
+    clovek = db.auth_user[userid]
+    clovek.update_record(zaloha=clovek.zaloha+castka)
+    # db.commit() --- potvrzuji v odmeny()
+
+def ucetodm():
+    db.ucet[0] = dict(ucet='58', zkratka='Odm', nazev='Poskytnutí příspěvku')
+    db.commit()
+    
 def zavinac():
     auth.del_membership(12, 1238)
     db.clenstvi[41] = dict(do_dne=datetime.date(2013,11,14)) 
     db.commit()
 
-'''
 def mp():                   # MisaP vrácení zálohy, pozdě jsem potvrdil vyřízení
     db.zadost[47] = dict(zadano=475, prevedeno=445) 
     db.pohyb[3882] = dict(castka=30)     # poplatek 

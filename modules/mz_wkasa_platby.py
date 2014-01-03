@@ -24,6 +24,7 @@ class Uc_sa(object):
     org = 9       # 211-01 pokladna u organizátorů
     akce = 10     # 518-01 náklady akcí
     provoz = 11   # 548-03 náklady provozní
+    odmeny = 15   # 58 poskytnuté příspěvky (odměny)
     vynos = 12    # 602 výnos za akce
     vynos_jiny = 13 # 640 výnosy ostatní
     vraceno = 14  # XXX vrácené zálohy

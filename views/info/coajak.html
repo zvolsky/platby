@@ -37,20 +37,22 @@ Jako návštěvník(ce) našich akcí nemusíš na tomto webu udělat téměř n
   {{pass}} email {{=B(auth.user.email)}}.</p>{{pass}} 
 </div>
 
+<!--
 <div class="obly modry">
   <h5>Chceš platit za akce serveru spolecneaktivity.cz ?</h5>
-  <p class="ma_byt">V {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} musíš jen mít zapsán svůj <b>specifický symbol</b> ze spolecneaktivity.cz <small>(na nicku ani e-mailu nezáleží)</small>.</p>
-  {{if auth.user:}}<p class="nyni_je">Toto placení {{if auth.user.ss:}}
-  máš nastaveno pro symbol {{=B(auth.user.ss)}}. 
-  {{else:}}
+  <p class="ma_byt">V {if auth.user:}<a href="{=URL('default', 'user', args='profile')}">profilu</a>{else:}profilu{pass} musíš jen mít zapsán svůj <b>specifický symbol</b> ze spolecneaktivity.cz <small>(na nicku ani e-mailu nezáleží)</small>.</p>
+  {if auth.user:}<p class="nyni_je">Toto placení {if auth.user.ss:}
+  máš nastaveno pro symbol {=B(auth.user.ss)}. 
+  {else:}
   zatím nemáš nastaveno.
-  {{pass}}</p>{{pass}} 
+  {pass}</p>{pass} 
 </div>
+-->
 
 <ul>Časově placení probíhá takto:
-  <li>Do půl hodiny po příchodu do banky je platba zapsána {{if auth.user:}}<a href="{{=URL('platby', 'pohyby', args='profile')}}">zde</a>{{else:}}zde{{pass}} na Tvé osobní záloze.</li>
-  <li>Při přihlášení na akci Fungujeme je ihned zaplaceno, pokud máš na záloze dost peněz. V opačném případě se občas (např. v noci) doptává robot, jestli už Tvé peníze dorazily. Do té doby se zobrazuješ v sekci Rezervace.</li>
-  <li>Při přihlášení na akci spolecneaktivity.cz se zobrazuješ v sekci Rezervace. Nejde to tak automaticky jako v předchozím případě - protože je potřeba ruční obsluha serveru spolecneaktivity.cz. Platby tam připíšeme vždy jednou za několik dní (a tím se přesuneš mezi účastníky, kteří mají zaplaceno).</li>
+  <li>Do půl hodiny po příchodu do banky je platba zapsána {{if auth.user:}}<a href="{{=URL('platby', 'pohyby')}}">zde</a>{{else:}}zde{{pass}} na Tvé osobní záloze.</li>
+  <li>Při přihlášení na akci Fungujeme je ihned zaplaceno, pokud máš na záloze dost peněz. V opačném případě se vždy v noci doptává robot, jestli už Tvé peníze dorazily. Do té doby se zobrazuješ v sekci Rezervace. (Poté, co peníze dorazily, můžeš přihlášení urychlit opakovaným klepnutím na Přijdu.)</li>
+  <li>Na stránce akce je uveden Čas posledního vrácení peněz. Odhlásíš-li se z akce dříve, peníze se Ti automaticky vrátí na zálohu. Při pozdějším odhlášení se domluv s organizátorem akce.</li>
 </ul>
 
 <div class="obly modry">
