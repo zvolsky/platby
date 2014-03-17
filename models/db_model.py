@@ -10,6 +10,13 @@ db.define_table('ucet',
     format='%(ucet)s - %(nazev)s'
     )
 
+db.define_table('kategorie',
+    Field('idma_dati', db.ucet),
+    Field('iddal', db.ucet),
+    Field('vyznam', default=''),
+    format='%(vyznam)s'
+    )
+
 db.define_table('pohyb',
     Field('idauth_user', 'reference auth_user', label=TFu("Uživatel"),
           requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id, '%(nick)s - %(vs)s'))),

@@ -89,6 +89,47 @@ def mikruse():
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
 '''
+def kaja():
+    del db.auth_user[1261]
+    db.commit()
+
+def silv2():       # tomas.zemres
+    userid = 757 
+    zakaznik = 582 
+    castka = 50
+    db.pohyb[0] = dict(idauth_user=userid, castka=castka,
+                          zakaznik=str(zakaznik), popis='přeplatek Silvestr',
+                          datum=datetime.datetime(2013,12,31,11),
+                          idma_dati=Uc_sa.oz_fu, iddal=Uc_sa.oz)
+    clovek = db.auth_user[userid]
+    clovek.update_record(zaloha=clovek.zaloha+castka)
+    db.commit()
+
+def silv1():        # Chodovar
+    userid = 1252
+    zakaznik = 80117
+    castka = 50
+    db.pohyb[0] = dict(idauth_user=userid, castka=castka,
+                          zakaznik=str(zakaznik), popis='přeplatek Silvestr',
+                          datum=datetime.datetime(2013,12,31,11),
+                          idma_dati=Uc_sa.oz_fu, iddal=Uc_sa.oz)
+    clovek = db.auth_user[userid]
+    clovek.update_record(zaloha=clovek.zaloha+castka)
+    db.commit()
+
+def silv0():         # Voi
+    userid = 895 
+    zakaznik = 444 
+    castka = -2750
+    db.pohyb[0] = dict(idauth_user=userid, castka=abs(castka),
+                          zakaznik=str(zakaznik),
+                          popis='přesun pro spolecneaktivity.cz (Silvestr)',
+                          datum=datetime.datetime(2013,12,31,11),
+                          idma_dati=Uc_sa.oz, iddal=Uc_sa.oz_sa)
+    clovek = db.auth_user[userid]
+    clovek.update_record(zaloha=clovek.zaloha+castka)
+    db.commit()
+
 def odmeny():
     """
     1) za weby: du-san 4000 (rozděluje: 3000 on, 1000 Manik), mirek zvolsky 1000
@@ -732,5 +773,5 @@ def init_systab():
     return 'systab: nastaveno'
 '''
 
-if __name__=='__main__':
-    antikraken()
+#if __name__=='__main__':
+#    antikraken()

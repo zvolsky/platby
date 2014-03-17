@@ -90,6 +90,7 @@ if auth.has_membership('admin'):
               (T('chybí účet'), False,
                         URL('podvojne', 'chybi'), []),
               ]))
+    subprehledy.append((T('Závěrky'), False, URL('zaverky', 'obdobi'), []))
 response.menu.append((T('Přehledy'), False, None, subprehledy))
 
 DEVELOPMENT_MENU = False

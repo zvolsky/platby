@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+<h2>Závěrka {{=rok}} ({{=mesic_od}} - {{=mesic_do}})</h2>
+
+<h3>Podle druhu pohybu</h3>
+<table>{{for skupina in skupiny:}}
+    {{=TR(TD(skupina.md.ucet), TD(skupina.dal.ucet), TD(skupina.kategorie.vyznam), TD(skupina[pocet], _style="text-align: right;"), TD(skupina[suma], _style="text-align: right;"))}}
+{{pass}}</table>
+
+<h3>Podle účtu</h3>
+<table>{{for ucet in sorted(ucty.items(), key=lambda item: item[0]):}}
+    {{=TR(TD(ucet[0]), TD(ucet[1], _style="text-align: right;"))}}
+{{pass}}</table>
+
+<table>
+    <tr><td>Výnosy:</td><td style="text-align: right;">{{=vynosy}}</td></tr>
+    <tr><td>Náklady:</td><td style="text-align: right;">{{=naklady}}</td></tr>
+</table>
