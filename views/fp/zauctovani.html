@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+
+V deníku přijatých faktur: {{=len(prijate)}}<br />
+V deníku plateb za faktury: {{=len(platby)}}<br />
+Ke kontrole nezaúčtovaných faktur: {{=len(nezauctovane)}}<br />
+
+<h2>Výsledky kontroly</h2>
+
+<a href="{{=URL('prehled')}}">Zpět na přehled</a>

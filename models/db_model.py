@@ -17,6 +17,54 @@ db.define_table('kategorie',
     format='%(vyznam)s'
     )
 
+db.define_table('typp',
+    Field('zkratka', length=1),
+    Field('vyznam', length=40),
+    format='%(vyznam)s'
+    )
+
+db.define_table('partner',
+    Field('idx', 'integer'),  # foxpro id
+    Field('typp_id', db.typp),
+    Field('ucel', length=40),
+    Field('nazev', length=60),
+    Field('ulice', length=40),
+    Field('psc', length=5),
+    Field('misto', length=40),
+    Field('ico', length=10),
+    Field('kontakt', 'text'),
+    Field('poznamka', 'text'),
+    format='%(nazev)s, %(misto)s'
+    )
+
+db.define_table('fp',
+    Field('idx', 'integer'),  # foxpro id
+    Field('zauctovana', 'boolean', default=False),
+    Field('md', db.ucet, label=TFu('nákladový účet 5..'),
+        comment=TFu('pro zaúčtování faktury [MD=5..,Dal=321], pokud ještě nebylo provedeno')),
+    Field('partner_id', db.partner),
+    Field('ucet', length=20),
+    Field('elektronicky', 'boolean', default=True),
+    Field('castka', 'decimal(11,2)', default=0.00),
+    Field('zaloha', 'decimal(11,2)', default=0.00),
+    Field('no_jejich', length=20),
+    Field('vystaveno', 'date'),
+    Field('prijato', 'date'),
+    Field('splatnost', 'date'),
+    Field('uhrazeno', 'date'),
+    Field('zal_uhrazeno', 'date'),
+    Field('datum_akce', 'date'),
+    Field('uhrada', length=1),
+    Field('zal_uhrada', length=1),
+    Field('vs', length=10),
+    Field('ss', length=10),
+    Field('ks', length=4),
+    Field('vs_akce', length=5),
+    Field('popis', length=90),
+    Field('poznamka', 'text'),
+    format='%(vystaveno)s, %(castka)s, %(no_jejich)s'
+    )
+
 db.define_table('pohyb',
     Field('idauth_user', 'reference auth_user', label=TFu("Uživatel"),
           requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id, '%(nick)s - %(vs)s'))),
@@ -25,6 +73,8 @@ db.define_table('pohyb',
           requires=IS_EMPTY_OR(IS_IN_DB(db, db.auth_user.id, '%(nick)s - %(vs)s'))),
     Field('idma_dati', 'reference ucet'),
     Field('iddal', 'reference ucet'),
+    Field('fp_id', db.fp),
+    Field('partner_id', db.partner),
     Field('datum', 'datetime',
           requires=[IS_NOT_EMPTY(), IS_DATETIME(format=TFu('%d.%m.%Y'))]),
     Field('castka', 'decimal(11,2)'),

@@ -63,12 +63,14 @@ def zaverka():
         db.commit()
     
     naklady = vynosy = 0
-    for ucet in ucty.items():
-        if ucet[0][0]=='5':
-            naklady += ucet[1]
-        elif ucet[0][0]=='6':
-            vynosy -= ucet[1]
+    for ucet_cislo, ucet_castka in ucty.items():
+        if ucet_cislo:
+            if ucet_cislo[0]=='5':
+                naklady += ucet_castka
+            elif ucet_cislo[0]=='6':
+                vynosy -= ucet_castka
     
     return dict(rok=rok, mesic_od=mesic_od, mesic_do=mesic_do,
+            den_od=den_od.strftime('%Y%m%d'), den_po=den_po.strftime('%Y%m%d'),
             skupiny=skupiny, pocet=pocet, suma=suma,
             ucty=ucty, naklady=naklady, vynosy=vynosy)

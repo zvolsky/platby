@@ -90,7 +90,13 @@ if auth.has_membership('admin'):
               (T('chybí účet'), False,
                         URL('podvojne', 'chybi'), []),
               ]))
-    subprehledy.append((T('Závěrky'), False, URL('zaverky', 'obdobi'), []))
+    subprehledy.append((TFu('Závěrky'), False, URL('zaverky', 'obdobi'), []))
+    subprehledy.append((TFu('Partneři'), False, URL('partneri', 'prehled'), []))
+    subprehledy.append((TFu('Faktury'), False,
+              None, [
+              (T('přijaté'), False,
+                        URL('fp', 'prehled'), []),
+              ]))
 response.menu.append((T('Přehledy'), False, None, subprehledy))
 
 DEVELOPMENT_MENU = False

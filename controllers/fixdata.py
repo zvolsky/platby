@@ -88,6 +88,74 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+def typp():
+    db.typp.insert(zkratka='U', vyznam='ubytování')
+    db.typp.insert(zkratka='S', vyznam='sportoviště')
+    db.typp.insert(zkratka='K', vyznam='kulturní zařízení')
+    db.typp.insert(zkratka='R', vyznam='restaurace')
+    db.typp.insert(zkratka='A', vyznam='zajištění akcí ostatní (exkurze,..)')
+    db.typp.insert(zkratka='D', vyznam='drobné nákupy/služby')
+    db.typp.insert(zkratka='W', vyznam='weby vlastní')
+    db.typp.insert(zkratka='I', vyznam='internetové služby (cizí)')
+    db.typp.insert(zkratka='T', vyznam='telekomunikace, pošta')
+    db.typp.insert(zkratka='P', vyznam='půjčky pro nás (navýšení pokladny)')
+    db.typp.insert(zkratka='G', vyznam='státní orgány (FÚ,..)')
+    db.typp.insert(zkratka='J', vyznam='jiné')
+    db.commit()
+
+def part():
+    import csv
+    typy = db(db.typp).select()
+    with open('partner.csv', 'r') as f:  # os.getcwd()=='web2py'
+        for partner in csv.DictReader(f):
+            for k, v in partner.items():
+                if k:  # je tam totiž navíc prvek s klíčem None
+                    partner[k] = unicode(v, encoding='cp1250')
+            typ = typy.find(lambda typ: typ.zkratka==partner['typ'])[0].id
+            db.partner.insert(idx=int(partner['id']), typp_id=typ, ucel=partner['ucel'], nazev=partner['nazev'],
+                    ulice=partner['ulice'], psc=partner['psc'], misto=partner['misto'], ico=partner['ico'])
+    db.commit()
+
+def uct():
+    db.ucet[11] = dict(ucet='548-01')
+    db.ucet.insert(ucet='518-02', zkratka='-Ad', nazev="Náklady akce doplňkové")
+    db.ucet.insert(ucet='518-03', zkratka='-Aw', nazev="Náklady zveřejnění akcí na webu")
+    db.ucet.insert(ucet='530', zkratka='-DP', nazev="Daně a polatky (kromě daně z příjmu)")
+    db.ucet.insert(ucet='548-03', zkratka='-Bp', nazev="Bankovní poplatky")
+    db.ucet.insert(ucet='311', zkratka='Fv', nazev="Faktura vydaná (pohledávka)")
+    db.ucet.insert(ucet='314', zkratka='Zál', nazev="Záloha (např. na akci)")
+    db.ucet.insert(ucet='321', zkratka='Fp', nazev="Faktura přijatá (závazek)")
+    db.ucet.insert(ucet='324', zkratka='Záp', nazev="Záloha přijatá")
+    db.commit()
+
+def fakt():
+    def _dat_txt(strDat):
+        try:
+            val = datetime.datetime.strptime(strDat, '%d.%m.%Y')
+        except:
+            val = None
+        return val
+    import csv
+    partneri = db(db.partner).select()
+    with open('faktura.csv', 'r') as f:  # os.getcwd()=='web2py'
+        for fp in csv.DictReader(f):
+            for k, v in fp.items():
+                if k:  # možná je tam jako u partnerů navíc prvek s klíčem None?
+                    fp[k] = unicode(v, encoding='cp1250')
+            try:
+                partner = partneri.find(lambda partner: partner.idx==int(fp['idpartner']))[0].id
+            except:
+                partner = None
+            db.fp.insert(idx=int(fp['id']), partner_id=partner, ucet=fp['ucet'], elektronicky=fp['elektronic'],
+                    castka=fp['castka'], zaloha=fp['zaloha'], no_jejich=fp['no_jejich'],
+                    vystaveno=_dat_txt(fp['vystaveno']), prijato=_dat_txt(fp['prijato']),
+                    splatnost=_dat_txt(fp['splatnost']), uhrazeno=_dat_txt(fp['uhrazeno']),
+                    uhrada=fp['uhrada'][:1], zal_uhrada=fp['uhrada'][1:2],
+                    vs=fp['vs'], ss=fp['ss'], ks=fp['ks'],
+                    datum_akce=_dat_txt(fp['datum_akce']), vs_akce=fp['vsakce'],
+                    popis=fp['popis'])
+    db.commit()
+
 '''
 def kaja():
     del db.auth_user[1261]

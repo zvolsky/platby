@@ -2,8 +2,9 @@
 <h2>Závěrka {{=rok}} ({{=mesic_od}} - {{=mesic_do}})</h2>
 
 <h3>Podle druhu pohybu</h3>
+{{ukaz = TFu("ukaž")}}
 <table>{{for skupina in skupiny:}}
-    {{=TR(TD(skupina.md.ucet), TD(skupina.dal.ucet), TD(skupina.kategorie.vyznam), TD(skupina[pocet], _style="text-align: right;"), TD(skupina[suma], _style="text-align: right;"))}}
+    {{=TR(TD(skupina.md.ucet), TD(skupina.dal.ucet), TD(skupina.kategorie.vyznam), TD(skupina[pocet], _style="text-align: right;"), TD(skupina[suma], TD(A(ukaz, _href="%s" % URL('podvojne', 'vse', args=(skupina.pohyb.idma_dati or 0, skupina.pohyb.iddal or 0, den_od, den_po)))), _style="text-align: right;"))}}
 {{pass}}</table>
 
 <h3>Podle účtu</h3>
