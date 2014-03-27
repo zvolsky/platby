@@ -556,6 +556,7 @@
 'Twitter': 'Twitter',
 'Type python statement in here and hit Return (Enter) to execute it.': 'Type python statement in here and hit Return (Enter) to execute it.',
 'Type some Python code in here and hit Return (Enter) to execute it.': 'Type some Python code in here and hit Return (Enter) to execute it.',
+'Typp Id': 'Typp Id',
 'Ucel': 'Ucel',
 'Ucet': 'Ucet',
 'Uhrada': 'Uhrada',

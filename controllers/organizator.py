@@ -116,6 +116,8 @@ def cokoliv():
     return dict(form=form)
 
 def _skryj(vic=0):
+    db.pohyb.partner_id.readable=db.pohyb.partner_id.writable=False
+    db.pohyb.fp_id.readable=db.pohyb.fp_id.writable=False
     db.pohyb.idma_dati.readable=db.pohyb.idma_dati.writable=False
     db.pohyb.iddal.readable=db.pohyb.iddal.writable=False
     db.pohyb.id_pokynu.readable=db.pohyb.id_pokynu.writable=False
@@ -236,4 +238,3 @@ def odstran_chybny():
             uzivatel.update_record(zaloha=uzivatel.zaloha - pohyb.castka)                
         pohyb.delete_record()
     redirect(URL('pokladna', args=request.args(1) if request.args(1) else ()))
-    

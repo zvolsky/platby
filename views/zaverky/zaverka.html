@@ -9,7 +9,11 @@
 
 <h3>Podle účtu</h3>
 <table>{{for ucet in sorted(ucty.items(), key=lambda item: item[0]):}}
-    {{=TR(TD(ucet[0]), TD(ucet[1], _style="text-align: right;"))}}
+    {{=TR(TD(B(ucet[0])), TD(), TD(B(ucty_dict.get(ucet[0], ''))), TD(B(ucet[1]), _style="text-align: right;"))}}
+    {{proti = protistrana[ucet[0]]}}
+    {{for ucet2 in sorted(proti.items(), key=lambda item: item[0]):}}
+    	{{=TR(TD(), TD(ucet2[0]), TD(ucty_dict.get(ucet2[0], '')), TD(-ucet2[1], _style="text-align: right;"))}}
+    {{pass}}
 {{pass}}</table>
 
 <table>

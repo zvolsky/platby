@@ -38,9 +38,15 @@ def zaverka():
                 dal.on(dal.id==db.pohyb.iddal),
                 db.kategorie.on((db.kategorie.idma_dati==db.pohyb.idma_dati) & (db.kategorie.iddal==db.pohyb.iddal))],
             groupby=[db.pohyb.idma_dati, db.pohyb.iddal])
-    
+
+    ucty_rows = db(db.ucet).select()
+    ucty_dict = {}
+    for ucet in ucty_rows:
+        ucty_dict[ucet.ucet] = ucet.nazev
+        
     need_commit = False
     ucty = {}
+    protistrana = {}
     for skupina in skupiny:
         # aktualizovat 'kategorie' (druhy pohybů) o dosud nezaznamenané druhy pohybů
         if skupina.kategorie.vyznam==None:
@@ -57,7 +63,14 @@ def zaverka():
         
         # podle účtů
         ucty[skupina.md.ucet] = ucty.get(skupina.md.ucet, 0) + skupina[suma]
+        if protistrana.get(skupina.md.ucet) is None:
+            protistrana[skupina.md.ucet] = {}
+        protistrana[skupina.md.ucet][skupina.dal.ucet] = protistrana[skupina.md.ucet].get(skupina.dal.ucet, 0) - skupina[suma]
+        
         ucty[skupina.dal.ucet] = ucty.get(skupina.dal.ucet, 0) - skupina[suma]
+        if protistrana.get(skupina.dal.ucet) is None:
+            protistrana[skupina.dal.ucet] = {}
+        protistrana[skupina.dal.ucet][skupina.md.ucet] = protistrana[skupina.dal.ucet].get(skupina.md.ucet, 0) + skupina[suma]
         
     if need_commit:
         db.commit()
@@ -73,4 +86,5 @@ def zaverka():
     return dict(rok=rok, mesic_od=mesic_od, mesic_do=mesic_do,
             den_od=den_od.strftime('%Y%m%d'), den_po=den_po.strftime('%Y%m%d'),
             skupiny=skupiny, pocet=pocet, suma=suma,
-            ucty=ucty, naklady=naklady, vynosy=vynosy)
+            ucty=ucty, ucty_dict=ucty_dict, protistrana=protistrana,
+            naklady=naklady, vynosy=vynosy)

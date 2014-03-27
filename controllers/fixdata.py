@@ -88,6 +88,12 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+def neznami():
+    db.kategorie[19] = dict(vyznam='vynosy: poplatky z osobniho kreditu')
+    db.ucet.insert(ucet='379-08', zkratka='Os?', nazev="Chybné a neurčené platby")
+    db.commit()
+
+'''
 def typp():
     db.typp.insert(zkratka='U', vyznam='ubytování')
     db.typp.insert(zkratka='S', vyznam='sportoviště')
@@ -156,7 +162,6 @@ def fakt():
                     popis=fp['popis'])
     db.commit()
 
-'''
 def kaja():
     del db.auth_user[1261]
     db.commit()

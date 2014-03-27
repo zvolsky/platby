@@ -3,9 +3,9 @@
 @auth.requires_membership('admin')
 def prehled():
     return dict(grid=SQLFORM.grid(db.fp,
-              fields=(db.fp.zauctovana, db.fp.vystaveno, db.fp.uhrazeno,
+              fields=[db.fp.zauctovana, db.fp.vystaveno, db.fp.uhrazeno,
                   db.fp.no_jejich, db.fp.castka, db.fp.poznamka
-                  ),
+                  ],
               deletable=auth.has_membership('pokladna'),
               editable=auth.has_membership('pokladna'),
               create=auth.has_membership('pokladna'),
