@@ -39,10 +39,7 @@ def zaverka():
                 db.kategorie.on((db.kategorie.idma_dati==db.pohyb.idma_dati) & (db.kategorie.iddal==db.pohyb.iddal))],
             groupby=[db.pohyb.idma_dati, db.pohyb.iddal])
 
-    ucty_rows = db(db.ucet).select()
-    ucty_dict = {}
-    for ucet in ucty_rows:
-        ucty_dict[ucet.ucet] = ucet.nazev
+    ucty_dict = osnova()
         
     need_commit = False
     ucty = {}
@@ -88,3 +85,59 @@ def zaverka():
             skupiny=skupiny, pocet=pocet, suma=suma,
             ucty=ucty, ucty_dict=ucty_dict, protistrana=protistrana,
             naklady=naklady, vynosy=vynosy)
+
+@auth.requires_membership('admin')
+def prubezne():
+    def ucty_init(ucty, ucet_id):
+        ucty[ucet_id]['stav'] = {}
+        ucty[ucet_id]['pohyb'] = {}
+        ucty[ucet_id]['md'] = {}
+        ucty[ucet_id]['dal'] = {}
+        pohyb = ucty[ucet_id]['pohyb']
+        md = ucty[ucet_id]['md']
+        dal = ucty[ucet_id]['dal']
+        stav = ucty[ucet_id]['stav']
+        for rok in xrange(2010, letos + 1): # 2010: i pro 2011 vypisujeme předchozí
+            pohyb[rok] = 0
+            md[rok] = 0
+            dal[rok] = 0
+            stav[rok] = 0
+
+    letos = datetime.date.today().year
+    ucty_rows = db(db.ucet).select()
+    ucty = {}
+
+    ucty[0] = {}
+    ucty[0]['ucet'] = '?'
+    ucty[0]['nazev'] = '<neurčeno>'
+    ucty_init(ucty, 0)
+    
+    for ucet in ucty_rows:
+        ucty[ucet.id] = {}
+        ucty[ucet.id]['ucet'] = ucet.ucet
+        ucty[ucet.id]['nazev'] = ucet.nazev
+        ucty_init(ucty, ucet.id)
+
+    pohyby = db(db.pohyb).select(orderby=db.pohyb.datum)
+    for pohyb in pohyby:
+        rok = pohyb.datum.year
+        ucty[pohyb.idma_dati or 0]['md'][rok] += pohyb.castka
+        ucty[pohyb.iddal or 0]['dal'][rok] += pohyb.castka
+        ucty[pohyb.idma_dati or 0]['pohyb'][rok] += pohyb.castka
+        ucty[pohyb.iddal or 0]['pohyb'][rok] -= pohyb.castka
+    for ucet in ucty:
+        for rok in xrange(2011, letos + 1):
+            for rok_b in xrange(2011, rok + 1):
+                ucty[ucet]['stav'][rok] += ucty[ucet]['pohyb'][rok_b]
+    
+    return dict(ucty=ucty,
+        od_roku=request.args(0) or letos,
+        )
+
+@auth.requires_membership('admin')
+def osnova():
+    ucty_rows = db(db.ucet).select()
+    ucty_dict = {}
+    for ucet in ucty_rows:
+        ucty_dict[ucet.ucet] = ucet.nazev
+    return ucty_dict
