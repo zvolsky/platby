@@ -18,7 +18,7 @@
     <th style="text-align:right;">Dal</th>
 </tr></thead>
 <tbody>{{for ucet in sorted(ucty, key=lambda ucet: ucty[ucet]['ucet']):}}
-    {{if ucty[ucet]['stav'][rok-1] or ucty[ucet]['stav'][rok]:}}<tr>
+    {{if ucet!='x' and (ucty[ucet]['stav'][rok-1] or ucty[ucet]['stav'][rok]):}}<tr>
         <td>{{=ucty[ucet]['ucet']}}</td>
         <td>{{=ucty[ucet]['nazev']}}</td>
 	    <td style="text-align:right;"><b>{{=ucty[ucet]['stav'][rok]}}</b></td>
@@ -27,6 +27,10 @@
 	    <td style="text-align:right;">{{=ucty[ucet]['md'][rok]}}</td>
 	    <td style="text-align:right;">{{=ucty[ucet]['dal'][rok]}}</td>
     </tr>{{pass}}
-    {{pass}}</tbody></table>
+    {{pass}}
+</tbody></table>
 
 {{pass}}
+
+<h5>Osobní kredity podle údaje u uživatele</h5>
+Kč {{=B(zaloha_zakaznik)}}

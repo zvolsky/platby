@@ -73,8 +73,7 @@ if auth.has_membership('admin'):
               (TFu('BÚ sdružení (vše)'), False,
                         URL('jednoduche', 'bu'), []),
               ]))
-    subprehledy.append((T('Podvojné'), False,
-              None, [
+    podvojne = [
               (T('neformátované za 2 měsíce'), False,
                         URL('podvojne', 'nedavne', args=1), []),
               (T('pohyby za 2 měsíce'), False,
@@ -89,7 +88,10 @@ if auth.has_membership('admin'):
                         URL('podvojne', 'pokladna'), []),
               (T('chybí účet'), False,
                         URL('podvojne', 'chybi'), []),
-              ]))
+            ]
+    if auth.has_membership('pokladna'):
+        podvojne.append((TFu('Přidat záznam'), False, URL('prehledy', 'pridat_pohyb'), []))
+    subprehledy.append((T('Podvojné'), False, None, podvojne))
     subprehledy.append((TFu('Závěrky'), False, URL('zaverky', 'obdobi'), []))
     subprehledy.append((TFu('Partneři'), False, URL('partneri', 'prehled'), []))
     subprehledy.append((TFu('Faktury'), False,

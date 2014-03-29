@@ -111,12 +111,21 @@ def prubezne():
     ucty[0]['ucet'] = '?'
     ucty[0]['nazev'] = '<neurčeno>'
     ucty_init(ucty, 0)
+    ucty[-1] = {} # ZAL=osobní zálohy (z pohybů)
+    ucty[-1]['ucet'] = 'ZAL'  # musí být vyplněno, je to klíč pro třídění
+    ucty[-1]['nazev'] = 'závazek: osobní zálohy neumístěné na akce (z pohybů)'
+    ucty_init(ucty, -1)
     
     for ucet in ucty_rows:
         ucty[ucet.id] = {}
         ucty[ucet.id]['ucet'] = ucet.ucet
         ucty[ucet.id]['nazev'] = ucet.nazev
         ucty_init(ucty, ucet.id)
+
+    kredit_pohyb = {}  # zákaznické zálohy podle pohybů
+    kredit_soucet = {}
+    for rok in xrange(2010, letos + 1): # 2010: i pro 2011 vypisujeme předchozí
+        kredit_pohyb[rok] = kredit_soucet[rok] = 0
 
     pohyby = db(db.pohyb).select(orderby=db.pohyb.datum)
     for pohyb in pohyby:
@@ -125,13 +134,25 @@ def prubezne():
         ucty[pohyb.iddal or 0]['dal'][rok] += pohyb.castka
         ucty[pohyb.idma_dati or 0]['pohyb'][rok] += pohyb.castka
         ucty[pohyb.iddal or 0]['pohyb'][rok] -= pohyb.castka
-    for ucet in ucty:
-        for rok in xrange(2011, letos + 1):
-            for rok_b in xrange(2011, rok + 1):
+        if pohyb.idauth_user:
+            if pohyb.idma_dati in Uc_sa.gl_ozwk:  # OsZ, >SA
+                ucty[-1]['md'][rok] += pohyb.castka
+                ucty[-1]['pohyb'][rok] -= pohyb.castka
+            if pohyb.iddal in Uc_sa.gl_ozwk:
+                ucty[-1]['dal'][rok] += pohyb.castka
+                ucty[-1]['pohyb'][rok] += pohyb.castka
+                
+    for rok in xrange(2011, letos + 1):
+        for rok_b in xrange(2011, rok + 1):
+            for ucet in ucty:
                 ucty[ucet]['stav'][rok] += ucty[ucet]['pohyb'][rok_b]
+    
+    soucet = db.auth_user.zaloha.sum()
+    zaloha_ted = db().select(soucet).first()[soucet]
     
     return dict(ucty=ucty,
         od_roku=request.args(0) or letos,
+        zaloha_zakaznik=zaloha_ted  # < ucty[-1=ZAL], dokud vrácení záloh (None/221) není určeno
         )
 
 @auth.requires_membership('admin')

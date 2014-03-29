@@ -35,7 +35,7 @@ def pohyby():
         if pohyb.idma_dati in Uc_sa.gl_ozwk and pohyb.iddal in Uc_sa.gl_ozwk:
             pohyb.castka = 0  # interní převod mezi 379 ve správě wKasa
         else:       # zobrazit uživateli
-                 # gl_ozwk = (5,7)   # osobní účet ve správě na wKasa
+                 # gl_ozwk = (5,7)   # osobní účet ve správě na wKasa (OsZ 379-09, >SA 379-11)
                  # gl_sdr = (1,2,9)  # účty sdružení (pokladna a BÚ)
                  # oz_sa             # osobní účet u sa.cz
             # vložení a vrácení celkově
@@ -55,9 +55,14 @@ def pohyby():
             # vložení a čerpání z wKasa (vrácení nelze určit, dokud MD==None)
             if pohyb.iddal in Uc_sa.gl_ozwk:
                 Celkem.ozwk_vlozeno += pohyb.castka
-            elif pohyb.idma_dati in Uc_sa.gl_ozwk:      
+            # zde bylo elif, změnil jsem na if, což je správně i při převodu OsZ <-> >SA
+            #  ale protože takový převod v datech není, tak to v reálu nic neovlivní
+            if pohyb.idma_dati in Uc_sa.gl_ozwk:      
                 Celkem.ozwk_cerpano += pohyb.castka
                 ukaz_minus = True
+                if pohyb.iddal in Uc_sa.gl_ozwk:
+                    pohyb.castka = 0  # vnitřní převod, záloha se nemění
+                    # takové pohyby v reálu nejsou (viz výše), ale pro případ zjemnění analytiky
 
             # obrácení znaménka pro zobrazení
             if ukaz_minus:                

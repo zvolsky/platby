@@ -225,6 +225,15 @@ def duplicity():
 
 # ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
 @auth.requires_membership('pokladna')
+def pridat_pohyb():
+    response.view = 'prehledy/edit_pohyb.html'
+    form = SQLFORM(db.pohyb, ignore_rw=True)
+    if form.process().accepted:
+        redirect(URL('podvojne', 'nedavne'))
+    return dict(form=form)
+
+# ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
+@auth.requires_membership('pokladna')
 def edit_pohyb():
     if len(request.args)>0:
         form = SQLFORM(db.pohyb, request.args[0], ignore_rw=True)
