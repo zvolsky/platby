@@ -34,3 +34,10 @@
 
 <h5>Osobní kredity podle údaje u uživatele</h5>
 Kč {{=B(zaloha_zakaznik)}}
+
+{{if chybi:}}
+<h4>Pokladna pod nulou v obdobích</h4>
+<p>{{=XML(chybi)}}</p>
+{{else:}}
+<p><i>Stav pokladny zkontrolován - neklesá pod nulu.</i></p>
+{{pass}}

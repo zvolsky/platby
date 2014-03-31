@@ -88,6 +88,8 @@ def zaverka():
 
 @auth.requires_membership('admin')
 def prubezne():
+    from mz_wkasa_platby import Uc_sa
+    
     def ucty_init(ucty, ucet_id):
         ucty[ucet_id]['stav'] = {}
         ucty[ucet_id]['pohyb'] = {}
@@ -128,7 +130,25 @@ def prubezne():
         kredit_pohyb[rok] = kredit_soucet[rok] = 0
 
     pohyby = db(db.pohyb).select(orderby=db.pohyb.datum)
+    kasa = 0
+    zapor = False
+    chybi = ''
+    pod = 0
     for pohyb in pohyby:
+        # kontrola, zda pokladna není v záporu
+        if pohyb.idma_dati==Uc_sa.pokladna:
+            kasa += pohyb.castka
+            if zapor and kasa>=0:
+                zapor = False
+                chybi += ' - %s - Kč %s<br />' % (pohyb.datum.strftime('%d.%m.%Y'), -pod)
+                pod = 0
+        elif pohyb.iddal==Uc_sa.pokladna:
+            kasa -= pohyb.castka
+            pod = min((pod, kasa))
+            if not zapor and kasa<0:
+                zapor = True
+                chybi += pohyb.datum.strftime('%d.%m.%Y')
+
         rok = pohyb.datum.year
         ucty[pohyb.idma_dati or 0]['md'][rok] += pohyb.castka
         ucty[pohyb.iddal or 0]['dal'][rok] += pohyb.castka
@@ -141,7 +161,10 @@ def prubezne():
             if pohyb.iddal in Uc_sa.gl_ozwk:
                 ucty[-1]['dal'][rok] += pohyb.castka
                 ucty[-1]['pohyb'][rok] += pohyb.castka
-                
+    
+    if zapor:  # dotisk načatého řádku
+        chybi += ' - %s - Kč %s<br />' % (pohyb.datum.strftime('%d.%m.%Y'), -pod)
+                            
     for rok in xrange(2011, letos + 1):
         for rok_b in xrange(2011, rok + 1):
             for ucet in ucty:
@@ -151,6 +174,7 @@ def prubezne():
     zaloha_ted = db().select(soucet).first()[soucet]
     
     return dict(ucty=ucty,
+        chybi = chybi,
         od_roku=request.args(0) or letos,
         zaloha_zakaznik=zaloha_ted  # < ucty[-1=ZAL], dokud vrácení záloh (None/221) není určeno
         )

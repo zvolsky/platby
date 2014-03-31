@@ -88,12 +88,145 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+def dalsiucty():
+    db.ucet.insert(ucet='379-03', zkratka='Půj', nazev="Jiné závazky (půjčky, např.dotace pokladny)")
+    db.ucet.insert(ucet='379-07', zkratka='Půj', nazev="Os.záloha (převod mezi 2 zákazníky)")
+    db.ucet.insert(ucet='213', zkratka='Per', nazev="Ceniny (např. permanentky)")
+    db.commit()
+
+def dalsiucty2():
+    oda = db.ucet.insert(ucet='520', zkratka='OdA', nazev="Osobní náklady (za akce)")
+    odv = db.ucet.insert(ucet='523', zkratka='OdV', nazev="Odměny členů vedení (nedaňový)")
+    db.ucet.insert(ucet='543', zkratka='>Da', nazev="Poskytnuté dary (nedaňový)")
+    db.ucet.insert(ucet='546', zkratka='xPo', nazev="Odpis pohledávky (nedaňový)")
+    db.pohyb[3963].update_record(idma_dati=odv)  # Du-šan
+    db.pohyb[3964].update_record(idma_dati=oda)  # Manik
+    db.pohyb[3965].update_record(idma_dati=oda)  # Mirek Zv.
+    db.pohyb[3966].update_record(idma_dati=odv)  # Nerothar
+    db.pohyb[3967].update_record(idma_dati=oda)  # Archon (Roman Č.)
+    db.pohyb[3968].update_record(idma_dati=odv)  # Effa
+    db.pohyb[3969].update_record(idma_dati=odv)  # potapeni.cz
+    db.pohyb[3970].update_record(idma_dati=odv)  # Bobo (a předchozí - na OsZ)
+    db.pohyb[2048].update_record(idma_dati=oda)  # Timšel (na BÚ)
+    db.ucet.insert(ucet='642', zkratka='+Úr', nazev="Výnosové úroky z banky")
+    del db.ucet[8]
+    del db.ucet[14]
+    del db.ucet[15]
+    db.commit()
+
+def fa_ucel():
+    db.fp[1].update_record(md=10) # náklady akcí
+    db.fp[2].update_record(md=10)
+    db.fp[3].update_record(md=10)
+    db.fp[4].update_record(md=17) # náklady zveřejnění akcí na webu
+    db.fp[5].update_record(md=17)
+    db.fp[6].update_record(md=17)
+    db.fp[7].update_record(md=17)
+    db.fp[8].update_record(md=10)
+    db.fp[9].update_record(md=10)
+    db.fp[10].update_record(md=10)
+    db.fp[11].update_record(md=10)
+    db.fp[12].update_record(md=11) # provozní náklady
+    db.fp[13].update_record(md=10)
+    db.fp[14].update_record(md=10)
+    db.fp[15].update_record(md=10)
+    db.fp[16].update_record(md=17)
+    db.fp[17].update_record(md=17)
+    db.fp[18].update_record(md=10)
+    db.fp[19].update_record(md=10)
+    db.fp[20].update_record(md=10)
+    db.fp[21].update_record(md=11)
+    db.fp[22].update_record(md=17)
+    db.fp[23].update_record(md=10)
+    db.fp[24].update_record(md=10)
+    db.fp[25].update_record(md=17)
+    db.fp[26].update_record(md=10)
+    db.fp[27].update_record(md=17)
+    db.fp[28].update_record(md=10)
+    db.fp[29].update_record(md=17)
+    db.fp[31].update_record(md=17)
+    db.fp[32].update_record(md=17)
+    db.fp[33].update_record(md=17)
+    db.fp[34].update_record(md=10)
+    db.fp[35].update_record(md=17)
+    db.fp[36].update_record(md=17)
+    db.fp[37].update_record(md=10)
+    db.fp[38].update_record(md=17)
+    db.fp[39].update_record(md=17)
+    db.fp[40].update_record(md=10)
+    db.fp[41].update_record(md=10)
+    db.fp[42].update_record(md=17)
+    db.fp[43].update_record(md=10)
+    db.fp[44].update_record(md=10)
+    db.fp[45].update_record(md=10)
+    db.fp[46].update_record(md=10)
+    db.commit()
+
+def fa_data():
+    db.pohyb[2923].update_record(fp_id=1, idma_dati=Uc_sa.fp)
+    db.fp[1].update_record(uhrazeno=datetime.date(2013, 3, 10))
+    db.pohyb[1891].update_record(fp_id=17, idma_dati=Uc_sa.fp)
+    db.pohyb[2882].update_record(fp_id=18, idma_dati=Uc_sa.fp)
+    db.pohyb[1708].update_record(idma_dati=Uc_sa.zaloha)
+    db.pohyb[1716].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[1788].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[1857].update_record(fp_id=23, idma_dati=Uc_sa.fp)
+    db.pohyb[1890].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[2926].update_record(fp_id=26, idma_dati=Uc_sa.fp)
+    db.pohyb[1916].update_record(fp_id=26, idma_dati=Uc_sa.zaloha)
+    db.pohyb[1996].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[2935].update_record(fp_id=28, idma_dati=Uc_sa.fp)
+    db.pohyb[2044].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[2089].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[2119].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[4788].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[2328].update_record(idma_dati=Uc_sa.fp)
+    db.fp[34].update_record(md=27) # 213 ceniny
+    db.pohyb[2297].update_record(fp_id=34, idma_dati=Uc_sa.fp)
+    db.pohyb[3284].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[3176].update_record(fp_id=37, idma_dati=Uc_sa.fp)
+    db.pohyb[4787].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[3740].update_record(idma_dati=Uc_sa.fp)
+    db.pohyb[3556].update_record(fp_id=40, idma_dati=Uc_sa.fp)
+    db.pohyb[3621].update_record(fp_id=41, idma_dati=Uc_sa.fp)
+    db.pohyb[3865].update_record(idma_dati=Uc_sa.fp)
+    db.commit()
+
+def fa_data2():    
+    db.pohyb.insert(idma_dati=Uc_sa.zaloha, iddal=1, castka=900.00, datum=datetime.datetime(2013,9,21),
+            fp_id=40, popis='ubyt.Mariánskoh.b.,Těžká romantika na konci léta 20-22/9; dopsal mz podle Fa a doplatku')
+    db.pohyb[4925].update_record(idma_dati=27)
+    db.commit()
+
+def fa_konec():
+    db.fp[35].update_record(zauctovana=True) # nepřesná platba Jirkovi
+    db.fp[36].update_record(zauctovana=True) # snížená platba Jirkovi
+    db.commit()
+
+def mikulaska():
+    db.pohyb[3021].update_record(idma_dati=Uc_sa.zaloha)
+    db.pohyb[4790].update_record(idma_dati=Uc_sa.zaloha)
+    db.commit()
+
+def otevri():
+    zaverkovy = db.ucet.insert(ucet='96', zkratka='Záv', nazev="Závěrkový účet (přenos mezi roky)")
+    # pasiva
+    db.pohyb.insert(idma_dati=zaverkovy, iddal=Uc_sa.oz_sa, castka=101157.00, datum=datetime.datetime(2013, 1, 1))
+    db.pohyb.insert(idma_dati=zaverkovy, iddal=25, castka=70500.00, datum=datetime.datetime(2013, 1, 1))
+    db.pohyb.insert(idma_dati=zaverkovy, iddal=22, castka=5850.00, datum=datetime.datetime(2013, 1, 1))
+    # aktiva
+    db.pohyb.insert(iddal=zaverkovy, idma_dati=Uc_sa.pokladna, castka=1340.00, datum=datetime.datetime(2013, 1, 1))
+    db.pohyb.insert(iddal=zaverkovy, idma_dati=Uc_sa.bezny, castka=191226.37, datum=datetime.datetime(2013, 1, 1))
+    db.pohyb.insert(iddal=zaverkovy, idma_dati=27, castka=20571.00, datum=datetime.datetime(2013, 1, 1))
+    db.pohyb.insert(iddal=zaverkovy, idma_dati=21, castka=1400.00, datum=datetime.datetime(2013, 1, 1))
+    db.commit()
+
+'''
 def neznami():
     db.kategorie[19] = dict(vyznam='vynosy: poplatky z osobniho kreditu')
     db.ucet.insert(ucet='379-08', zkratka='Os?', nazev="Chybné a neurčené platby")
     db.commit()
 
-'''
 def typp():
     db.typp.insert(zkratka='U', vyznam='ubytování')
     db.typp.insert(zkratka='S', vyznam='sportoviště')

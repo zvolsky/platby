@@ -28,6 +28,8 @@ class Uc_sa(object):
     vynos = 12    # 602 výnos za akce
     vynos_jiny = 13 # 640 výnosy ostatní
     vraceno = 14  # XXX vrácené zálohy
+    zaloha = 21   # 314 zálohy
+    fp = 22       # 321 faktury přijaté
 
     gl_ozwk = (5,7)   # osobní účet ve správě na wKasa
     gl_sdr = (1,2,9)  # účty sdružení
