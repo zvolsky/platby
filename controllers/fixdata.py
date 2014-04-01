@@ -221,6 +221,16 @@ def otevri():
     db.pohyb.insert(iddal=zaverkovy, idma_dati=21, castka=1400.00, datum=datetime.datetime(2013, 1, 1))
     db.commit()
 
+def koncime():
+    db.ucet[29].update(ucet='521-1')
+    db.ucet.insert(ucet='521-2', zkratka='OdF', nazev="odměny za výkon funkcí a činností")
+    db.ucet[28].update(ucet='521-3')
+    vpo = db.ucet.insert(ucet='383', zkratka='VPo', nazev="výdaje příštích období (nedošla faktura)")
+    db.fp[45].update(md=vpo)
+    db.pohyb.insert(idma_dati=Uc_sa.akce, iddal=vpo, castka=66468.00,
+            datum=datetime.datetime(2013, 12, 31), popis="problematický ubytovatel zdržuje vystavení faktury")
+    db.commit()
+
 '''
 def neznami():
     db.kategorie[19] = dict(vyznam='vynosy: poplatky z osobniho kreditu')
