@@ -21,6 +21,7 @@ class Uc_sa(object):
     oz_fu = 6	    # 379-12 os.zálohy ve správě Fungujeme
     oz = 7		    # 379-09 os.zálohy spravované centrálně (na wKasa)
     oz_vy = 8 #nepoužívat    # 379-99 os.zálohy (asi už výnosy) z hotovost.příjmů
+    oz_presun = 26  # 379-07 dočasný účet pro přesun zálohy mezi 2 zákazníky 
     org = 9       # 211-01 pokladna u organizátorů
     akce = 10     # 518-01 náklady akcí
     provoz = 11   # 548-03 náklady provozní

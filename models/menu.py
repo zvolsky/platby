@@ -25,6 +25,7 @@ if auth.user:
     response.menu.append((T('Zákazník'), False, URL('info', 'coajak'), [
             (T('Přehled a žádosti o převody'), False, URL('platby', 'prehled'), []),
             (T('Pohyby na záloze'), False, URL('platby', 'pohyby'), []),
+            (TFu('Věnovat peníze jiné(mu)'), False, URL('platby', 'venovat'), []),
             ]))
 else:
     if not (request.controller=='default' and request.function=='index'):

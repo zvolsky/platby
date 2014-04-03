@@ -1,6 +1,6 @@
 # coding: utf8
 
-from datetime import datetime, timedelta, time
+from datetime import datetime, date, timedelta, time
 from mz_wkasa_platby import sa_ss, Uc_sa, vs2id
 from bs4 import BeautifulSoup
 from spolecneaktivity_cz import unformat_castka
@@ -142,6 +142,41 @@ def vyridit():
         return "ok" 
     else:
         return "selhalo"
+
+@auth.requires_login()
+def venovat():
+    ja = db.auth_user[auth.user.id]
+    if ja.zaloha<=0:
+        session.flash = TFu("Momentálně na záloze nemáš žádné peníze.")
+        redirect(URL('platby', 'prehled'))
+    form = SQLFORM.factory(
+            Field('zaloha', 'decimal(11,2)', default=ja.zaloha,
+                    writable=False, label=TFu("Stav Tvé zálohy")),
+            Field('venovat', 'decimal(11,2)', default=min((400.0, ja.zaloha)),
+                    requires=IS_DECIMAL_IN_RANGE(1.0, ja.zaloha),
+                    label=TFu("Převést Kč")),
+            Field('komu', db.auth_user,
+                    requires = IS_IN_DB(db, db.auth_user.id, db.auth_user._format),
+                    label=TFu("komu"))
+            )
+    if form.validate():
+        dnes = date.today()
+        prijemce = db.auth_user[form.vars.komu]
+        ja = db.auth_user[auth.user.id]
+        ja.update_record(zaloha=ja.zaloha - form.vars.venovat)
+        db.pohyb.insert(idauth_user=auth.user.id, idma_dati=Uc_sa.oz, iddal=Uc_sa.oz_presun,
+                castka=form.vars.venovat, datum=dnes,
+                popis=TFu("předává kredit pro %s (VS=%s, id=%s)") % (
+                        prijemce.nick, prijemce.vs, prijemce.id))
+        db.pohyb.insert(idauth_user=prijemce.id, idma_dati=Uc_sa.oz_presun, iddal=Uc_sa.oz,
+                castka=form.vars.venovat, datum=dnes,
+                popis=TFu("kredit věnoval/a %s (VS=%s, id=%s)") % (
+                        auth.user.nick, auth.user.vs, auth.user.id))
+        prijemce.update_record(zaloha=prijemce.zaloha + form.vars.venovat)
+        session.flash = TFu("Předáno, příjemce má na záloze %s.") % (
+                        prijemce.zaloha)
+        redirect(URL('platby', 'prehled'))
+    return dict(form=form)
 
 @auth.requires_membership('pokladna')
 def zaloha():  # nastaví požadovanou zálohu
