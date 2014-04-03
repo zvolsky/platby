@@ -229,7 +229,7 @@ def pridat_pohyb():
     response.view = 'prehledy/edit_pohyb.html'
     form = SQLFORM(db.pohyb, ignore_rw=True)
     if form.process().accepted:
-        redirect(URL('podvojne', 'nedavne'))
+        redirect(URL('platby', 'prehled'))
     return dict(form=form)
 
 # ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
