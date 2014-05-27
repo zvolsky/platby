@@ -21,7 +21,8 @@ class Uc_sa(object):
     oz_fu = 6	    # 379-12 os.zálohy ve správě Fungujeme
     oz = 7		    # 379-09 os.zálohy spravované centrálně (na wKasa)
     oz_vy = 8 #nepoužívat    # 379-99 os.zálohy (asi už výnosy) z hotovost.příjmů
-    oz_presun = 26  # 379-07 dočasný účet pro přesun zálohy mezi 2 zákazníky 
+    oz_presun = 26  # 379-07 dočasný účet pro přesun zálohy mezi 2 zákazníky
+    oz_x = 24     # příp. os.zál. neurčeného vlastníka 
     org = 9       # 211-01 pokladna u organizátorů
     akce = 10     # 518-01 náklady akcí
     provoz = 11   # 548-03 náklady provozní
@@ -32,8 +33,8 @@ class Uc_sa(object):
     zaloha = 21   # 314 zálohy
     fp = 22       # 321 faktury přijaté
 
-    gl_ozwk = (5,7)   # osobní účet ve správě na wKasa
-    gl_sdr = (1,2,9)  # účty sdružení
+    gl_ozwk = (5,7,24) # osobní účet ve správě na wKasa
+    gl_sdr = (1,2,9)   # účty sdružení
 
     mail_subj = "Společné Aktivity, o.s. - %s"
     podpis = ('\n\n\nSpolečné Aktivity, o.s.\n'

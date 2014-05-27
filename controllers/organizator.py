@@ -44,7 +44,7 @@ def pokladnikovi():
                 **dict(form.vars))
         redirect(URL('pokladna'))
     response.view = 'organizator/novy_pohyb.html'
-    return dict(form=form)
+    return dict(form=form, txt='')
 
 @auth.requires_login()
 def od_pokladnika():
@@ -58,7 +58,7 @@ def od_pokladnika():
                 **dict(form.vars))
         redirect(URL('pokladna'))
     response.view = 'organizator/novy_pohyb.html'
-    return dict(form=form)
+    return dict(form=form, txt='')
 
 @auth.requires_login()
 def hotov_prijem():
@@ -72,17 +72,32 @@ def hotov_prijem():
         _na_konec(row, idx, form, 'pohyb_cislo_uctu__row')
     _set_akce(form)
     if form.validate():
+        if 'STRHNOUT' in form.vars.popis:
+            if form.vars.idauth_user:                 
+                idpokynu = TFu('za akci (strhnout z os.zál.)')
+                iddal = Uc_sa.oz        
+                uzivatel = db.auth_user[form.vars.idauth_user]
+                uzivatel.update_record(zaloha=uzivatel.zaloha + form.vars.castka)
+            else:
+                idpokynu = TFu('za akci (kdo ???)')
+                iddal = Uc_sa.oz_x        
+        elif 'DAR' in form.vars.popis:                
+            idpokynu = TFu('dar')
+            iddal = Uc_sa.dary
+        elif 'HOTOVKA' in form.vars.popis:
+            idpokynu = TFu('za akci (ne na os.zálohu)')
+            iddal = Uc_sa.vynos      
+        else:
+            iddal = None
+            idpokynu = TFu('??? hotov.příjem')        
         db.pohyb.insert(idorganizator=organizator,
-                id_pokynu=TFu('hotov.příjem'),
-                idma_dati=Uc_sa.org, iddal=Uc_sa.oz, ks='10',
+                id_pokynu=idpokynu,
+                idma_dati=Uc_sa.org, iddal=iddal, ks='10',
                 **dict(form.vars))
-        if form.vars.idauth_user:                
-            uzivatel = db.auth_user[form.vars.idauth_user]
-            uzivatel.update_record(zaloha=uzivatel.zaloha + form.vars.castka)                
         _get_akce(form)
         redirect(URL('pokladna'))
     response.view = 'organizator/novy_pohyb.html'
-    return dict(form=form)
+    return dict(form=form, txt=TFu("Věnuj pozornost údaji Popis a vyplň správně DAR nebo STRHNOUT nebo HOTOVKA. Zejména pozor v případě, když zapíšeš STRHNOUT: peníze pak připíšeme na osobní zálohu účastíka a Fungujeme si je musí 'vzít' - to se stane jen jestliže je v rezervacích na placenou akci - jinak mu to zůstane na osobní záloze a obohatíme ho na úkor sdružení(!)"))
 
 @auth.requires_login()
 def hotov_vydaj():
@@ -98,7 +113,7 @@ def hotov_vydaj():
         _get_akce(form)
         redirect(URL('pokladna'))
     response.view = 'organizator/novy_pohyb.html'
-    return dict(form=form)
+    return dict(form=form, txt='')
 
 @auth.requires_membership('pokladna')
 def cokoliv():
@@ -113,7 +128,7 @@ def cokoliv():
         else:
             redirect(URL('pokladna'))
     response.view = 'organizator/novy_pohyb.html'
-    return dict(form=form)
+    return dict(form=form, txt='')
 
 def _skryj(vic=0):
     db.pohyb.partner_id.readable=db.pohyb.partner_id.writable=False
@@ -126,10 +141,11 @@ def _skryj(vic=0):
     db.pohyb.zakaznik.readable=db.pohyb.zakaznik.writable=False
     db.pohyb.ks.readable=db.pohyb.ks.writable=False
     db.pohyb.id_pohybu.readable=db.pohyb.id_pohybu.writable=False
-    db.pohyb.popis.comment = TFu('cokoli, co chceš sdělit pokladníkovi, nebo co má u tohoto pohybu zůstat poznamenáno')
     db.pohyb.datum.comment = TFu('skutečné datum příjmu')
     db.pohyb.vs.readable=db.pohyb.vs.writable=False
     if vic>=1:
+        db.pohyb.popis.comment = TFu(
+            'cokoli, co chceš sdělit pokladníkovi, nebo co má u tohoto pohybu zůstat poznamenáno')
         db.pohyb.idauth_user.readable=db.pohyb.idauth_user.writable=False
         db.pohyb.cislo_uctu.readable=db.pohyb.cislo_uctu.writable=False
         db.pohyb.datum.comment = TFu('datum podle dokladu')
@@ -139,11 +155,13 @@ def _skryj(vic=0):
             db.pohyb.popis.comment = TFu('místo předání, apod.')
             db.pohyb.datum.comment = TFu('skutečné datum předání')
     else:
+        db.pohyb.popis.comment = TFu(
+            'napiš (velkými písmeny!) DAR (jedná-li se o dar), STRHNOUT (je-li v rezervacích na předem placenou akci), HOTOVKA (v ostatních případech: tedy když akce není placena předem nebo účastník není a nebude v rezervaci/přihlášených). Můžeš připsat cokoli dalšího, co chceš vysvětlit pokladníkovi.')
         db.pohyb.idauth_user.comment=TFu('přednostně zde; jen v nouzi v následujícím údaji [[Omluva: Háčky jsou momentálně až na konci.]]')
         #db.pohyb.vs.label = TFu('Symbol uživatele')
         #db.pohyb.vs.comment = TFu('pokud ho náhodou víte, je to ideální (101+ z sa nebo 80111+ přidělené zde); když ne, nevadí')
         db.pohyb.cislo_uctu.label = TFu('Nick nereg. uživatele')
-        db.pohyb.cislo_uctu.comment = TFu('už nezadávej, pokud jsi vybral uživatele v předchozím údaji; do spárování tohoto údaje bude příjem evidován jako anonymní')
+        db.pohyb.cislo_uctu.comment = TFu('zadej, jestliže nemůžeš nalézt/vybrat uživatele v předchozím údaji; můžeš zapsat i něco jako "host" nebo "kamarádka Kajouska"')
     db.pohyb.castka.label = TFu('Částka')
     db.pohyb.castka.comment = TFu('kladné číslo')
     db.pohyb.ss.label = TFu('Číslo akce')

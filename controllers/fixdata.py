@@ -88,6 +88,10 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
+'''
+def katar():
+    db.auth_user[1251] = dict(zaloha=500.0)
+
 def dalsiucty():
     db.ucet.insert(ucet='379-03', zkratka='Půj', nazev="Jiné závazky (půjčky, např.dotace pokladny)")
     db.ucet.insert(ucet='379-07', zkratka='Půj', nazev="Os.záloha (převod mezi 2 zákazníky)")
@@ -195,7 +199,7 @@ def fa_data():
 def fa_data2():    
     db.pohyb.insert(idma_dati=Uc_sa.zaloha, iddal=1, castka=900.00, datum=datetime.datetime(2013,9,21),
             fp_id=40, popis='ubyt.Mariánskoh.b.,Těžká romantika na konci léta 20-22/9; dopsal mz podle Fa a doplatku')
-    db.pohyb[4925].update_record(idma_dati=27)
+    # jiné ID, ale bylo už správně// db.pohyb[4925].update_record(idma_dati=27)  # permice
     db.commit()
 
 def fa_konec():
@@ -204,7 +208,7 @@ def fa_konec():
     db.commit()
 
 def mikulaska():
-    db.pohyb[3021].update_record(idma_dati=Uc_sa.zaloha)
+    db.pohyb[3021].update_record(idma_dati=Uc_sa.zaloha, fp_id=45)
     db.pohyb[4790].update_record(idma_dati=Uc_sa.zaloha)
     db.commit()
 
@@ -231,7 +235,12 @@ def koncime():
             datum=datetime.datetime(2013, 12, 31), popis="problematický ubytovatel zdržuje vystavení faktury")
     db.commit()
 
-'''
+def koncime2():     # oprava předchozího
+    db.ucet[29].update_record(ucet='521-1')
+    db.ucet[28].update_record(ucet='521-3')
+    db.fp[45].update_record(md=35)
+    db.commit()
+
 def neznami():
     db.kategorie[19] = dict(vyznam='vynosy: poplatky z osobniho kreditu')
     db.ucet.insert(ucet='379-08', zkratka='Os?', nazev="Chybné a neurčené platby")
