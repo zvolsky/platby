@@ -1,0 +1,43 @@
+{{extend 'layout.html'}}
+
+<i>Výnosy jsou vždy kladné. Zobrazují se ale vždy jako záporné, protože se vyskytují pouze na Dal straně účetních pohybů.</i>
+
+<h2>Stavy účtů na konci období</h2>
+
+{{for rok in xrange(int(od_roku), datetime.date.today().year + 1):}}
+<h4>ke konci <b>{{=rok}}</b></h4>
+
+<table>
+<thead><tr>
+    <th></th>
+    <th></th>
+    <th style="text-align:right;"><b>{{=rok}}</b></th>
+    <th style="text-align:right;">{{=rok-1}}</th>
+    <th style="text-align:right;">pohyb</th>
+    <th style="text-align:right;">MD</th>
+    <th style="text-align:right;">Dal</th>
+</tr></thead>
+<tbody>{{for ucet in sorted(ucty, key=lambda ucet: ucty[ucet]['ucet']):}}
+    {{if ucet!='x' and (ucty[ucet]['stav'][rok-1] or ucty[ucet]['stav'][rok]):}}<tr>
+        <td>{{=ucty[ucet]['ucet']}}</td>
+        <td>{{=ucty[ucet]['nazev']}}</td>
+	    <td style="text-align:right;"><b>{{=ucty[ucet]['stav'][rok]}}</b></td>
+        <td style="text-align:right;">{{=ucty[ucet]['stav'][rok-1]}}</td>
+	    <td style="text-align:right;">{{=ucty[ucet]['pohyb'][rok]}}</td>
+	    <td style="text-align:right;">{{=ucty[ucet]['md'][rok]}}</td>
+	    <td style="text-align:right;">{{=ucty[ucet]['dal'][rok]}}</td>
+    </tr>{{pass}}
+    {{pass}}
+</tbody></table>
+
+{{pass}}
+
+<h5>Osobní kredity podle údaje u uživatele</h5>
+Kč {{=B(zaloha_zakaznik)}}
+
+{{if chybi:}}
+<h4>Pokladna pod nulou v obdobích</h4>
+<p>{{=XML(chybi)}}</p>
+{{else:}}
+<p><i>Stav pokladny zkontrolován - neklesá pod nulu.</i></p>
+{{pass}}

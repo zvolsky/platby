@@ -1,0 +1,22 @@
+{{extend 'layout.html'}}
+<h2>Závěrka {{=rok}} ({{=mesic_od}} - {{=mesic_do}})</h2>
+
+<h3>Podle druhu pohybu</h3>
+{{ukaz = TFu("ukaž")}}
+<table>{{for skupina in skupiny:}}
+    {{=TR(TD(skupina.md.ucet), TD(skupina.dal.ucet), TD(skupina.kategorie.vyznam), TD(skupina[pocet], _style="text-align: right;"), TD(skupina[suma], TD(A(ukaz, _href="%s" % URL('podvojne', 'vse', args=(skupina.pohyb.idma_dati or 0, skupina.pohyb.iddal or 0, den_od, den_po)))), _style="text-align: right;"))}}
+{{pass}}</table>
+
+<h3>Podle účtu</h3>
+<table>{{for ucet in sorted(ucty.items(), key=lambda item: item[0]):}}
+    {{=TR(TD(B(ucet[0])), TD(), TD(B(ucty_dict.get(ucet[0], ''))), TD(B(ucet[1]), _style="text-align: right;"))}}
+    {{proti = protistrana[ucet[0]]}}
+    {{for ucet2 in sorted(proti.items(), key=lambda item: item[0]):}}
+    	{{=TR(TD(), TD(ucet2[0]), TD(ucty_dict.get(ucet2[0], '')), TD(-ucet2[1], _style="text-align: right;"))}}
+    {{pass}}
+{{pass}}</table>
+
+<table>
+    <tr><td>Výnosy:</td><td style="text-align: right;">{{=vynosy}}</td></tr>
+    <tr><td>Náklady:</td><td style="text-align: right;">{{=naklady}}</td></tr>
+</table>

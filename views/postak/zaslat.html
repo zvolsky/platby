@@ -1,0 +1,30 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<div class="obly modry">
+<p>O zařazení této funkce pro <b>zasílání soukromých vzkazů</b> výběrem nicků mailem a pro <b>organizování soukromých akcí</b> se uvažuje.</p>
+<p>Funkce by mohla pomoci i k integraci skupin bývalých známých, ať už preferují server spolecneaktivity.cz, fungujeme.aspone.cz nebo se už pohybují mimo tyto komunitní servery.</p>
+<p>Předběžná analytická úvaha následuje pod rámečkem. Uvítám vaše názory.</p>
+</div>
+
+<ul>
+<li>příjemce určíte výběrem ze seznamu nicků</li>
+<li>výběr nicků lze pojmenovat pro použití příště</li>
+<li>výběr, pojmenovaný "blacklist" zakazuje předávání zpráv od uvedených uživatelů, aniž by o tom věděli</li>
+<li>v nastavení lze příjem mailů zaslaných touto službou zcela zakázat</li>
+<li>do textu lze automatizovaně vložit seznam nicků příjemců</li>
+<li>možnost Odpovědět / Odpovědět všem bez prozrazení vlastní mailové adresy</li>
+</ul>
+
+<ul>Zamýšlená omezení
+<li>max. 35 adres příjemců</li>
+<li>(možná) omezen počet mailů denně nebo zpoplatněn 2. a další, globální blacklist proti spamerům, apod.</li>
+</ul>
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

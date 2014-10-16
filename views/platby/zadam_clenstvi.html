@@ -1,0 +1,14 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<p>Díky za zájem. Tvoje žádost o členství byla zaznamenána.</p>
+<p>Prosíme o trpělivost, přijetí vyžaduje schválení. Pokud ale nebudeme reagovat např. do týdne, určitě to urguj (např. telefonicky: 732457966).</p>
+<p><a href="{{=URL('prehled')}}">Pokračovat ...</a>
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+
+<i>Trpělivost, výpočty mohou trvat déle ...</i>
+
+<p><small><i>Závěrka se zobrazí podle aktuálního stavu účetních dat a může se tedy změnit, jestliže data budou ještě doplněna (o chybějící pohyby), upřesněna (změnou zaúčtování na podvojné účty), apod.</i></small></p>
+
+<h2>Vyber účetní období</h2>
+
+{{=XML(volba_obdobi)}}
+
+<h2>Další</h2>
+
+<p>Průběžné výsledky hospodaření (stavy účtů)
+{{if request.is_local:}}
+    od
+    {{for rok in xrange(2011, datetime.date.today().year + 1):}}
+    <a href="{{=URL('prubezne', args=rok)}}">{{=rok}}</a>
+    {{pass}}
+{{else:}}
+jsou s ohledem na zatížení serveru k dispozici pouze při lokální instalaci (localhost).
+{{pass}}
+</p>
+<p><a href="{{=URL('osnova')}}">Používané podvojné účty</a></p>

@@ -1,0 +1,123 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+{{if nick:
+  =nick
+pass}}
+
+<div class="obly modry">
+<h5>Pohyby na záloze:</h5>
+<table>
+{{if Celkem.vlozeno or Celkem.vraceno:
+    =TR(TD("Celkem jsi sdružení platil(a):"), TD(B(Celkem.vlozeno), _style="text-align: right;"))
+    pass
+if Celkem.vraceno:
+    =TR(TD("Z toho Ti bylo vráceno zpět:"), TD(Celkem.vraceno, _style="text-align: right;"))
+    pass
+if Celkem.sa_vlozeno:
+    =TR(TD("Na spolecneaktivity.cz jsi celkem umístil(a):"), TD(Celkem.sa_vlozeno, _style="text-align: right;"))
+    pass
+if Celkem.z_sa_prevedeno:
+    =TR(TD("Ze spolecneaktivity.cz do této evidence převzato:"), TD(Celkem.z_sa_prevedeno, _style="text-align: right;"))
+    pass
+if Celkem.sa_vlozeno or Celkem.z_sa_prevedeno:
+    =TR(TD(SPAN("zbytek byl spotřebován na spolecneaktivity.cz na akce", _class="small right")))
+    pass
+#if Celkem.sa_vlozeno or Celkem.z_sa_prevedeno:
+#    =TR(TD(SPAN(("zbytek byl spotřebován" if Celkem.z_sa_prevedeno else "což bylo spotřebováno")+" na spolecneaktivity.cz na akce"+(", zbývá tam na záloze nebo Ti bylo vráceno" if Celkem.vraceno else " nebo tam zbývá na záloze"), _class="small")))
+#    =TR(TD(A("vyúčtování za server spolecneaktivity.cz", _href="http://www.spolecneaktivity.cz/ucet/platby"), _style="text-align: right;"))
+#    txt_sa = SPAN(" (nezahrnuje případnou zálohu na spolecneaktivity.cz)", _class="small")
+#else:
+#    txt_sa = ''
+#    pass
+if Celkem.ozwk_vlozeno:
+    =TR(TD("Na zálohu vloženo:"), TD(Celkem.ozwk_vlozeno, _style="text-align: right;"))
+    pass
+if Celkem.ozwk_cerpano:
+    =TR(TD("Ze zálohy čerpáno:"), TD(Celkem.ozwk_cerpano, _style="text-align: right;"))
+    pass
+=TR(TD(B("Stav zálohy"),":"), TD(B(zaloha), _style="text-align: right;"))
+}}
+</table><hr />
+		
+{{problem=False
+if pohyby:
+	for pohyb in pohyby:
+      if pohyb.ss.isdigit() and int(pohyb.ss)>8999:
+          problem=True 
+          break
+      pass
+  pass
+pass}}
+{{if problem:}}
+  <p>Pro každou akci se zobrazí dvojice, např. +150(hotovostní příjem), -150(inkaso z osob.zálohy); resp. při předplácení např. +600, -150, -150, ..<br />
+Inkasa za badmintony 1.10.-6.11. jsou prováděna opožděně - proto jsou řádky zpřeházeny. Omlouváme se.</p>
+  <hr />
+{{pass}}   
+
+{{if pohyby:
+	tablecontent = []
+	for pohyb in pohyby:
+    if pohyb.castka==0:
+      continue
+    if pohyb.iddal==Uc_sa.oz_sa:
+      popis = "předáno na spolecneaktivity.cz"
+    elif pohyb.iddal==Uc_sa.pro_sa:
+      popis = "bude předáno pro spolecneaktivity.cz"
+    else:
+      popis = ''
+    pass
+    if pohyb.cislo_uctu:
+      cislo_uctu = (pohyb.cislo_uctu+'/'+pohyb.kod_banky
+                          ) if pohyb.kod_banky else pohyb.cislo_uctu
+    else:
+      cislo_uctu = pohyb.kod_banky if pohyb.kod_banky else ''
+    pass
+    if Uc_sa.bezny in (pohyb.idma_dati, pohyb.iddal):
+      interni_ucet = 'B' 
+    elif Uc_sa.pokladna in (pohyb.idma_dati, pohyb.iddal):
+      interni_ucet = 'P'
+    else: 
+      interni_ucet = '' 
+    pass
+    vypis_ks = pohyb.ks if interni_ucet=='B' else '' 
+    vypis_vs = pohyb.vs if interni_ucet=='B' else '' 
+    vypis_ucet = cislo_uctu if (interni_ucet=='B'
+          ) else (pohyb.id_pokynu or '')
+              # v podmínce IFu bylo ještě:  ... or len(request.args)>0
+              #  s komentářem: bývá tam totiž vidět nick
+              #  odstranil jsem (s obavami) 12.11.
+    vypis_castka = B(pohyb.castka) if pohyb.castka>0 else pohyb.castka
+    interni_ucet = B(interni_ucet) if interni_ucet=='P' else interni_ucet
+		tablecontent.append(TR(
+				auth.has_membership('pokladna') and TD(pohyb.id) or '',
+				TD(pohyb.datum.strftime('%d.%m.%Y')),
+				TD(pohyb.datum.strftime('%H:%M') if auth.has_membership('admin') else '', _class='slabe'),
+				TD(vypis_castka, _style="text-align: right;"),
+				TD(interni_ucet),
+				TD(vypis_ucet),
+				TD(vypis_vs),
+				TD(pohyb.ss, _style="text-align: right;"),
+				TD(vypis_ks),
+				TD(popis or ((not pohyb.cislo_uctu or not pohyb.kod_banky)
+                and (pohyb.nazev_banky or pohyb.popis)) or ''),
+        auth.has_membership('pokladna') and
+          TD(A('del', _href=URL('platby', 'zrus', args=(uzivatel_id, pohyb.id)))) or '',
+				))
+		pass
+	=TABLE(tablecontent)
+else:}}
+žádné pohyby
+{{pass}}
+</div>
+
+<p><a href="{{=URL('prehled')}}">Přehled</a></p>
+
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

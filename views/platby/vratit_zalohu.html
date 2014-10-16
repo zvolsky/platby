@@ -1,0 +1,20 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<p><a href="{{=URL('prehled')}}">Zpět (zatím jsem si to rozmyslel(a))</a>
+
+<p>Za vrácení osobní zálohy se strhává poplatek 30,- Kč.</p>
+
+<p>Pokud chcete zálohu vrátit, vyplňte správně číslo účtu.</p>
+
+{{=form}}
+
+<p>Prosíme o trpělivost, jedná se o manuální úkon pokladníka. Pokud ale peníze nebudou ani za týden na zadaném účtu, určitě to urgujte. Děkujeme.</p>
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

@@ -1,0 +1,24 @@
+{{extend 'layout.html'}}
+
+<div class="obly modry"><table>
+  <thead>
+    <th>Nick</th>
+    <th>Ode dne</th>
+    <th>(do dne)</th>
+  </thead>
+  <tbody>
+{{clenu = 0}}{{last_nick=''}}
+{{for clen in clenove:}}
+  {{if not clen.auth_user.nick==last_nick:}}
+    {{clenu += 1}}
+    {{last_nick=clen.auth_user.nick}}
+    {{pass}}
+  <tr>
+    <td>{{=clen.auth_user.nick or ''}}</td>
+    <td>{{=(clen.clenstvi.ode_dne.strftime('%d.%m.%Y') if clen.clenstvi.ode_dne else '')}}</td>
+    <td>{{=(clen.clenstvi.do_dne.strftime('%d.%m.%Y') if clen.clenstvi.do_dne else '')}}</td>
+  </tr>
+{{pass}}
+  </tbody>
+</table></div>
+<p>Členů celkem: {{=clenu}}</p>

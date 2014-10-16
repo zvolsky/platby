@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+{{=db._lastsql}}
+<div class="obly modry"><table>
+  <thead>
+    <th>Uživatel</th>
+    <th>VS</th>
+    <th>Částka</th>
+    <th>SpecSymbol</th>
+    <th>Počet</th>
+  </thead>
+  <tbody>
+  {{for pohyb in seznam:}}
+  <tr>
+    <td>{{=pohyb.auth_user.nick}}</td>
+    <td>{{=pohyb.auth_user.vs}}</td>
+    <td>{{=pohyb.pohyb.castka}}</td>
+    <td>{{=pohyb.pohyb.ss}}</td>
+    <td>{{=pohyb[count]}}</td>
+    <td><a href="{{=URL('platby', 'pohyby', args=pohyb.auth_user.vs)}}">ukaž</a></td>
+  </tr>
+  {{pass}}
+  </tbody>
+</table></div>

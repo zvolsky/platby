@@ -1,0 +1,110 @@
+{{extend 'layout.html'}}
+
+<p><b>
+{{if mam>0:}}
+Do pokladny mám předat {{=mam}} Kč.
+{{elif mam<0:}}
+Pokladna mi dluží {{=-mam}} Kč.
+{{else:}}
+S pokladnou jsem vyrovnán.
+{{pass}}
+</b></p>
+
+<p>
+Pohyb může zapsat nejen organizátor, ale i pokladník.<br />
+Před připsáním do pokladny se proto podívej, jestli už pohyb není zapsaný.
+</p>
+
+<p>
+Momentálně tu nemáme možnost opravy.<br />
+Pokud se spleteš, zavolej nebo napiš pokladníkovi: 732457966 zvolsky@seznam.cz
+</p>
+
+<p>
+<b>Zapsat do pokladny:</b>
+-- <a href="{{=URL('hotov_prijem')}}">hotovostní příjem</a>
+-- <a href="{{=URL('hotov_vydaj')}}">výdaj</a>
+-- <a href="{{=URL('pokladnikovi')}}">předání peněz pokladníkovi</a>
+-- <a href="{{=URL('od_pokladnika')}}">převzetí peněz od pokladníka</a>
+{{if auth.has_membership('pokladna'):}}
+-- <a href="{{=URL('cokoliv')}}">cokoliv</a>
+{{pass}}
+--</p>
+
+{{if zapisy:}}
+  <div class="obly modry">
+  <table>{{for zapis in zapisy:}}
+    <tr>
+      {{castka = zapis.pohyb.castka if zapis.pohyb.idma_dati==Uc_sa.org else -zapis.pohyb.castka
+      schvaleny = zapis.pohyb.ks in ('33','30','3!','3#')
+      if adm:
+        status=zapis.pohyb.ks
+      elif schvaleny:
+        status=''
+      elif zapis.pohyb.ks=='11':
+        status='předat peníze a doklad'
+      elif zapis.pohyb.ks[0]=='1':
+        status='předat peníze'
+      elif zapis.pohyb.ks[1]=='1':
+        status='předat doklad'
+      elif '?' in zapis.pohyb.ks:
+        status='vyjasnit'
+      else:
+        status='odsouhlasit'
+      pass
+      datum = zapis.pohyb.datum.strftime('%d.%m.%Y')
+      pokyn = zapis.pohyb.id_pokynu or ''
+      if schvaleny:
+        status = B(status)
+        if castka>0:
+          castka = B(castka)
+        pass
+      else:
+        pokyn = B(pokyn)
+        datum = B(datum)
+        castka = B(castka)
+      pass
+      if zapis.auth_user.nick:
+        uzivatel = zapis.auth_user.nick
+      elif zapis.pohyb.cislo_uctu:
+        uzivatel = '~ ' + zapis.pohyb.cislo_uctu
+      else:
+        uzivatel = ''
+      pass
+      }}
+      {{if auth.has_membership('pokladna'):}}
+          {{=TD(zapis.pohyb.id)}}
+          {{pass}}
+      {{=TD(status)}}
+      {{=TD(datum)}}
+      {{=TD(pokyn)}}
+      {{=TD(castka, _style="text-align: right;")}}
+      {{=TD(zapis.pohyb.ss or '')}}
+      {{=TD(zapis.pohyb.nazev_banky or '')}}
+      {{=TD(zapis.pohyb.vs or '')}}
+      {{=TD(uzivatel)}}
+      {{=TD(zapis.pohyb.popis or '')}}
+      {{if pokladnik:}}
+      <td>
+        <a href="{{=URL('st33', args=(zapis.pohyb.id, arg))}}">schv+D</a>
+        <a href="{{=URL('st30', args=(zapis.pohyb.id, arg))}}">schv-d</a>
+        
+        <a href="{{=URL('st1_', args=(zapis.pohyb.id, arg))}}">1_</a>
+        <a href="{{=URL('st2_', args=(zapis.pohyb.id, arg))}}">2_</a>
+        <a href="{{=URL('st3_', args=(zapis.pohyb.id, arg))}}">3_</a>
+        <a href="{{=URL('stq_', args=(zapis.pohyb.id, arg))}}">?_</a>
+
+        <a href="{{=URL('st_0', args=(zapis.pohyb.id, arg))}}">_0</a>
+        <a href="{{=URL('st_1', args=(zapis.pohyb.id, arg))}}">_1</a>
+        <a href="{{=URL('st_2', args=(zapis.pohyb.id, arg))}}">_2</a>
+        <a href="{{=URL('st_3', args=(zapis.pohyb.id, arg))}}">_3</a>
+        <a href="{{=URL('st_q', args=(zapis.pohyb.id, arg))}}">_?</a>
+        <a href="{{=URL('st_jako_mam', args=(zapis.pohyb.id, arg))}}">_#</a>
+        <a href="{{=URL('st_ztracen', args=(zapis.pohyb.id, arg))}}">_!</a>
+
+        <a href="{{=URL('odstran_chybny', args=(zapis.pohyb.id, arg))}}">del</a>
+      </td>
+      {{pass}}
+    </tr>
+  {{pass}}</table></div>
+{{pass}}

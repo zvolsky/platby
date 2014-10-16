@@ -1,0 +1,3 @@
+maska.csv - zde/here
+routes.py - web2py root
+crontab.txt - crontab setting

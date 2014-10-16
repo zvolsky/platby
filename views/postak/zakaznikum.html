@@ -1,0 +1,23 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<h4>Mail všem zákazníkům sdružení (kromě neregistrovaných 675+)</h4>
+<p>Lze zaslat 1 hromadný mail denně. Mail bude odeslán po 5.hodině ráno a do té doby se kdykoli stejnou volbou zobrazí k dodatečné opravě.</p>
+
+<p>Vždy při uložení bude mail na zkoušku zaslán na Tvůj mail</p>
+
+{{if planovano:}}
+<p>Právě <b>upravuješ mail, už plánovaný k odeslání na ráno.</b> <a href="{{=URL('zrus_hromadny')}}">Tento mail neposílat!</a></p>
+{{pass}}
+
+<div class="obly modry">
+{{=form}}
+</div>
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

@@ -1,0 +1,133 @@
+{{extend 'layout.html'}}
+
+<h5>Proč nevést účetní evidenci na serveru spolecneaktivity.cz</h5>
+
+<p>Naše občanské sdružení Společné Aktivity, o.s. původně provozovalo server spolecneaktivity.cz, ale dostalo se do obtížné situace, protože nebylo vlastníkem domény, ani aplikace.</p>
+
+<p>I poté, kdy vlastník se rozhodl stát provozovatelem webu místo nás, jsme vedli účetní evidenci na jeho serveru spolecneaktivity.cz, rozumí se částečně, protože taková evidence potřebám podvojného účetnictví nevyhovuje. Pro těsnou integraci s platbami za akce je totiž obtížné přejít na jinou vyhovující evidenci.</p>
+
+<p><b>Chci varovat vedení všech organizací, které by na serveru spolecneaktivity.cz působily, i osoby, odpovědné za vedení jejich účetnictví, aby nepřistoupily na nabídku ukládat účetní data (informace z běžného účtu a pokladny) do aplikace spolecneaktivity.cz</b></p> 
+
+<p>V následujícím srovnání pro to najdete mnoho dobrých důvodů ...</p>
+
+<div class="obly modry">
+
+<h4>Přehled výhod a nevýhod staré a nové evidence plateb</h4>
+
+Nová evidence plateb přináší výhody účastníkům akcí i vedení sdružení v oblastech:
+<ul>
+<li>účetní</li>
+<li>bezpečnostní</li>
+<li>informací pro účastníky akcí</li>
+<li>finančních výdajů na provoz aplikace</li>
+<li>vlastnických práv našeho sdružení</li>
+</ul>
+
+Zde je jejich podrobné srovnání a přehled.
+</div>
+
+<table border="1px">
+<thead>
+  <th>hodnocený parametr</th>
+  <th>opuštěná evidence na spolecneaktivity.cz</th>
+  <th>modernizovaná evidence</th>
+</thead>
+<tbody>
+  <tr>
+    <td>za jak dlouho vidí zákazník, že platba došla na účet sdružení</td>
+    <td>[-] několik dnů</td>
+    <td>[+] 20 min</td>
+  </tr>
+  <tr>
+    <td>zabezpečení uživatelských dat</td>
+    <td>[-] žádné; data se předávají v nešifrované podobě a jsou dostupná kterémukoli uživateli použitého wifi připojení, a také správcům všech transportních serverů; mohou být zneužita i změněna případným útočníkem</td>
+    <td>[+] https protokol; data jsou šifrována a nemohou být změněna</td>
+  </tr>
+  <tr>
+    <td>zabezpečení hesla uživatele</td>
+    <td>[-] pravděpodobně žádné - hesla se předávají v nešifrované podobě a jsou dostupná kterémukoli uživateli použitého wifi připojení, a také správcům všech transportních serverů</td>
+    <td>[+] https protokol; hesla jsou šifrována</td>
+  </tr>
+  <tr>
+    <td>splňuje požadavky zákona o účetnictví na (pro sdružení povinné) podvojné účetnictví?</td>
+    <td>[-] ne; je výsledkem zjednodušených představ J.Poučka, které vycházejí ze zjednodušené daňové evidence (pro sdružení nedovolené)</td>
+    <td>[+] ano</td>
+  </tr>
+  <tr>
+    <td>zdrojové kódy</td>
+    <td>[-] vlastník evidence nezná a nemůže získat</td>
+    <td>[+] dostupné, včetně práv na úpravy</td>
+  </tr>
+  <tr>
+    <td>přímé zpracování dat z databáze oprávněnými osobami (např. dozorčí komisí)</td>
+    <td>[-] nelze, provozovatel data neposkytne*)</td>
+    <td>[+] je v případě potřeby možné (pomocí běžných databázových manažerů a SQL dotazů); vedení sdružení v tom není na nikom závislé</td>
+  </tr>
+  <tr>
+    <td>možnost zneužít data kódem, který je přímo součástí evidenčního programu</td>
+    <td>[-] ano</td>
+    <td>[+] v otevřeném softwaru není z principu možné; autor takového kódu se vystavuje odhalení a postihu</td>
+  </tr>
+  <tr>
+    <td>může zájemce o přesné pochopení činnosti programu a audit jeho zdrojového kódu získat k němu přístup?</td>
+    <td>[-(+)] ne, kód je utajován před kýmkoli</td>
+    <td>[+(-)] ano</td>
+  </tr>
+  <tr>
+    <td>zpřístupňuje data nepovolaným osobám?</td>
+    <td>[-] ano; není-li provozovatel webu oprávněná osoba, nelze situaci řešit (což je aktuální případ)</td>
+    <td>[+] ne; lze blokovat i neoprávněný přístup správce</td>
+  </tr>
+  <tr>
+    <td>cena pro sdružení</td>
+    <td>[-] 12000 Kč ročně</td>
+    <td>[+] zdarma, včetně podpory pro první 3 roky</td>
+  </tr>
+  <tr>
+    <td>možnost evidovat všechny platby současných akcí sdružení</td>
+    <td>[-] ne, tomu brání provozovatel spolecneaktivity.cz</td>
+    <td>[+] ano</td>
+  </tr>
+  <tr>
+    <td>spolupráce mezi sdružením a správcem z hlediska sdružení</td>
+    <td>[-] dlouhodobě komplikovaná a problematická</td>
+    <td>[+] bezproblémová</td>
+  </tr>
+  <tr>
+    <td>možnost umístit aplikaci jinam a provozovat ji bez závislosti na stávajícím správci</td>
+    <td>[-] žádná možnost; naprostá závislost na správci</td>
+    <td>[+] ano; vedení sdružení je značně nezávislé na správci</td>
+  </tr>
+  <tr>
+    <td>možnost režimu, kdy správce aplikace nemá přístup k datům, takže je nemůže zneužít</td>
+    <td>[-] ne</td>
+    <td>[+] ano; běžná osoba se základními znalostmi SQL může správci z databáze exportovat jen data k opravě nebo i simulovaná data k opravě - správce dodá skript pro úpravu dat, aniž by viděl ostrá data</td>
+  </tr>
+  <tr>
+    <td>může být evidence přesunuta na hosting zdarma?</td>
+    <td>[-] <small>ne; je integrální součástí softwaru spolecneaktivity.cz, který má již nároky mimo nabízené možnosti hostingů zdarma;</small> především ale stávající poskytovatel aplikaci neposkytne</td>
+    <td>[+] ano</td>
+  </tr>
+  <tr>
+    <td>je pro spuštění aplikace nezbytný licencovaný software?</td>
+    <td>[-] <small>ano; cenu licencí určuje společnost Microsoft;</small> otázka je ale bezpředmětná - stávající poskytovatel aplikaci neposkytne</td>
+    <td>[+] ne; je použit pouze otevřený software, který je zdarma</td>
+  </tr>
+  <tr>
+    <td>může chyba v softwaru pro spuštění znamenat nutnost zaplacení další licence?</td>
+    <td>[-] <small>ano; záleží na rozhodnutí společnosti Microsoft;</small> otázka je ale bezpředmětná - stávající poskytovatel aplikaci neposkytne</td>
+    <td>[+] ne; je použit pouze otevřený software, který je komukoli k dispozici pro opravy chyb; chyby jsou v praxi opravovány okamžitě a oprava je všem k dispozici</td>
+  </tr>
+</tbody>
+</table>
+
+<small>*) V našem případě jsme byli téměř vydíráni - bylo nám mailem důrazně doporučeno, abychom nepřestávali platit za tzv. nadstandardní služby (především za evidenci pokladních pohybů a pohybů na účtu) a naznačeno, že pokud platit přestaneme, ztratíme pravděpodobně přístup k těmto údajům (pochopitelně životně důležitým, jelikož se jedná o účetní data - podklad pro daňové přiznání). Před problémem nás zachránil jen provoz této nové aplikace, který nám konečně umožnil obnovit nezávislost na vlastníkovi webu.</small>
+<br /><br /> 
+
+<p>Poté, co jsme platební systém emacipovali, vydal provozovatel J.Pouček na svém webu spolecneaktivity.cz proti našemu sdružení, které mu dlouhodobě platilo jako jeho zákazník (!!), varování.<br />
+Na námitku, že tím sdružení působí nepřímé škody a může způsobit přímou škodu až do výše výdajů právě zveřejněných akcí (75000 Kč) odpověděl: <i>"Nevidím 1) souvislost, 2) omezení z mé strany, 3) onu škodu"</i>. ..no comment..<br />
+Na požadavek možnosti publikovat vyjádření sdružení tamtéž, co publikoval varování, odpověděl, že máme podstránky, kde můžeme svůj názor publikovat. Při poměru sledovanosti zajímavých stránek s dynamickým obsahem z databáze a podstránek se statickým obsahem (na které nevede odkaz z hlavní strany), který lze odhadnout asi na 10000:1, je to jako kdyby pomluvu zveřejnila televizní stanice a řekla: "můžete si taky přece koupit promítačku a promítat kdekoli vaše vysvětlení".</p>   
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}

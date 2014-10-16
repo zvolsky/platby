@@ -1,0 +1,77 @@
+/* změna přednastaveného designu */
+#header {margin-top: 30px;}
+
+/* vlastní design aplikace */
+body {
+	background-color: #f8f8ff;
+	color: #18173a;
+  font-size: 10pt;
+  font-family: sans-serif;
+	}
+
+.obly {
+	margin: 6px 0;
+	padding: 9px 12px 2px 12px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	}
+
+.modry {
+	background-color: #dbe4f4;
+	}
+
+.zluty {
+	background-color: #e0e020;
+	}
+
+.svetlezluty {
+	background-color: #eeeeb8;
+	}
+
+.sedy {
+	background-color: #b2c2b2;
+	color: black;
+	}
+
+.svetlesedy {
+	background-color: #e2e6e2;
+	color: #707070;
+	}
+
+.small {
+  font-size: smaller;
+  }
+
+.hustsi {
+  line-height:100%;
+  }
+
+#rekl {
+  margin: 20px;
+  }
+
+.ma_byt {
+	color: #222233;
+  }
+
+.nyni_je {
+  margin-left: 40px;
+	color: #444444;
+  }
+
+.aktualita {
+  clear: both;
+  padding: 8px 0 1px 0;
+	background-color: #ffffd8;
+	color: #004;
+  margin-top: 40px;
+	}
+.aktualita #aktualne {
+	color: gray;
+  margin-right: 24px;
+	}
+
+.slabe {
+  color: gray;
+  }

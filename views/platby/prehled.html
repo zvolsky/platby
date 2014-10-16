@@ -1,0 +1,52 @@
+{{right_sidebar_enabled = True}}
+{{extend 'layout.html'}}
+
+<div class="obly modry">
+<h4>Na záloze máš: {{=zaloha}} Kč</h4>
+
+{{if sa_ss:}}
+<p><b>To nezahrnuje část zálohy, která je umístěna na spolecneaktivity.cz.</b><br />
+{{if sa_zal[1]!=None:}}
+Výše této části osobní zálohy k {{=sa_zal[0].strftime('%d.%m.%Y %H:%M')}} byla <b>{{=sa_zal[1]}} Kč</b>.<br />{{pass}}
+{{if sa_zal[1]:}}
+Pokud jsi tedy od té doby na spolecneaktivity.cz neplatil za žádnou akci, máš <b>celkem na záloze {{=zaloha+sa_zal[1]}} Kč</b>,
+jenže {{=sa_zal[1]}} Kč lze použít jen pro akce na spolecneaktivity.cz - pokud nepožádáš (níže) o převedení zmíněné částky do této evidence.<br />{{pass}}
+<small>Přesnou aktuální výši osobní zálohy na spolecneaktivity.cz najdeš zde: 
+<a href="http://www.spolecneaktivity.cz/ucet/platby">podrobné vyúčtování za server spolecneaktivity.cz</a>.
+</small></p>
+</div>
+{{pass}}
+
+<div class="obly modry">
+<ul>
+<li><p>{{if clen:}}<b>Jsi členem sdružení</b> Společné Aktivity o.s.{{if clenstvi and clenstvi.ode_dne:}} ode dne {{=clenstvi.ode_dne.strftime('%d.%m.%Y')}}.{{pass}}{{else:}}Zatím <b>nejsi členem našeho sdružení</b> Společné Aktivity o.s.
+{{if not clenstvi:}}<br /><b>Můžeš se přidat</b> k více než 150 účastníkům akcí, kteří jsou členy sdružení.<br />
+<a href="{{=URL('zadam_clenstvi')}}">Žádám o členství ve sdružení Společné Aktivity o.s.</a>{{pass}}{{pass}}
+</p></li> 
+
+<!--<li><p>{{if sa_ss:}}
+<b><a href="{{=URL('seber_jirkovi')}}">Žádám o převedení zbylé zálohy ze spolecneaktivity.cz do této evidence</a>,<br />
+abych ji mohl využít i pro akce na Fungujeme.</b>
+{{if int(sa_ss)>=675:}}<br /><small>Současně prosím pokladníkovi (kontakt uveden dole) pošli i vzkaz na spolecneaktivity.cz, aby bylo ověřeno, že se nikdo cizí nepokouší použít Tvé peníze.</small>{{pass}}
+{{else:}}<small>Případný převod zálohy ze spolecneaktivity.cz (pro placení i na Fungujeme) je možný po uvedení specifického symbolu v <a href="{{=URL('default', 'user', args='profile')}}">profilu</a>.</small>
+{{pass}}</p></li>-->
+<li><small>Žádosti o převod ze spolecneaktivity.cz jsou už bezpředmětné. 13.11. Jiří Pouček oznámil, že 18.11.2013 smaže finanční data sdružení z webu spolecneaktivity.cz. Aby byl zachován online přístup účastníků akcí k osobní záloze, jsou do této pokladny už převedeny zálohy všech.</small></li>
+
+<li><p>{{if auth.user.zaloha or sa_ss:}}<a href="{{=URL('vratit_zalohu')}}">Žádám o vrácení zálohy na běžný účet.</a>
+{{else:}}<small>Podobně se po zadání specifického symbolu ze spolecneaktivity.cz zobrazí i možnost žádat o vrácení zálohy na běžný účet</small>.{{pass}} 
+</p></li>
+</ul>
+
+</div>
+
+<p><a href="{{=URL('pohyby')}}">Pohyby na záloze</a> --
+<a href="{{=URL('info', 'coajak', args='strucneji')}}">Jak mám platit</a></p>
+
+
+{{block right_sidebar}}
+{{include 'incl/bocni.html'}}
+{{end}}
+
+{{block footer}}
+{{include 'incl/kdojekdo.html'}}
+{{end}}
