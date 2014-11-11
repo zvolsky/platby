@@ -173,7 +173,7 @@ def venovat():
                 popis=TFu("kredit věnoval/a %s (VS=%s, id=%s)") % (
                         auth.user.nick, auth.user.vs, auth.user.id))
         prijemce.update_record(zaloha=prijemce.zaloha + form.vars.venovat)
-        session.flash = TFu("Příjemci bylo úěšně předání %s.") % (
+        session.flash = TFu("Příjemci bylo úspěšně předáno %s.") % (
                         form.vars.venovat)
         redirect(URL('platby', 'prehled'))
     return dict(form=form)

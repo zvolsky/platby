@@ -1,4 +1,4 @@
-# coding: utf8
+# -*- coding: utf-8 -*-
 {
 '!=': '!=',
 '!langcode!': 'cs-cz',
@@ -186,7 +186,9 @@
 'Email verification': 'Ověření e-mailové adresy',
 'Enable': 'Odblokovat',
 'enter a number between %(min)g and %(max)g': 'zadejte číslo mezi %(min)g a %(max)g',
+'Enter a number between %(min)g and %(max)g': 'Enter a number between %(min)g and %(max)g',
 'enter a value': 'zadejte požadovaný údaj',
+'Enter an integer between %(min)g and %(max)g': 'Enter an integer between %(min)g and %(max)g',
 'enter an integer between %(min)g and %(max)g': 'zadejte celé číslo mezi %(min)g a %(max)g',
 'enter date and time as %(format)s': 'zadejte datum a čas takto: %(format)s',
 'enter from %(min)g to %(max)g characters': 'enter from %(min)g to %(max)g characters',
@@ -299,6 +301,8 @@
 'loading...': 'nahrávám...',
 'locals': 'locals',
 'Locals##debug': 'Lokální proměnné',
+'Log In': 'Log In',
+'Log Out': 'Log Out',
 'Logged in': 'Přihlášení proběhlo úspěšně',
 'Logged out': 'Odhlášení proběhlo úspěšně',
 'Login': 'Přihlásit se',
@@ -479,6 +483,7 @@
 'session expired': 'session expired',
 'Set Breakpoint on %s at line %s: %s': 'Bod přerušení nastaven v souboru %s na řádce %s: %s',
 'shell': 'příkazová řádka',
+'Sign Up': 'Sign Up',
 'Singular Form': 'Singular Form',
 'Site': 'Správa aplikací',
 'Size of cache:': 'Velikost cache:',
@@ -531,6 +536,7 @@
 'These files are not served, they are only available from within your app': 'Tyto soubory jsou klientům nepřístupné. K dispozici jsou pouze v rámci aplikace.',
 'These files are served without processing, your images go here': 'Tyto soubory jsou servírovány bez přídavné logiky, sem patří např. obrázky.',
 'This App': 'Tato aplikace',
+'This email already has an account': 'This email already has an account',
 'This is a copy of the scaffolding application': 'Toto je kopie aplikace skelet.',
 'This is an experimental feature and it needs more testing. If you decide to upgrade you do it at your own risk': 'This is an experimental feature and it needs more testing. If you decide to upgrade you do it at your own risk',
 'This is the %(filename)s template': 'This is the %(filename)s template',
