@@ -1,1 +1,1 @@
-chmod +x web2py.cfgi
+chmod +x web2py.fcgi

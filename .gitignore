@@ -87,10 +87,11 @@ develop-eggs/
 
 uploads/
 downloads/
-databases/*.*
-cache/*.*
-private/*.*
-errors/*.*
+databases/
+cache/
+private/
+errors/
+sessions/
 sessions/*.*
 
 .installed.cfg
