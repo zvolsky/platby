@@ -7,6 +7,8 @@ odešle mail pomocí mandrill
 
 import base64
 import os
+import mimetypes
+
 import mandrill
 import vfp
 
@@ -30,7 +32,7 @@ def mandrill_send(subject, txt, prilohy=[], prijemci=
         attachments.append({
                 'content': base64.b64encode(open(priloha, 'rb').read()),
                 'name': os.path.basename(priloha),
-                'type': 'text/plain'
+                'type': mimetypes.guess_type(priloha) or 'text/plain'
         })
 
     # https://mandrillapp.com/api/docs/messages.python.html#method=send
