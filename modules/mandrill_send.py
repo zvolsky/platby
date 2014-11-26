@@ -5,6 +5,7 @@ u'''
 odešle mail pomocí mandrill
 '''
 
+import base64
 import os
 import mandrill
 import vfp
@@ -13,7 +14,7 @@ appdir = os.path.join(os.getcwd(), 'applications', 'platby')
 mandrill_key = vfp.filetostr(os.path.join(appdir,
           'private', 'zvolsky_gmail_mandrill.smtp'))
 
-def mandrill_send(subject, txt, prijemci=
+def mandrill_send(subject, txt, prilohy=[], prijemci=
       [{'email': 'mirek.zvolsky@gmail.com', 'name': u'Mirek Zvolský na Googlu'},
       {'email': 'zvolsky@seznam.cz', 'name': u'Mirek Zvolský na Seznamu'}],
       styl='text'):
@@ -21,7 +22,16 @@ def mandrill_send(subject, txt, prijemci=
     subject, txt - nejlépe unicode objekty
     prijemci - viz příklad defaultní hodnoty
     styl = 'html'/'text'
+    přílohy je třeba uložit přes FTP do mail_attachments/ a po odeslání smazat
     '''
+
+    attachments = []
+    for priloha in prilohy:
+        attachments.append({
+                'content': base64.b64encode(open(priloha, 'rb').read()),
+                'name': os.path.basename(priloha),
+                'type': 'text/plain'
+        })
 
     # https://mandrillapp.com/api/docs/messages.python.html#method=send
     m=mandrill.Mandrill(mandrill_key)
@@ -31,9 +41,14 @@ def mandrill_send(subject, txt, prijemci=
          'subject': subject,
          styl: txt,
          'to': prijemci,
+         'attachments': attachments,
     }
         # 'attachments': [{'content': 'ZXhhbXBsZSBmaWxl',
         #                 'name': 'myfile.txt', 'type': 'text/plain'}]
+        #
+        #    def filetobase64(self, inputfilename):
+        # return base64.b64encode(open(inputfilename, 'rb').read())
+        
     m.messages.send(message=msg)
 
 # společné pro plánované maily

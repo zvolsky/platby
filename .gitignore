@@ -91,6 +91,7 @@ databases/
 cache/
 private/
 errors/
+mail_attachments/
 sessions/
 sessions/*.*
 

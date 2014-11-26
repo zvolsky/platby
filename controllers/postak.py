@@ -28,7 +28,7 @@ def zakaznikum():
             session.flash = "Pošťák ještě neposlal maily všem, vyčkej nebo volej Mirek Zv. 732457966"
             #redirect(URL('default', 'index')) # dvojí redirekce nezobrazí flash
             redirect(URL('info', 'coajak'))    # ale toto mají všichni admini
-        form.vars.is_html, form.vars.jen_clenum, form.vars.subject = __parse_mailheader(
+        form.vars.is_html, form.vars.komu, form.vars.subject = __parse_mailheader(
                                                       planovany)
         try:
             form.vars.txt = unicode(vfp.filetostr(planovany2), 'utf8')
@@ -37,6 +37,7 @@ def zakaznikum():
     else:
         form.vars.subject = 'Společné Aktivity o.s. - informace rady'
         form.vars.txt = '\n\nZa Společné Aktivity o.s.' + form.table.txt.default
+    prilohy = __get_prilohy()
     if form.process().accepted:
         vfp.strtoutf8file(__get_mailheader(form), planovany,
                                                       str_encoding='utf8')
@@ -45,13 +46,26 @@ def zakaznikum():
         try:
             mandrill_send(form.vars.subject, form.vars.txt,
                     prijemci=[{'email': auth.user.email}, {'email': 'myum@seznam.cz'}],
+                    prilohy=prilohy,
                     styl='html' if form.vars.is_html else 'text')
             session.flash = TFu('Zkušební odeslán na %s')%auth.user.email
         except:
             session.flash = TFu(
                           'Mail naplánován, ale nezdařilo se poslat zkušební')
         redirect(URL())
-    return dict(form=form, planovano=planovano)
+    return dict(form=form, planovano=planovano, prilohy=prilohy)
+
+@auth.requires_membership('admin')
+def smaz_prilohy():
+    prilohy = __get_prilohy()
+    for priloha in prilohy:
+        os.remove(priloha)
+    redirect(URL('zakaznikum'))
+
+def __get_prilohy():
+    dir_prilohy = os.path.join(request.folder, 'mail_attachments')
+    prilohy = [os.path.join(dir_prilohy, priloha) for priloha in os.listdir(unicode(dir_prilohy))]
+    return [priloha for priloha in prilohy if os.path.isfile(priloha)]
 
 @auth.requires_membership('admin')
 def zrus_hromadny():
@@ -74,6 +88,7 @@ def __get_mailform():
                     default='\n%s %s'
                           %(auth.user.first_name, auth.user.last_name),
                     comment=TFu('zvětšit okno lze vpravo dole ---- pro HTML mail: <b>tučně</b> <i>šikmo</i> <h3>nadpis</h3> <p>odstavec</p> <ul><li>1.pol.seznamu</li><li>2.pol.seznamu</li></ul> <a href="http://adresa-odkazu">text-odkazu</a> odřádkovat navíc: <br />')),
+              submit_button = TFu('Uložit a Naplánovat k odeslání na 05:00'),
               )
 
 def __get_mailheader(form):
