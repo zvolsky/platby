@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Fungujeme už má svoji doménu: www.fungujemeaktivne.cz" 
+aktualita = "Kvůli daňové úlevě bude rok 2015 ztrátový - rada proto rozhodne o způsobu podpory/dotování činnosti - i Ty to můžeš ovlivnit"
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
@@ -34,18 +34,17 @@ else:
 response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             (T('Co a jak'), False, URL('info', 'coajak'), []),
             (T('O sdružení'), False, URL('info', 'sdruzeni'), []),
-            (T('O Fungujeme'), False, URL('info', 'fungujeme'), []),
+            (T('O FungujemeAktivne'), False, URL('info', 'fungujeme'), []),
             (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),
             (T('Pro organizátory'), False, URL('info', 'organizatori'), []),
             (T('Pro organizace: Účtovat na spolecneaktivity.cz?'), False, URL('info', 'varovani'), []),
             ]))
 subpostak = [
-            (T('Zaslat mail'), False, URL('postak', 'zaslat'), []),
             ]
 if auth.has_membership('admin'):
     subpostak.append((T('Hromadný mail'), False,
               URL('postak', 'zakaznikum'), []))
-response.menu.append((T('Pošťák'), False, URL('postak', 'zaslat'), subpostak))
+response.menu.append((T('Pošťák'), False, None, subpostak))
 
 if auth.user and auth.user.organizator:
     response.menu.append((T('Záznamy do pokladny'), False,

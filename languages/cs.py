@@ -369,6 +369,7 @@
 'Něco o sdružení': 'Něco o sdružení',
 'Něco o spolecneaktivity.cz': 'Něco o spolecneaktivity.cz',
 'O Fungujeme': 'O Fungujeme',
+'O FungujemeAktivne': 'O FungujemeAktivne',
 'O sdružení': 'O sdružení',
 'O spolecneaktivity.cz': 'O spolecneaktivity.cz',
 'Object or table name': 'Objekt či tabulka',
