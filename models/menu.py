@@ -47,15 +47,17 @@ if auth.has_membership('admin'):
 response.menu.append((T('Pošťák'), False, None, subpostak))
 
 if auth.user and auth.user.organizator:
-    response.menu.append((T('Záznamy do pokladny'), False,
-              URL('organizator', 'pokladna'), []))        
+    suborganizator = [(T('Záznamy do pokladny'), False, URL('organizator', 'pokladna'), []),]
+    if auth.has_membership('admin'):
+        suborganizator.append((T('Dluhy'), False, URL('organizator', 'dluhy'), []))
+    response.menu.append((T('Záznamy do pokladny'), False, URL('organizator', 'pokladna'), suborganizator))
 
 subprehledy = [
             (T('Členové sdružení'), False, URL('prehledy', 'clenove'), []),
             ]
 if auth.has_membership('admin'):
     subprehledy.append((T('Zákazníci'), False,
-              URL('prehledy', 'zakaznici'), []))        
+              URL('prehledy', 'zakaznici'), []))
 subprehledy.append((T('Čísla a ceny akcí'), False,
         URL('home', 'xml', '', scheme='http', host='www.fungujemeaktivne.cz'), []))        
 if auth.user:

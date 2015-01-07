@@ -170,6 +170,7 @@
 'DISK': 'DISK',
 'Disk Cache Keys': 'Klíče diskové cache',
 'Disk Cleared': 'Disk smazán',
+'Dluhy': 'Dluhy',
 'docs': 'dokumentace',
 'Documentation': 'Dokumentace',
 "Don't know what to do?": 'Nevíte kudy kam?',

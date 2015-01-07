@@ -31,7 +31,27 @@ def pokladna():
     kombinace pro Vyřízeno: 33, 30, 3#, 3!
     statusy, které zobrazí Odsouhlasit: 22, 23, 2#, 2!, 32
     '''
-     
+
+@auth.requires_membership('admin')
+def dluhy():
+    zapisy = db(db.pohyb.idorganizator!=None).select(
+                db.pohyb.castka, db.pohyb.idma_dati, db.pohyb.iddal,
+                db.pohyb.idorganizator, db.auth_user.nick, db.auth_user.email, db.auth_user.vs,
+                left=db.auth_user.on(db.auth_user.id==db.pohyb.idorganizator),
+                orderby=db.pohyb.idorganizator)
+    dluhy = {}
+    id_last = -999
+    for zapis in zapisy:
+        if id_last!=zapis.pohyb.idorganizator:
+            id_last = zapis.pohyb.idorganizator
+            klic = zapis.auth_user.nick or ('id %s' % zapis.pohyb.idorganizator)
+            dluhy[klic] = [0, zapis.auth_user.email, zapis.auth_user.vs]
+        if zapis.pohyb.iddal==Uc_sa.org:   # organizátor vydal
+            dluhy[klic][0] -= zapis.pohyb.castka
+        else:                              # organizátor získal
+            dluhy[klic][0] += zapis.pohyb.castka
+    return dict(dluhy=dluhy)
+
 @auth.requires_login()
 def pokladnikovi():
     organizator = auth.has_membership('admin'

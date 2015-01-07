@@ -1,5 +1,10 @@
 # -*- coding: utf8 -*-
 
+'''TODO:
+308 Ludek - dlouho neaktivni - opravit zalohu na 0 (nyni -290 po chybnem prirazeni platby za hosting)
+pridat admin prava Marovi a sebrat je Potapkovi
+'''
+
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
