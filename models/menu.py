@@ -33,6 +33,7 @@ else:
                 URL('default', 'index'), []))
 response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             (T('Co a jak'), False, URL('info', 'coajak'), []),
+            (T('Můžu ošidit jedinou platbu?'), False, URL('info', 'poprve'), []),
             (T('O sdružení'), False, URL('info', 'sdruzeni'), []),
             (T('O FungujemeAktivne'), False, URL('info', 'fungujeme'), []),
             (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),

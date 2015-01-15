@@ -61,7 +61,7 @@ Jako návštěvník(ce) našich akcí nemusíš na tomto webu udělat téměř n
 <p>A budeš-li nějaké placené akce organizovat, nastav si v {{if auth.user:}}<a href="{{=URL('default', 'user', args='profile')}}">profilu</a>{{else:}}profilu{{pass}} předvolbu Organizátor placených akcí - přibyde Ti nová volba menu pro zápis Tvých příjmů a výdajů peněz.</p> 
 </div>
 
-{{=A('další text', _href=URL('sdruzeni'))}}
+{{=A('další text', _href=URL('poprve'))}}
 {{if not auth.user:}} --
 {{=A('pokračovat přihlášením na stránky', _href=URL('default', 'index'))}}
 {{pass}}

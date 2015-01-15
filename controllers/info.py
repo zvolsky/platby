@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+def poprve():
+    return {}
+
 def coajak():
     return {}
 
