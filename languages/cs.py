@@ -116,6 +116,7 @@
 'compiled application removed': 'zkompilovaná aplikace smazána',
 'Components and Plugins': 'Komponenty a zásuvné moduly',
 'Condition': 'Podmínka',
+'Confirm Password': 'Confirm Password',
 'contains': 'contains',
 'continue': 'continue',
 'Controller': 'Kontrolér (Controller)',

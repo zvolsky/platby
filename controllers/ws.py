@@ -4,12 +4,49 @@ import os
 from datetime import datetime, date, timedelta
 from hashlib import md5
 import vfp
+from mz_wkasa_platby import get_new_vs
 
 first_token = vfp.filetostr(os.path.join(request.folder,
                   'private', 'fungujeme.token'))
 
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
+
+def novy():
+    '''založí uživatele
+    ws/novy/<args>, args:
+    token = hash(token+mail)
+    mail
+    nick
+    '''
+    __log_ws('novy')
+
+    if len(request.args)==3:
+        token = request.args[0]
+        mail = request.args[1]
+        #nick = request.args[2]  # web2py bug (good in url, bad in args)   %c4%8c = Č
+	nick = request.url.rsplit('/', 2)[-1]
+        regist_token = first_token
+        if token==md5(regist_token+mail).hexdigest():
+            nickL = nick.lower()
+            mailL = mail.lower()
+            uzivatel = db(db.auth_user.email.lower()==mailL).select().first()
+            if uzivatel:    
+                retval = dict(vs='', problem='email existuje')
+                __log_res('mail_dupl')
+                return retval
+            uzivatel = db(db.auth_user.nick.lower()==nickL).select().first()
+            if uzivatel:    
+                retval = dict(vs='', problem='nick existuje')
+                __log_res('nick_dupl')
+                return retval
+            new_vs = get_new_vs(db, vs_default)  # vs_default je definován v db.py
+            new_id = db.auth_user.insert(nick=nick, email=mail, vs=new_vs)
+            retval = dict(vs=new_vs, problem='')
+            __log_res('ok')
+            return retval
+    __log_res('failed')
+    raise HTTP(403)
 
 def udaje():
     __log_ws('udaje')

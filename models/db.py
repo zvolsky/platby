@@ -84,7 +84,7 @@ auth.settings.extra_fields['auth_user'] = [
     Field('vs', length=10, writable=False, default=vs_default,
           label=TFu('Osobní symbol (VS)'),
           comment=TFu('tento variabilní symbol (osobní symbol) používej pro platby; preferujeme variabilní symbol, ale s ohledem na spolecneaktivity.cz bude číslo rozpoznáno i ve specifickém symbolu')),
-    Field('ss', length=10, default='',
+    Field('ss', length=10, default='', readable=False, writable=False,
           label=TFu('Symbol pro spolecneaktivity.cz (SS)'),
           comment=TFu('uveď, chceš-li hradit akce pro tento specifický symbol na spolecneaktivity.cz; pozor: nesprávné zadání způsobí úhradu někomu jinému')),
     Field('zaloha', 'decimal(11,2)', label=TFu('Záloha'),
@@ -113,11 +113,11 @@ db.auth_user.ss.requires=[
       IS_EMPTY_OR(IS_NOT_IN_DB(db, db.auth_user.ss)),
       ]
 db.auth_user._format = '%(nick)s - %(vs)s'
-db.auth_user.email.comment = TFu('kvůli placení na Fungujeme zapiš mail z registrace na Fungujeme (při prvním přihlášení zákazníka se spec.sym. 101-674 je zde mail z registrace na spolecneaktivity.cz)')
+db.auth_user.email.comment = TFu('zapiš mail z registrace na fungujemeaktivne.cz (případně z registrace na spolecneaktivity.cz před rokem 2013)')
 name_comment = TFu('údaj nepředáme třetí straně - pomáhá nám identifikovat platby')
 db.auth_user.first_name.comment = name_comment
 db.auth_user.last_name.comment = name_comment
-db.auth_user.password.comment = TFu("raději NEPOUŽÍVEJ stejné heslo jako pro spolecneaktivity.cz nebo Fungujeme")
+db.auth_user.password.comment = TFu("raději NEPOUŽÍVEJ stejné heslo jako na jiných serverech")
 
 ## configure email
 mail = auth.settings.mailer
