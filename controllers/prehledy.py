@@ -14,7 +14,7 @@ def clenove():
 @auth.requires_signature()
 def zrus_clenstvi():
     if len(request.args)==1:
-        clenstvi = db(db.clenstvi.user_id==request.args[1]).select().first()
+        clenstvi = db(db.clenstvi.user_id==request.args[0]).select().first()
         if not clenstvi.do_dne:
             clenstvi.update_record(do_dne=date.today())
     redirect(URL('clenove'))
