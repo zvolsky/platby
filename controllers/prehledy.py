@@ -11,6 +11,14 @@ def clenove():
           orderby=db.auth_user.nick.lower())
     return dict(clenove=clenove)
 
+@auth.requires_signature()
+def zrus_clenstvi():
+    if len(request.args)==1:
+        clenstvi = db(db.clenstvi.user_id==request.args[1]).select().first()
+        if not clenstvi.do_dne:
+            clenstvi.update_record(do_dne=date.today())
+    redirect(URL('clenove'))
+
 @auth.requires_membership('admin')
 def zakaznici():
     return dict(grid=SQLFORM.grid(db.auth_user,

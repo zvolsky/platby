@@ -12,11 +12,18 @@
   {{if not clen.auth_user.nick==last_nick:}}
     {{clenu += 1}}
     {{last_nick=clen.auth_user.nick}}
-    {{pass}}
+  {{pass}}
   <tr>
     <td>{{=clen.auth_user.nick or ''}}</td>
     <td>{{=(clen.clenstvi.ode_dne.strftime('%d.%m.%Y') if clen.clenstvi.ode_dne else '')}}</td>
     <td>{{=(clen.clenstvi.do_dne.strftime('%d.%m.%Y') if clen.clenstvi.do_dne else '')}}</td>
+    {{if auth.has_membership("admin"):}}
+      <td>
+      {{if not clen.clenstvi.do_dne:}}
+        {{=A("del", _href=URL("zrus_clenstvi", args=clen.auth_user.id, user_signature=True))}}
+      {{pass}}
+      </td>
+    {{pass}}
   </tr>
 {{pass}}
   </tbody>
