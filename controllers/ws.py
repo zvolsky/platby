@@ -12,6 +12,14 @@ first_token = vfp.filetostr(os.path.join(request.folder,
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def xxx():
+    print request.url
+    print request.args
+    print request.args[0]=='__'
+    print request.vars
+    print request.vars.bbb
+    return request.url + ' // ' + str(request.args) + ' // ' + request.vars.bbb
+
 def novy():
     '''založí uživatele
     ws/novy/<args>, args:
