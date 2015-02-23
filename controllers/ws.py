@@ -12,14 +12,6 @@ first_token = vfp.filetostr(os.path.join(request.folder,
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
-def xxx():
-    print request.url
-    print request.args
-    print request.args[0]=='__'
-    print request.vars
-    print request.vars.bbb
-    return request.url + ' // ' + str(request.args) + ' // ' + request.vars.bbb
-
 def novy():
     '''založí uživatele
     ws/novy/<args>, args:
@@ -33,7 +25,7 @@ def novy():
         token = request.args[0]
         mail = request.args[1]
         #nick = request.args[2]  # web2py bug (good in url, bad in args)   %c4%8c = Č
-	nick = request.url.rsplit('/', 2)[-1]
+        nick = request.url.rsplit('/', 2)[-1]
         regist_token = first_token
         if token==md5(regist_token+mail).hexdigest():
             nickL = nick.lower()
