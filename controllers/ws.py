@@ -32,12 +32,12 @@ def novy():
             mailL = mail.lower()
             uzivatel = db(db.auth_user.email.lower()==mailL).select().first()
             if uzivatel:    
-                retval = dict(vs='', problem='email existuje')
+                retval = dict(vs=uzivatel.vs, problem='email existuje')
                 __log_res('mail_dupl')
                 return retval
             uzivatel = db(db.auth_user.nick.lower()==nickL).select().first()
             if uzivatel:    
-                retval = dict(vs='', problem='nick existuje')
+                retval = dict(vs=uzivatel.vs, problem='nick existuje')
                 __log_res('nick_dupl')
                 return retval
             new_vs = get_new_vs(db, vs_default)  # vs_default je definován v db.py
