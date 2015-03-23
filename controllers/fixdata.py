@@ -29,7 +29,6 @@ proplacená faktura:
 (1555,),16.11. 2700
 '''
 
-
 def setnick():
     '''doplní zákazníka pohybu podle nicku; nemění zálohu'''
     if len(request.args)==2:
@@ -94,6 +93,15 @@ def mikruse():
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
 '''
+def vetrelci():
+    for i in xrange(1275, 1286):
+        del db.auth_user[i]
+    return 'ok'
+def xludek():
+    db.pohyb[1448] = dict(idauth_user=None)
+    db.pohyb[1449] = dict(idauth_user=None)
+    return 'ok'
+
 def katar():
     db.auth_user[1251] = dict(zaloha=500.0)
 
