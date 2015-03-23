@@ -3,15 +3,19 @@
 @auth.requires_membership('admin')
 def prehled():
     return dict(grid=SQLFORM.grid(db.fp,
-              fields=[db.fp.zauctovana, db.fp.vystaveno, db.fp.uhrazeno,
-                  db.fp.no_jejich, db.fp.castka, db.fp.poznamka
+              left=db.partner.on(db.fp.partner_id==db.partner.id),
+              fields=[db.fp.id, db.fp.zauctovana, db.fp.vystaveno, db.fp.uhrazeno,
+                  db.fp.no_jejich, db.fp.castka, db.partner.nazev, db.fp.poznamka
                   ],
+              #links=dict(header='pohyby',
+              #    body=lambda row: A('v', _href=URL('pohyby', args=row.fp.id))),
               deletable=auth.has_membership('pokladna'),
               editable=auth.has_membership('pokladna'),
               create=auth.has_membership('pokladna'),
               csv=auth.has_membership('admin'),
               paginate=100,
               orderby=db.fp.vystaveno,
+              showbuttontext=False,
               maxtextlengths={'fp.poznamka' : 40}
               ))
 

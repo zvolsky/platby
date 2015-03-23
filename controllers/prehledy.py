@@ -38,6 +38,7 @@ def zakaznici():
               csv=auth.has_membership('pokladna'),
               paginate=100,
               orderby=db.auth_user.nick.lower(),
+              showbuttontext=False,
               maxtextlengths={'auth_user.email' : 30}
               ))
 
