@@ -394,6 +394,7 @@
 'or alternatively': 'or alternatively',
 'Or Get from URL:': 'Or Get from URL:',
 'or import from csv file': 'nebo importovat z .csv souboru',
+'Organizátor akcí': 'Organizátor akcí',
 'Organizátor placených akcí': 'Organizátor placených akcí',
 'Origin': 'Původ',
 'Original/Translation': 'Originál/Překlad',

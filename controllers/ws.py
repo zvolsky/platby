@@ -1,6 +1,7 @@
 # -*- encoding: utf8 -*-
 
 import os
+import base64
 from datetime import datetime, date, timedelta
 from hashlib import md5
 import vfp
@@ -25,19 +26,20 @@ def novy():
         token = request.args[0]
         mail = request.args[1]
         #nick = request.args[2]  # web2py bug (good in url, bad in args)   %c4%8c = Č
-	nick = request.url.rsplit('/', 2)[-1]
+        #nick = request.url.rsplit('/', 2)[-1]
+        nick = base64.urlsafe_b64decode(request.args[2])
         regist_token = first_token
         if token==md5(regist_token+mail).hexdigest():
             nickL = nick.lower()
             mailL = mail.lower()
             uzivatel = db(db.auth_user.email.lower()==mailL).select().first()
             if uzivatel:    
-                retval = dict(vs='', problem='email existuje')
+                retval = dict(vs=uzivatel.vs, problem='email existuje')
                 __log_res('mail_dupl')
                 return retval
             uzivatel = db(db.auth_user.nick.lower()==nickL).select().first()
             if uzivatel:    
-                retval = dict(vs='', problem='nick existuje')
+                retval = dict(vs=uzivatel.vs, problem='nick existuje')
                 __log_res('nick_dupl')
                 return retval
             new_vs = get_new_vs(db, vs_default)  # vs_default je definován v db.py
