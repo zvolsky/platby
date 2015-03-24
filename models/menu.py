@@ -67,7 +67,9 @@ if auth.user:
 if auth.has_membership('admin'):
     subprehledy.append((T('Jednoduché'), False,
               None, [
-              (T('pokladna'), False,
+              (TFu('všechny výdaje'), False,
+                        URL('jednoduche', 'vydaje'), []),
+              (TFu('pokladna'), False,
                         URL('jednoduche', 'pokladna'), []),
               (TFu('výběry z bankomatu'), False,
                         URL('jednoduche', 'atm'), []),
