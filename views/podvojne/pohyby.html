@@ -1,5 +1,9 @@
 {{extend 'layout.html'}}
 
+{{if hdr:}}
+  <b>{{=hdr}}</b>
+  {{pass}}
+
 <div class="obly modry"><table>
 {{for pohyb in pohyby:
   kdo = pohyb.auth_user.nick

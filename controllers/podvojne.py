@@ -64,9 +64,21 @@ def chybi():
     return _podvojne((db.pohyb.iddal==None)|
               (db.pohyb.idma_dati==None))
 
-def _podvojne(query):
+@auth.requires_membership('admin')
+def ucet():
+    if len(request.args)==1:
+        ucet = db.ucet[request.args[0]]
+        if ucet:
+            response.view = 'podvojne/pohyby.html'
+            return _podvojne((db.pohyb.idma_dati==request.args[0])|
+                (db.pohyb.iddal==request.args[0]), '%s : %s (%s)' % (ucet.ucet, ucet.nazev, ucet.zkratka))
+    session.flash = "nesprávně zadaný účet (id)"
+    redirect(URL('default', 'index'))
+
+
+def _podvojne(query, hdr=None):
     md, dal, org = aliases(db) 
-    return dict(
+    return dict(hdr=hdr,
         pohyby=db(query).select(
           db.pohyb.ALL,
           db.auth_user.nick,

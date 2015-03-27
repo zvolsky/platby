@@ -1,5 +1,7 @@
 # coding: utf8
 
+import datetime
+
 @auth.requires_membership('admin')
 def obdobi():
     volba_obdobi = '<table>'
@@ -181,8 +183,16 @@ def prubezne():
 
 @auth.requires_membership('admin')
 def osnova():
-    ucty_rows = db(db.ucet).select()
-    ucty_dict = {}
-    for ucet in ucty_rows:
-        ucty_dict[ucet.ucet] = ucet.nazev
-    return ucty_dict
+    return dict(ucty = db(db.ucet).select(orderby=db.ucet.ucet))
+
+@auth.requires_membership('admin')
+def dp():
+    letos = datetime.datetime.now().year
+    if len(request.args)==1:
+        try:
+            rok = int(request.args[0])
+        except ValueError:
+            rok = 0
+        if 2011<=rok<=letos:
+            return str(rok)
+    return "Uprav URL takto: .../dp/%s" % letos
