@@ -216,14 +216,6 @@ def dp():
     iniciovany_rok = iniciovano_ke_dni.year
     k_datu_default = min(datetime.date(iniciovany_rok, 12, 31), datetime.date.today())
 
-    permice_in = db((db.pohyb.datum>=iniciovano_ke_dni) & (db.pohyb.idma_dati==permice_ucet)).select(orderby=db.pohyb.datum)
-    permice_out = db((db.pohyb.datum>=iniciovano_ke_dni) & (db.pohyb.iddal==permice_ucet)).select(orderby=db.pohyb.datum)
-    permice_max = 0
-    for permice in permice_in:
-        permice_max += permice.castka
-    for permice in permice_out:
-        permice_max -= permice.castka
-
     fungujeme = db((db.pohyb.datum>=iniciovano_ke_dni) & ((db.pohyb.idma_dati==fungujeme_ucet) | (db.pohyb.iddal==fungujeme_ucet))).select(orderby=db.pohyb.datum)
     akt_rok = iniciovano_ke_dni.year
     akt_mesic = iniciovano_ke_dni.month
@@ -242,8 +234,50 @@ def dp():
             ziskano -= pohyb.castka
     else:
         zapis_mesice(akt_rok, akt_mesic, None, ziskano, ziskano_mesice)
+    lze_vynosy = int(round(ziskano-prevedeno))
+
+    permice_in = db((db.pohyb.datum>=iniciovano_ke_dni) & (db.pohyb.idma_dati==permice_ucet)).select(orderby=db.pohyb.datum)
+    permice_out = db((db.pohyb.datum>=iniciovano_ke_dni) & (db.pohyb.iddal==permice_ucet)).select(orderby=db.pohyb.datum)
+    permice_max = 0
+    if auth.has_membership('pokladna'):
+        inputy = [Field('zavrit', 'boolean', default=False, label='uzavřít', comment="zapsat převáděcí účet 96 do databáze?"),
+                Field('zapsat', 'boolean', default=False, label='zapsat', comment="fyzicky zapsat změny 213 a 602 do databáze?")]
+    else:
+        inputy = []
+    inputy.append(Field('k_datu', 'date', default=k_datu_default, label='ke dni'))
+    inputy.append(Field('do_vynosu', 'integer', default=lze_vynosy, label='do výnosů'))
+    for idx, permice in enumerate(permice_in):
+        permice_max += permice.castka
+        inputy.append(Field('permice%s'%idx,
+                label="Ponechat na perm.",
+                comment='z původních %s (%s)' % (int(round(permice.castka)), permice.datum.strftime('%d.%m.%Y')),
+                default=int(round(permice.castka))))
+    for permice in permice_out:
+        permice_max -= permice.castka
+
+    problem = ''
+    form = SQLFORM.factory(*inputy)
+    if form.process().accepted:
+        if form.vars.do_vynosu>lze_vynosy:
+            problem = 'NELZE - výnosy: %s > %s' % (form.vars.do_vynosu, lze_vynosy)
+        else:
+            zustatek_permic = 0
+            for idx in xrange(500):
+                zustatek_jedne = form.vars.get('permice%s' % idx)
+                if zustatek_jedne is None:
+                    break
+                zustatek_permic += int(zustatek_jedne)
+            if zustatek_permic>permice_max:
+                problem = 'NELZE - permanentky: %s > %s' % (zustatek_permic, int(round(permice_max)))
+        if problem:
+            response.flash = problem
+        else:
+            response.view = 'zaverky/dp2.html'
+            return dict()
 
     return dict(permice_in=permice_in, permice_out=permice_out,
             ziskano_mesice=ziskano_mesice, ziskano=ziskano,
             prevedeno=prevedeno, prevedeno_dne=prevedeno_dne,
-            permice_max=permice_max)
+            permice_max=permice_max,
+            form=form, problem=problem,
+            iniciovano_ke_dni=iniciovano_ke_dni)

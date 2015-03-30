@@ -1,6 +1,6 @@
-    return dict(permice_in=permice_in, permice_out=permice_out, ziskano_mesice=ziskano_mesice, ziskano=ziskano)
-
 {{extend 'layout.html'}}
+
+<p>Začínáme od {{=iniciovano_ke_dni.strftime('%d.%m.%Y')}} (pevně dáno poslední provedenou závěrkou).</p>
 
 {{if ziskano or prevedeno:}}
   <h2>Tržby za akce</h2>
@@ -17,38 +17,24 @@
   </table>
 
   {{if prevedeno:}}
-    <p>Z toho bylo převedeno do výnosů {{=prevedeno}}, naposledy ke dni {{=prevedeno_dne.strftime('%d.%m.%Y')}}</p>
+    <p>Z toho bylo převedeno do výnosů {{=int(round(prevedeno))}}, naposledy ke dni {{=prevedeno_dne.strftime('%d.%m.%Y')}}</p>
     {{pass}}
 
   {{pass}}
 
-{{if len(permice_in) or len(permice_out):}}
-  <h2>Permanentky</h2>
-
-  {{if len(permice_out):}}
-    <h4>Už zapsány záznamy o spotřebě:</h4>
-    <table>
-    {{for permice in permice_out:}}
-      <tr>
-        <td>{{=permice.datum.strftime('%d.%m.%Y')}}</td>
-        <td style="text-align: right;">{{=int(round(permice.castka))}}</td>
-      </tr>
-      {{pass}}
-    </table>
+{{if len(permice_out):}}
+  <h2>Už zapsané záznamy o spotřebě permanentek:</h2>
+  <table>
+  {{for permice in permice_out:}}
+    <tr>
+      <td>{{=permice.datum.strftime('%d.%m.%Y')}}</td>
+      <td style="text-align: right;">{{=int(round(permice.castka))}}</td>
+    </tr>
     {{pass}}
-
-  {{if len(permice_in):}}
-    <h4>Pořízení permanentky (nebo převod z minula):</h4>
-    <table>
-    {{for permice in permice_in:}}
-      <tr>
-        <td>{{=permice.datum.strftime('%d.%m.%Y')}}</td>
-        <td style="text-align: right;">{{=int(round(permice.castka))}}</td>
-      </tr>
-      {{pass}}
-    </table>
-    {{pass}}
-
-  <p><i>Celková částka, ponechaná na permanentkách, nesmí být větší než {{=permice_max}}.</i></p>
-
+  </table>
   {{pass}}
+
+<h2>Převod do výnosů a snížení stavu permanentek</h2>
+{{=form}}
+<p><i>Celková částka, ponechaná na permanentkách, nesmí být větší než {{=int(round(permice_max))}}.</i></p>
+<p><strong>{{=problem}}</strong></p>
