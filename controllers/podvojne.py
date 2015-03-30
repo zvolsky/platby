@@ -21,9 +21,9 @@ def castka():
         session.castka_castka = form.vars.castka
         session.castka_vice = form.vars.vice
     if session.castka_vice:
-            return dict(form=form, grid=_grid(db.pohyb.castka>=session.castka_castka))
+        return dict(form=form, grid=_grid(db.pohyb.castka>=session.castka_castka))
     elif session.castka_castka:
-            return dict(form=form, grid=_grid(db.pohyb.castka==session.castka_castka))
+        return dict(form=form, grid=_grid(db.pohyb.castka==session.castka_castka))
     return dict(form=form, grid=None)
 
 '''
