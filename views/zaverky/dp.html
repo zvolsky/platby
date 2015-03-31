@@ -31,6 +31,9 @@
       <td style="text-align: right;">{{=int(round(permice.castka))}}</td>
     </tr>
     {{pass}}
+  {{if out_celkem>0:}}
+    <tr><td>celkem</td><td>{{=int(round(out_celkem))}}</td></tr>
+    {{pass}}
   </table>
   {{pass}}
 
