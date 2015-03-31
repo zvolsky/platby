@@ -93,6 +93,13 @@ def mikruse():
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
 '''
+def addu():
+    db.ucet.insert(ucet='221-01', zkratka='BÚj', nazev="Jmění")
+    db.ucet.insert(ucet='221-12', zkratka='d12', nazev="Odklad základu daně 2012")
+    db.ucet.insert(ucet='221-13', zkratka='d13', nazev="Odklad základu daně 2013")
+    db.ucet[26].update_record(zkratka='X-Y')
+    db.commit()
+
 def vetrelci():
     for i in xrange(1275, 1286):
         del db.auth_user[i]
