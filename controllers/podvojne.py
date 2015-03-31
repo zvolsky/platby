@@ -97,12 +97,14 @@ def ucet():
                 (db.pohyb.iddal==request.args[0]),
                 hdr = '%s : %s (%s)' % (ucet.ucet, ucet.nazev, ucet.zkratka),
                 lnk = A('přehled účtů', _href=URL('zaverky', 'osnova')),
-                fp = True)
+                fp = True, historie_uctu=int(request.args[0]))
     session.flash = "nesprávně zadaný účet (id)"
     redirect(URL('zaverky', 'osnova'))
 
 
-def _podvojne(query, fp=False, hdr=None, lnk=None):
+def _podvojne(query, fp=False, hdr=None, lnk=None, historie_uctu=None):
+    '''historie_uctu - id účtu, který má být nasčítáván
+    '''
     left, md, dal, org, dalsi_pole = _get_query_parts(db, fp)
     pohyby = db(query).select(
           db.pohyb.ALL,
@@ -112,11 +114,31 @@ def _podvojne(query, fp=False, hdr=None, lnk=None):
           *dalsi_pole,
           left=left,
           orderby=~db.pohyb.datum)
+
+    if historie_uctu and len(pohyby)>0:
+        def get_casocastka(pohyb, casocastka, historie_uctu):
+            if pohyb.pohyb.idma_dati==historie_uctu:
+                casocastka -= pohyb.pohyb.castka
+            if pohyb.pohyb.iddal==historie_uctu:
+                casocastka += pohyb.pohyb.castka
+            return casocastka
+
+        casoprubeh = [0]   # vzhledem k algoritmu to potřebuji šoupnout o jeden řádek dolů, proto první prvek
+        casocastka = 0
+        for pohyb in pohyby:
+            casocastka = get_casocastka(pohyb, casocastka, historie_uctu)
+            casoprubeh.append(casocastka)    # jeden prvek pro každý pohyb
+        drift = casoprubeh[-2] + get_casocastka(pohyby[-1], 0, historie_uctu)  # -2 je poslední řádek vzhledem k posunu o prvek
+        for idx, polozka in enumerate(casoprubeh):
+            casoprubeh[idx] = polozka - drift   # mám v obráceném časovém pořadí a nulovou potřebuju tu poslední
+    else:
+        casoprubeh = []
+
     if fp:
         for pohyb in pohyby:
             if pohyb.partner.nazev:
                 pohyb.pohyb.popis = pohyb.partner.nazev + ((', '+pohyb.pohyb.popis) if pohyb.pohyb.popis else '')
-    return dict(hdr=hdr, lnk=lnk, pohyby=pohyby)
+    return dict(hdr=hdr, lnk=lnk, pohyby=pohyby, casoprubeh=casoprubeh)
 
 def _get_query_parts(db, fp=False):
     md, dal, org = aliases(db)

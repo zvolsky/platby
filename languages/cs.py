@@ -210,6 +210,7 @@
 'enter date and time as %(format)s': 'zadejte datum a čas takto: %(format)s',
 'enter email or its starting characters': 'enter email or its starting characters',
 'enter from %(min)g to %(max)g characters': 'enter from %(min)g to %(max)g characters',
+'Enter from %(min)g to %(max)g characters': 'Enter from %(min)g to %(max)g characters',
 'Error': 'Chyba',
 'Error logs for "%(app)s"': 'Seznam výskytu chyb pro aplikaci "%(app)s"',
 'Error snapshot': 'Snapshot chyby',
