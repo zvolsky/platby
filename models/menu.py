@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Od 23.4.15 je zvoleno nové vedení sdružení - Rada: Du-šan, Nerothar, Majk, DK: Leni79, Manik"
+aktualita = "Od 23.4.15 je zvoleno nové vedení sdružení - Rada: Du-šan, Nerothar, Mára, DK: Leni79, Manik"
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
