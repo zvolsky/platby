@@ -165,6 +165,8 @@ def _grid(query):
           md.ucet, dal.ucet,
           db.auth_user.nick, org.nick, db.partner.nazev, db.pohyb.popis,
           )
+        db.pohyb.idorganizator.readable = True
+        db.pohyb.idorganizator.writable = True   # pro editaci v gridu
     else:
         fields=(db.pohyb.datum, db.pohyb.castka,
           md.zkratka, dal.zkratka,
