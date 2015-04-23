@@ -265,6 +265,7 @@
 'Hesla se neshodují': 'Hesla se neshodují',
 'Hide/Show Translated strings': 'Skrýt/Zobrazit přeložené texty',
 'Hits': 'Kolikrát dosaženo',
+'Hlavní organizátoři': 'Hlavní organizátoři',
 'Home': 'Domovská stránka',
 'honored only if the expression evaluates to true': 'brát v potaz jen když se tato podmínka vyhodnotí kladně',
 'How did you get here?': 'Jak jste se sem vlastně dostal?',
@@ -704,5 +705,6 @@
 'závěrky (původní verze)': 'závěrky (původní verze)',
 'Záznamy do pokladny': 'Záznamy do pokladny',
 'Členové sdružení': 'Členové sdružení',
+'Členství': 'Členství',
 'Čísla a ceny akcí': 'Čísla a ceny akcí',
 }

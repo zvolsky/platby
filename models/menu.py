@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Kvůli daňové úlevě bude rok 2015 ztrátový - rada proto rozhodne o způsobu podpory/dotování činnosti - i Ty to můžeš ovlivnit"
+aktualita = "Od 23.4.15 je zvoleno nové vedení sdružení - Rada: Du-šan, Nerothar, Majk, DK: Leni79, Manik"
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
@@ -53,8 +53,12 @@ if auth.user and auth.user.organizator:
         suborganizator.append((T('Dluhy'), False, URL('organizator', 'dluhy'), []))
     response.menu.append((T('Záznamy do pokladny'), False, URL('organizator', 'pokladna'), suborganizator))
 
-subprehledy = [
+subclenstvi = [
             (T('Členové sdružení'), False, URL('prehledy', 'clenove'), []),
+            (T('Hlavní organizátoři'), False, URL('prehledy', 'hlorg'), []),
+            ]
+subprehledy = [
+            (T('Členství'), False, URL('prehledy', 'clenove'), subclenstvi),
             ]
 if auth.has_membership('admin'):
     subprehledy.append((T('Zákazníci'), False,

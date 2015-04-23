@@ -9,7 +9,7 @@
   <tbody>
 {{clenu = 0}}{{last_nick=''}}
 {{for clen in clenove:}}
-  {{if not clen.auth_user.nick==last_nick:}}
+  {{if not clen.auth_user.nick==last_nick and not clen.clenstvi.do_dne:}}
     {{clenu += 1}}
     {{last_nick=clen.auth_user.nick}}
   {{pass}}
@@ -20,7 +20,10 @@
     {{if auth.has_membership("admin"):}}
       <td>
       {{if not clen.clenstvi.do_dne:}}
-        {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.user_id, user_signature=True))}}
+        {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.id, user_signature=True))}}
+      {{pass}}
+      {{if hlavni:}}
+        {{=A("hl.org.", _href=URL("add_hl_org", args=clen.clenstvi.user_id, user_signature=True))}}
       {{pass}}
       </td>
     {{pass}}

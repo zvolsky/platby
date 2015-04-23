@@ -4,20 +4,48 @@ from datetime import datetime, timedelta, time, date
 from mz_wkasa_platby import Uc_sa
 
 def clenove():
-    clen_id = db(db.auth_group.role=='člen sdružení').select().first().id
+    clen_id = _getgrpid('člen sdružení')
     clenove = db(db.clenstvi.group_id==clen_id).select(
           db.clenstvi.ALL, db.auth_user.nick,
           left=db.auth_user.on(db.auth_user.id==db.clenstvi.user_id),
           orderby=db.auth_user.nick.lower())
-    return dict(clenove=clenove)
+    return dict(clenove=clenove, hlavni=True)
+
+def hlorg():
+    response.view = 'prehledy/clenove.html'
+    clen_id = _getgrpid('hlavní organizátor')
+    clenove = db(db.clenstvi.group_id==clen_id).select(
+          db.clenstvi.ALL, db.auth_user.nick,
+          left=db.auth_user.on(db.auth_user.id==db.clenstvi.user_id),
+          orderby=db.auth_user.nick.lower())
+    return dict(clenove=clenove, hlavni=False)
+
+def add_hl_org():
+    grp_id = _getgrpid('hlavní organizátor')
+    if len(request.args)==1:
+        clenstvi = db((db.clenstvi.user_id==request.args[0]) & (db.clenstvi.group_id==grp_id)).select().first()
+        if clenstvi:
+            session.flash = "už je hlavním organizátorem"
+        else:
+            db.clenstvi.insert(user_id=int(request.args[0]), group_id=grp_id)
+            session.flash = "přidán do seznamu hlavních organizátorů"
+        redirect(URL('hlorg'))
+
+def _getgrpid(gr_name):
+    grp = db(db.auth_group.role==gr_name).select().first()
+    if not grp:
+        db.auth_group.insert(role=gr_name)
+        db.commit()
+        grp = db(db.auth_group.role==gr_name).select().first()
+    return grp.id
 
 @auth.requires_signature()
 def zrus_clenstvi():
     if len(request.args)==1:
-        clenstvi = db(db.clenstvi.user_id==request.args[0]).select().first()
+        clenstvi = db(db.clenstvi.id==request.args[0]).select().first()
         if not clenstvi.do_dne:
             clenstvi.update_record(do_dne=date.today())
-    redirect(URL('clenove'))
+    redirect(URL('default', 'index'))
 
 @auth.requires_membership('admin')
 def zakaznici():
