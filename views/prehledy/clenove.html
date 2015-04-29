@@ -17,15 +17,19 @@
     <td>{{=clen.auth_user.nick or ''}}</td>
     <td>{{=(clen.clenstvi.ode_dne.strftime('%d.%m.%Y') if clen.clenstvi.ode_dne else '')}}</td>
     <td>{{=(clen.clenstvi.do_dne.strftime('%d.%m.%Y') if clen.clenstvi.do_dne else '')}}</td>
-    {{if auth.has_membership("admin"):}}
+    {{if auth.has_membership("vedení"):}}
       <td>
-      {{if not clen.clenstvi.do_dne:}}
+      {{if not clen.clenstvi.do_dne and auth.has_membership("admin"):}}
         {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.id, user_signature=True))}}
       {{pass}}
       {{if hlavni:}}
         - {{=A("hl.org.", _href=URL("add_hl_org", args=clen.clenstvi.user_id, user_signature=True))}}
-        - {{=A("rada", _href=URL("add_rada", args=clen.clenstvi.user_id, user_signature=True))}}
-        - {{=A("DK", _href=URL("add_dk", args=clen.clenstvi.user_id, user_signature=True))}}
+        {{if auth.has_membership("admin"):}}
+          - {{=A("rada", _href=URL("add_rada", args=clen.clenstvi.user_id, user_signature=True))}}
+          - {{=A("DK", _href=URL("add_dk", args=clen.clenstvi.user_id, user_signature=True))}}
+          - {{=A("vedení", _href=URL("add_vedeni", args=clen.clenstvi.user_id, user_signature=True))}}
+          - {{=A("účto", _href=URL("add_ucto", args=clen.clenstvi.user_id, user_signature=True))}}
+          {{pass}}
       {{pass}}
       </td>
     {{pass}}

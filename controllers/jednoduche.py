@@ -2,7 +2,7 @@
 
 from mz_wkasa_platby import Uc_sa, zpatky, aliases
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def bu2():
     response.view = 'jednoduche/pohyby.html'
     md, dal, org = aliases(db) 
@@ -20,7 +20,7 @@ def bu2():
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def bu():
     response.view = 'jednoduche/pohyby.html'
     md, dal, org = aliases(db) 
@@ -37,7 +37,7 @@ def bu():
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def pokladna():
     response.view = 'jednoduche/pohyby.html'
     md, dal, org = aliases(db) 
@@ -56,7 +56,7 @@ def pokladna():
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def atm():
     response.view = 'jednoduche/pohyby.html'
     md, dal, org = aliases(db) 
@@ -75,7 +75,7 @@ def atm():
               dal.on(dal.id==db.pohyb.iddal)),
           orderby=~db.pohyb.datum))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def vydaje():
     response.view = 'jednoduche/pohyby.html'
     md, dal, org = aliases(db)

@@ -43,19 +43,29 @@ def send_plan_maily():
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
-    elif komu=='C':    # zatím závislé na datech(id==12==členové)
-        adresati = db((db.auth_membership.group_id==12) &
+    elif komu=='C':    # členové
+        grp = db(db.auth_group.role=='člen sdružení').select().first()
+        adresati = db((db.auth_membership.group_id==grp.id) &
                 (db.auth_user.id==db.auth_membership.user_id) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
     elif komu=='O':
-        adresati = db((db.auth_user.organizator==True) &
+        grp = db(db.auth_group.role=='hlavní organizátor').select().first()
+        adresati = db(((db.auth_user.organizator==True) |
+                    ((db.auth_membership.group_id==grp.id) & (db.auth_user.id==db.auth_membership.user_id))) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
-    else:  # komu=='A'    # zatím závislé na datech(id==1==admin==bafuňáři)
-        adresati = db((db.auth_membership.group_id==1) &
+    elif komu=='H':
+        grp = db(db.auth_group.role=='hlavní organizátor').select().first()
+        adresati = db((db.auth_membership.group_id==grp.id) & (db.auth_user.id==db.auth_membership.user_id) &
+                (db.auth_user.id<pozice)).select(
+                db.auth_user.id, db.auth_user.email,
+                orderby=~db.auth_user.id, limitby=(0,ncount))
+    else:  # komu=='A'    # vedení==bafuňáři
+        grp = db(db.auth_group.role=='vedení').select().first()
+        adresati = db((db.auth_membership.group_id==grp.id) &
                 (db.auth_user.id==db.auth_membership.user_id) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,

@@ -15,6 +15,12 @@ def rada():
 def dk():
     return _clenove('dk', False)
 
+def vedeni():
+    return _clenove('vedení', False)
+
+def ucto():
+    return _clenove('pokladna', False)
+
 def _clenove(skupina, hlavni):
     response.view = 'prehledy/clenove.html'
     clen_id = _getgrpid(skupina)
@@ -32,6 +38,12 @@ def add_rada():
 
 def add_dk():
     _add_x('dk', 'dk', "už je v DK", "přidán do DK")
+
+def add_vedeni():
+    _add_x('vedeni', 'vedení', "už je oprávněn vidět účetnictví, apod.", "přidán k oprávnění vidět účetnictví, apod.")
+
+def add_ucto():
+    _add_x('ucto', 'pokladna', "už je oprávněn vést účetnictví", "přidán k oprávnění vést účetnictví")
 
 def _add_x(kam_potom, skupina, msg_uz_je, msg_pridan):
     grp_id = _getgrpid(skupina)
@@ -60,7 +72,7 @@ def zrus_clenstvi():
             clenstvi.update_record(do_dne=date.today())
     redirect(URL('default', 'index'))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def zakaznici():
     return dict(grid=SQLFORM.grid(db.auth_user,
               fields=(db.auth_user.vs, db.auth_user.ss,
@@ -257,7 +269,7 @@ def vyrizeno():
                                           prevedeno=request.args[2])
     redirect(URL('zadosti'))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def duplicity():
     count = db.pohyb.id.count()
     seznam = db((db.pohyb.idauth_user!=None)

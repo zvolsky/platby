@@ -3,7 +3,7 @@
 import datetime
 from collections import defaultdict
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def obdobi():
     volba_obdobi = '<table>'
     for rok in xrange(datetime.date.today().year, 2010, -1):
@@ -18,7 +18,7 @@ def obdobi():
     volba_obdobi += '</table>'
     return dict(volba_obdobi=volba_obdobi)
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def zaverka():
     if len(request.args)<3:
         session.flash = TFu("nesprávné parametry volání")
@@ -89,7 +89,7 @@ def zaverka():
             ucty=ucty, ucty_dict=ucty_dict, protistrana=protistrana,
             naklady=naklady, vynosy=vynosy)
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def prubezne():
     from mz_wkasa_platby import Uc_sa
 
@@ -182,11 +182,11 @@ def prubezne():
         zaloha_zakaznik=zaloha_ted  # < ucty[-1=ZAL], dokud vrácení záloh (None/221) není určeno
         )
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def osnova():
     return dict(ucty = db(db.ucet).select(orderby=db.ucet.ucet))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def dp():
     def zapis_mesice(akt_rok, akt_mesic, dne, ziskano, ziskano_mesice):
         '''přelité osobní zálohy po měsících

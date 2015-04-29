@@ -4,7 +4,7 @@ from mz_wkasa_platby import sa_ss, Uc_sa, vs2id
 
 @auth.requires_login()
 def pokladna():
-    adm = auth.has_membership('admin')
+    adm = auth.has_membership('vedení')
     if adm and request.args(0)=='vse': 
         query = db.pohyb.idorganizator!=None
     else: 
@@ -32,7 +32,7 @@ def pokladna():
     statusy, které zobrazí Odsouhlasit: 22, 23, 2#, 2!, 32
     '''
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def dluhy():
     zapisy = db(db.pohyb.idorganizator!=None).select(
                 db.pohyb.castka, db.pohyb.idma_dati, db.pohyb.iddal,
@@ -54,7 +54,7 @@ def dluhy():
 
 @auth.requires_login()
 def pokladnikovi():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj(2)
     form = SQLFORM(db.pohyb)
@@ -68,7 +68,7 @@ def pokladnikovi():
 
 @auth.requires_login()
 def od_pokladnika():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj(2)
     form = SQLFORM(db.pohyb)
@@ -82,7 +82,7 @@ def od_pokladnika():
 
 @auth.requires_login()
 def dar():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj()
     form = SQLFORM(db.pohyb)
@@ -105,7 +105,7 @@ def dar():
 
 @auth.requires_login()
 def strhnout():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj(warning=True)
     form = SQLFORM(db.pohyb)
@@ -134,7 +134,7 @@ def strhnout():
 
 @auth.requires_login()
 def hotovka():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj()
     form = SQLFORM(db.pohyb)
@@ -157,7 +157,7 @@ def hotovka():
 
 @auth.requires_login()
 def hotov_vydaj():
-    organizator = auth.has_membership('admin'
+    organizator = auth.has_membership('vedení'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     _skryj(1)
     form = SQLFORM(db.pohyb)

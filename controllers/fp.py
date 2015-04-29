@@ -8,7 +8,7 @@ def edit():
         redirect('fp', 'prehled')
     return dict(form=form)
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedení')
 def prehled():
     return dict(grid=SQLFORM.grid(db.fp,
               left=db.partner.on(db.fp.partner_id==db.partner.id),
@@ -20,7 +20,7 @@ def prehled():
               deletable=False,
               editable=auth.has_membership('pokladna'),
               create=auth.has_membership('pokladna'),
-              csv=auth.has_membership('admin'),
+              csv=auth.has_membership('vedení'),
               paginate=100,
               orderby=db.fp.vystaveno,
               showbuttontext=False,

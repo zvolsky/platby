@@ -66,6 +66,6 @@ def __parse_mailheader(hlavicka_filename):
     hlavicka = vfp.filetostr(hlavicka_filename)
     radky_hlavicky = hlavicka.splitlines()
     is_html = True if radky_hlavicky[0][0]=='H' else False
-    komu = radky_hlavicky[0][1]  # Z|C|O|A zákazníkům/členům/organizátorům/adminům
+    komu = radky_hlavicky[0][1]  # Z|C|O|A zákazníkům/členům/organizátorům/vedení
     subj = unicode(radky_hlavicky[1], 'utf8')
     return (is_html, komu, subj)
