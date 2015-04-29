@@ -23,7 +23,9 @@
         {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.id, user_signature=True))}}
       {{pass}}
       {{if hlavni:}}
-        {{=A("hl.org.", _href=URL("add_hl_org", args=clen.clenstvi.user_id, user_signature=True))}}
+        - {{=A("hl.org.", _href=URL("add_hl_org", args=clen.clenstvi.user_id, user_signature=True))}}
+        - {{=A("rada", _href=URL("add_rada", args=clen.clenstvi.user_id, user_signature=True))}}
+        - {{=A("DK", _href=URL("add_dk", args=clen.clenstvi.user_id, user_signature=True))}}
       {{pass}}
       </td>
     {{pass}}

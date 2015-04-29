@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Od 23.4.15 je zvoleno nové vedení sdružení - Rada: Du-šan, Nerothar, Mára, DK: Leni79, Manik"
+aktualita = "Od 23.4.15 je zvoleno nové vedení sdružení - Rada: Nerothar, Du-šan, Mára, DK: Leni79, Manik"
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
@@ -38,7 +38,6 @@ response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             (T('O FungujemeAktivne'), False, URL('info', 'fungujeme'), []),
             (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),
             (T('Pro organizátory'), False, URL('info', 'organizatori'), []),
-            (T('Pro organizace: Účtovat na spolecneaktivity.cz?'), False, URL('info', 'varovani'), []),
             ]))
 subpostak = [
             ]
@@ -56,6 +55,8 @@ if auth.user and auth.user.organizator:
 subclenstvi = [
             (T('Členové sdružení'), False, URL('prehledy', 'clenove'), []),
             (T('Hlavní organizátoři'), False, URL('prehledy', 'hlorg'), []),
+            (T('Rada'), False, URL('prehledy', 'rada'), []),
+            (T('Dozorčí komise'), False, URL('prehledy', 'dk'), []),
             ]
 subprehledy = [
             (T('Členství'), False, URL('prehledy', 'clenove'), subclenstvi),
