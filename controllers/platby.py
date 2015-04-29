@@ -23,7 +23,7 @@ def prehled():
 def pohyby():
     class Celkem(object):
         vlozeno=vraceno=sa_vlozeno=z_sa_prevedeno=ozwk_vlozeno=ozwk_cerpano = 0
-    uzivatel_id = auth.has_membership('vedení'
+    uzivatel_id = auth.has_membership('vedeni'
         ) and vs2id(db, request.args(0)) or auth.user_id  # lze zadat parametrem
     pohyby = db(db.pohyb.idauth_user==uzivatel_id
                       ).select(orderby=~db.pohyb.datum)
@@ -70,7 +70,7 @@ def pohyby():
     return dict(zaloha=zaloha, pohyby=pohyby, Celkem=Celkem,
             Uc_sa=Uc_sa, nick=nick, uzivatel_id=uzivatel_id)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def vse():
     return dict(pohyby=db().select(db.pohyb.ALL))
 
@@ -127,7 +127,7 @@ def vratit_zalohu():
         redirect(URL('prehled'))
     return dict(form=form)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def vyridit():
     if len(request.args)==3: # 1/2=z_SA/na_BÚ, ss, castka po odečtu poplatku
         zadosti = db((db.zadost.ss==request.args[1])

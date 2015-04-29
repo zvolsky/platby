@@ -5,12 +5,12 @@
 
 from mz_wkasa_platby import Uc_sa, zpatky, aliases
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def vsechny():
     response.view = 'podvojne/grid.html'
     return dict(grid=_grid(db.pohyb))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def castka():
     if request.args:
         form = None
@@ -27,7 +27,7 @@ def castka():
     return dict(form=form, grid=None)
 
 '''
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def vse():
     response.view = 'podvojne/pohyby.html'
     cnt_args = len(request.args)
@@ -53,41 +53,41 @@ def vse():
     return _podvojne(query)
 '''
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def nedavne():
     response.view = 'podvojne/pohyby.html'
     return _podvojne(db.pohyb.datum>=zpatky(60))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def zal_plus():
     response.view = 'podvojne/pohyby.html'
     return _podvojne(db.pohyb.iddal==Uc_sa.oz)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def fungujeme():
     response.view = 'podvojne/pohyby.html'
     return _podvojne(db.pohyb.iddal==Uc_sa.oz_fu)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def bu():
     response.view = 'podvojne/pohyby.html'
     return _podvojne((db.pohyb.iddal==Uc_sa.bezny)|
               (db.pohyb.idma_dati==Uc_sa.bezny))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def pokladna():
     response.view = 'podvojne/pohyby.html'
     return _podvojne((db.pohyb.iddal==Uc_sa.pokladna)|
               (db.pohyb.idma_dati==Uc_sa.pokladna))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def chybi():
     response.flash = "chybějící podvojný účet je nutno doplnit před daňovým přiznáním"
     response.view = 'podvojne/pohyby.html'
     return _podvojne((db.pohyb.iddal==None)|
               (db.pohyb.idma_dati==None))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def ucet():
     if len(request.args)==1:
         ucet = db.ucet[request.args[0]]

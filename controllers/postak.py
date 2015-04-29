@@ -18,7 +18,7 @@ def zaslat():
         session.planovany2 = form.vars.txt
     return dict(form=form)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def zakaznikum():
     planovano = os.path.isfile(planovany)
     form = __get_mailform()
@@ -55,7 +55,7 @@ def zakaznikum():
         redirect(URL())
     return dict(form=form, planovano=planovano, prilohy=prilohy)
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def smaz_prilohy():
     prilohy = __get_prilohy()
     for priloha in prilohy:
@@ -67,7 +67,7 @@ def __get_prilohy():
     prilohy = [os.path.join(dir_prilohy, priloha) for priloha in os.listdir(unicode(dir_prilohy))]
     return [priloha for priloha in prilohy if os.path.isfile(priloha)]
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def zrus_hromadny():
     vfp.remove(planovany)
     vfp.remove(planovany2)

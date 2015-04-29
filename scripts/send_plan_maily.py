@@ -65,7 +65,7 @@ def send_plan_maily():
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
     else:  # komu=='A'    # vedení==bafuňáři
-        grp = db(db.auth_group.role=='vedení').select().first()
+        grp = db(db.auth_group.role=='vedeni').select().first()
         adresati = db((db.auth_membership.group_id==grp.id) &
                 (db.auth_user.id==db.auth_membership.user_id) &
                 (db.auth_user.id<pozice)).select(

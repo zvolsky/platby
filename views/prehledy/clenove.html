@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 
 {{if not hlavni and auth.has_membership("admin"):}}
-  <p>Pozor: přehled členů Rady a DK nemá vliv na práva. Zařazení do 'vedení' a 'pokladna' z hlediska oprávnění
+  <p>Pozor: přehled členů Rady a DK nemá vliv na práva. Zařazení do 'vedeni' a 'pokladna' z hlediska oprávnění
   {{=A('zde', _href="%s" % URL('plugin_manage_groups', 'index'))}}.
   Skupiny 'hlavní organizátor', 'rada', 'dk' nenastavuj ani neruš, ačkoli jsou prázdné - používá se totiž jiný mechanismus členství v těchto skupinách (tabulka db.clenstvi).</p>
   {{pass}}
@@ -23,7 +23,7 @@
     <td>{{=clen.auth_user.nick or ''}}</td>
     <td>{{=(clen.clenstvi.ode_dne.strftime('%d.%m.%Y') if clen.clenstvi.ode_dne else '')}}</td>
     <td>{{=(clen.clenstvi.do_dne.strftime('%d.%m.%Y') if clen.clenstvi.do_dne else '')}}</td>
-    {{if auth.has_membership("vedení"):}}
+    {{if auth.has_membership("vedeni"):}}
       <td>
       {{if not clen.clenstvi.do_dne:}}
         {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.id, user_signature=True))}}

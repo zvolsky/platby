@@ -64,7 +64,7 @@ def zrus_clenstvi():
             clenstvi.update_record(do_dne=date.today())
     redirect(URL('default', 'index'))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def zakaznici():
     return dict(grid=SQLFORM.grid(db.auth_user,
               fields=(db.auth_user.vs, db.auth_user.ss,
@@ -261,7 +261,7 @@ def vyrizeno():
                                           prevedeno=request.args[2])
     redirect(URL('zadosti'))
 
-@auth.requires_membership('vedení')
+@auth.requires_membership('vedeni')
 def duplicity():
     count = db.pohyb.id.count()
     seznam = db((db.pohyb.idauth_user!=None)

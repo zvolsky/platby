@@ -41,14 +41,14 @@ response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             ]))
 subpostak = [
             ]
-if auth.has_membership('vedení'):
+if auth.has_membership('vedeni'):
     subpostak.append((T('Hromadný mail'), False,
               URL('postak', 'zakaznikum'), []))
 response.menu.append((T('Pošťák'), False, None, subpostak))
 
 if auth.user and auth.user.organizator:
     suborganizator = [(T('Záznamy do pokladny'), False, URL('organizator', 'pokladna'), []),]
-    if auth.has_membership('vedení'):
+    if auth.has_membership('vedeni'):
         suborganizator.append((T('Dluhy'), False, URL('organizator', 'dluhy'), []))
     response.menu.append((T('Záznamy do pokladny'), False, URL('organizator', 'pokladna'), suborganizator))
 
@@ -61,7 +61,7 @@ subclenstvi = [
 subprehledy = [
             (T('Členství'), False, URL('prehledy', 'clenove'), subclenstvi),
             ]
-if auth.has_membership('vedení'):
+if auth.has_membership('vedeni'):
     subprehledy.append((T('Zákazníci'), False,
               URL('prehledy', 'zakaznici'), []))
 subprehledy.append((T('Čísla a ceny akcí'), False,
@@ -69,7 +69,7 @@ subprehledy.append((T('Čísla a ceny akcí'), False,
 if auth.user:
     subprehledy.append((T('Podané žádosti'), False,
               URL('prehledy', 'zadosti'), []))        
-if auth.has_membership('vedení'):
+if auth.has_membership('vedeni'):
     subprehledy.append((T('Jednoduché'), False,
               None, [
               (TFu('všechny výdaje'), False,
