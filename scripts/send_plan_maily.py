@@ -45,21 +45,22 @@ def send_plan_maily():
                 orderby=~db.auth_user.id, limitby=(0,ncount))
     elif komu=='C':    # členové
         grp = db(db.auth_group.role=='člen sdružení').select().first()
-        adresati = db((db.auth_membership.group_id==grp.id) &
-                (db.auth_user.id==db.auth_membership.user_id) &
+        adresati = db((db.clenstvi.group_id==grp.id) &
+                (db.auth_user.id==db.clenstvi.user_id) &
+                (db.clenstvi.do_dne==None) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
     elif komu=='O':
         grp = db(db.auth_group.role=='hlavní organizátor').select().first()
         adresati = db(((db.auth_user.organizator==True) |
-                    ((db.auth_membership.group_id==grp.id) & (db.auth_user.id==db.auth_membership.user_id))) &
+                    ((db.clenstvi.group_id==grp.id) & (db.auth_user.id==db.clenstvi.user_id) & (db.clenstvi.do_dne==None))) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))
     elif komu=='H':
         grp = db(db.auth_group.role=='hlavní organizátor').select().first()
-        adresati = db((db.auth_membership.group_id==grp.id) & (db.auth_user.id==db.auth_membership.user_id) &
+        adresati = db((db.clenstvi.group_id==grp.id) & (db.auth_user.id==db.clenstvi.user_id) & (db.clenstvi.do_dne==None) &
                 (db.auth_user.id<pozice)).select(
                 db.auth_user.id, db.auth_user.email,
                 orderby=~db.auth_user.id, limitby=(0,ncount))

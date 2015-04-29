@@ -15,12 +15,6 @@ def rada():
 def dk():
     return _clenove('dk', False)
 
-def vedeni():
-    return _clenove('vedení', False)
-
-def ucto():
-    return _clenove('pokladna', False)
-
 def _clenove(skupina, hlavni):
     response.view = 'prehledy/clenove.html'
     clen_id = _getgrpid(skupina)
@@ -39,18 +33,16 @@ def add_rada():
 def add_dk():
     _add_x('dk', 'dk', "už je v DK", "přidán do DK")
 
-def add_vedeni():
-    _add_x('vedeni', 'vedení', "už je oprávněn vidět účetnictví, apod.", "přidán k oprávnění vidět účetnictví, apod.")
-
-def add_ucto():
-    _add_x('ucto', 'pokladna', "už je oprávněn vést účetnictví", "přidán k oprávnění vést účetnictví")
-
 def _add_x(kam_potom, skupina, msg_uz_je, msg_pridan):
     grp_id = _getgrpid(skupina)
     if len(request.args)==1:
         clenstvi = db((db.clenstvi.user_id==request.args[0]) & (db.clenstvi.group_id==grp_id)).select().first()
         if clenstvi:
-            session.flash = msg_uz_je
+            if clenstvi.do_dne:
+                clenstvi.update_record(do_dne=None)
+                session.flash = msg_pridan
+            else:
+                session.flash = msg_uz_je
         else:
             db.clenstvi.insert(user_id=int(request.args[0]), group_id=grp_id)
             session.flash = msg_pridan

@@ -1,5 +1,10 @@
 {{extend 'layout.html'}}
 
+{{if not hlavni and auth.has_membership("admin"):}}
+  <p>Pozor: přehled členů Rady a DK nemá vliv na práva. Zařazení do 'vedení' a 'pokladna' z hlediska oprávnění
+  {{=A('zde', _href="%s" % URL('plugin_manage_groups', 'index'))}}.</p>
+  {{pass}}
+
 <div class="obly modry"><table>
   <thead>
     <th>Nick</th>
@@ -19,17 +24,13 @@
     <td>{{=(clen.clenstvi.do_dne.strftime('%d.%m.%Y') if clen.clenstvi.do_dne else '')}}</td>
     {{if auth.has_membership("vedení"):}}
       <td>
-      {{if not clen.clenstvi.do_dne and auth.has_membership("admin"):}}
+      {{if not clen.clenstvi.do_dne:}}
         {{=A("del", _href=URL("zrus_clenstvi", args=clen.clenstvi.id, user_signature=True))}}
       {{pass}}
       {{if hlavni:}}
         - {{=A("hl.org.", _href=URL("add_hl_org", args=clen.clenstvi.user_id, user_signature=True))}}
-        {{if auth.has_membership("admin"):}}
-          - {{=A("rada", _href=URL("add_rada", args=clen.clenstvi.user_id, user_signature=True))}}
-          - {{=A("DK", _href=URL("add_dk", args=clen.clenstvi.user_id, user_signature=True))}}
-          - {{=A("vedení", _href=URL("add_vedeni", args=clen.clenstvi.user_id, user_signature=True))}}
-          - {{=A("účto", _href=URL("add_ucto", args=clen.clenstvi.user_id, user_signature=True))}}
-          {{pass}}
+        - {{=A("rada", _href=URL("add_rada", args=clen.clenstvi.user_id, user_signature=True))}}
+        - {{=A("DK", _href=URL("add_dk", args=clen.clenstvi.user_id, user_signature=True))}}
       {{pass}}
       </td>
     {{pass}}

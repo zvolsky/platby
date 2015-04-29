@@ -57,8 +57,6 @@ subclenstvi = [
             (T('Hlavní organizátoři'), False, URL('prehledy', 'hlorg'), []),
             (T('Rada'), False, URL('prehledy', 'rada'), []),
             (T('Dozorčí komise'), False, URL('prehledy', 'dk'), []),
-            (T('Audit účetnictví'), False, URL('prehledy', 'audit'), []),
-            (T('Vedení účetnictví'), False, URL('prehledy', 'ucto'), []),
             ]
 subprehledy = [
             (T('Členství'), False, URL('prehledy', 'clenove'), subclenstvi),
