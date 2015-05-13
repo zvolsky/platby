@@ -66,7 +66,7 @@ def zrus_clenstvi():
 
 @auth.requires_membership('vedeni')
 def zakaznici():
-    return dict(grid=SQLFORM.grid(db.auth_user,
+    grid = SQLFORM.grid(db.auth_user,
               fields=(db.auth_user.vs, db.auth_user.ss,
                   db.auth_user.organizator,
                   db.auth_user.nick, db.auth_user.zaloha,
@@ -85,7 +85,10 @@ def zakaznici():
               orderby=db.auth_user.nick.lower(),
               showbuttontext=False,
               maxtextlengths={'auth_user.email' : 30}
-              ))
+              )
+    search_input = grid.element('#w2p_keywords')
+    search_input and search_input.attributes.pop('_onfocus')
+    return dict(grid=grid)
 
 @auth.requires_login()
 def zadosti():

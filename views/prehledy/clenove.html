@@ -3,7 +3,7 @@
 {{if not hlavni and auth.has_membership("admin"):}}
   <p>Pozor: přehled členů Rady a DK nemá vliv na práva. Zařazení do 'vedeni' a 'pokladna' z hlediska oprávnění
   {{=A('zde', _href="%s" % URL('plugin_manage_groups', 'index'))}}.
-  Skupiny 'hlavní organizátor', 'rada', 'dk' nenastavuj ani neruš, ačkoli jsou prázdné - používá se totiž jiný mechanismus členství v těchto skupinách (tabulka db.clenstvi).</p>
+  Skupiny 'hl_org', 'rada', 'dk', 'clen' nenastavuj ani neruš, bez ohledu na to, zda jsou prázdné - používá se totiž jiný mechanismus členství v těchto skupinách (tabulka db.clenstvi).</p>
   {{pass}}
 
 <div class="obly modry"><table>
