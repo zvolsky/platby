@@ -4,10 +4,10 @@ from datetime import datetime, timedelta, time, date
 from mz_wkasa_platby import Uc_sa
 
 def clenove():
-    return _clenove('člen sdružení', True)
+    return _clenove('clen sdruzeni', True)
 
 def hlorg():
-    return _clenove('hlavní organizátor', False)
+    return _clenove('hlavni organizator', False)
 
 def rada():
     return _clenove('rada', False)
