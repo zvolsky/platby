@@ -13,6 +13,42 @@ first_token = vfp.filetostr(os.path.join(request.folder,
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def naklady():
+    '''vrací pohyby (výdaje a příjmy) k zadané akci
+    ws/naklady/<args>, args:
+    token = hash(token+vs_akce)
+    vs_akce
+    '''
+    __log_ws('naklady')
+
+    if len(request.args)==2:
+        token = request.args[0]
+        vs_akce = request.args[1]
+        if token==md5(first_token+vs_akce).hexdigest():
+            pohyby = db(db.pohyb.ss==vs_akce).select(db.pohyb.castka, db.pohyb.castka)
+            retval = dict(pohyby=pohyby)
+            __log_res('ok')
+            return retval
+    __log_res('failed')
+    raise HTTP(403)
+
+def zakaznici():
+    '''vrací přehled zákazníků a jejich záloh
+    ws/zakaznici/<args>, args:
+    token = hash(token+YYYYmmddHHMMSS)
+    dummy
+    '''
+    __log_ws('zakaznici')
+
+    if len(request.args)==2:
+        token = request.args[0]
+        dummy = request.args[1]
+        if token==md5(first_token+dummy).hexdigest():
+            __log_res('ok')
+            return retval
+    __log_res('failed')
+    raise HTTP(403)
+
 def novy():
     '''založí uživatele
     ws/novy/<args>, args:
@@ -51,6 +87,11 @@ def novy():
     raise HTTP(403)
 
 def udaje():
+    '''vrací údaje o uživateli
+    ws/udaje/<args>, args:
+    token = hash(token+dotaz)
+    dotaz (e-mail nebo variabilní symbol)
+    '''
     __log_ws('udaje')
 
     if len(request.args)==2:
