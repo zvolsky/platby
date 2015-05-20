@@ -4,32 +4,49 @@ from datetime import datetime, timedelta, time, date
 from mz_wkasa_platby import Uc_sa
 
 def clenove():
-    clen_id = _getgrpid('člen sdružení')
-    clenove = db(db.clenstvi.group_id==clen_id).select(
-          db.clenstvi.ALL, db.auth_user.nick,
-          left=db.auth_user.on(db.auth_user.id==db.clenstvi.user_id),
-          orderby=db.auth_user.nick.lower())
-    return dict(clenove=clenove, hlavni=True)
+    return _clenove('clen sdruzeni', True)
 
 def hlorg():
+    return _clenove('hlavni organizator', False)
+
+def rada():
+    return _clenove('rada', False)
+
+def dk():
+    return _clenove('dk', False)
+
+def _clenove(skupina, hlavni):
     response.view = 'prehledy/clenove.html'
-    clen_id = _getgrpid('hlavní organizátor')
+    clen_id = _getgrpid(skupina)
     clenove = db(db.clenstvi.group_id==clen_id).select(
           db.clenstvi.ALL, db.auth_user.nick,
           left=db.auth_user.on(db.auth_user.id==db.clenstvi.user_id),
           orderby=db.auth_user.nick.lower())
-    return dict(clenove=clenove, hlavni=False)
+    return dict(clenove=clenove, hlavni=hlavni)
 
 def add_hl_org():
-    grp_id = _getgrpid('hlavní organizátor')
+    _add_x('hlorg', 'hlavní organizátor', "už je hlavním organizátorem", "přidán do seznamu hlavních organizátorů")
+
+def add_rada():
+    _add_x('rada', 'rada', "už je v radě", "přidán do rady")
+
+def add_dk():
+    _add_x('dk', 'dk', "už je v DK", "přidán do DK")
+
+def _add_x(kam_potom, skupina, msg_uz_je, msg_pridan):
+    grp_id = _getgrpid(skupina)
     if len(request.args)==1:
         clenstvi = db((db.clenstvi.user_id==request.args[0]) & (db.clenstvi.group_id==grp_id)).select().first()
         if clenstvi:
-            session.flash = "už je hlavním organizátorem"
+            if clenstvi.do_dne:
+                clenstvi.update_record(do_dne=None)
+                session.flash = msg_pridan
+            else:
+                session.flash = msg_uz_je
         else:
             db.clenstvi.insert(user_id=int(request.args[0]), group_id=grp_id)
-            session.flash = "přidán do seznamu hlavních organizátorů"
-        redirect(URL('hlorg'))
+            session.flash = msg_pridan
+        redirect(URL(kam_potom))
 
 def _getgrpid(gr_name):
     grp = db(db.auth_group.role==gr_name).select().first()
@@ -47,9 +64,9 @@ def zrus_clenstvi():
             clenstvi.update_record(do_dne=date.today())
     redirect(URL('default', 'index'))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def zakaznici():
-    return dict(grid=SQLFORM.grid(db.auth_user,
+    grid = SQLFORM.grid(db.auth_user,
               fields=(db.auth_user.vs, db.auth_user.ss,
                   db.auth_user.organizator,
                   db.auth_user.nick, db.auth_user.zaloha,
@@ -68,7 +85,10 @@ def zakaznici():
               orderby=db.auth_user.nick.lower(),
               showbuttontext=False,
               maxtextlengths={'auth_user.email' : 30}
-              ))
+              )
+    search_input = grid.element('#w2p_keywords')
+    search_input and search_input.attributes.pop('_onfocus')
+    return dict(grid=grid)
 
 @auth.requires_login()
 def zadosti():
@@ -244,7 +264,7 @@ def vyrizeno():
                                           prevedeno=request.args[2])
     redirect(URL('zadosti'))
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def duplicity():
     count = db.pohyb.id.count()
     seznam = db((db.pohyb.idauth_user!=None)

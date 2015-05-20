@@ -1,6 +1,6 @@
 # coding: utf8
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def prehled():
     return dict(grid=SQLFORM.grid(db.partner,
               fields=[db.partner.ucel,
@@ -8,9 +8,9 @@ def prehled():
                   db.partner.kontakt, db.partner.poznamka
                   ],
               deletable=False,
-              editable=auth.has_membership('admin'),
-              create=auth.has_membership('admin'),
-              csv=auth.has_membership('admin'),
+              editable=auth.has_membership('vedeni'),
+              create=auth.has_membership('vedeni'),
+              csv=auth.has_membership('vedeni'),
               showbuttontext=False,
               paginate=100,
               orderby=db.partner.typp_id,

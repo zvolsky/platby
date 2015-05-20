@@ -71,6 +71,7 @@ auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
+auth.settings.create_user_groups = None
 vs_default = TFu('dostaneš..') # max 10 znaků
 auth.settings.extra_fields['auth_user'] = [
     Field('email_ver', 'boolean', default=False, label=TFu("Mail není tajný"),

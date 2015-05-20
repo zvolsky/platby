@@ -18,7 +18,7 @@ def zaslat():
         session.planovany2 = form.vars.txt
     return dict(form=form)
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def zakaznikum():
     planovano = os.path.isfile(planovany)
     form = __get_mailform()
@@ -55,7 +55,7 @@ def zakaznikum():
         redirect(URL())
     return dict(form=form, planovano=planovano, prilohy=prilohy)
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def smaz_prilohy():
     prilohy = __get_prilohy()
     for priloha in prilohy:
@@ -67,7 +67,7 @@ def __get_prilohy():
     prilohy = [os.path.join(dir_prilohy, priloha) for priloha in os.listdir(unicode(dir_prilohy))]
     return [priloha for priloha in prilohy if os.path.isfile(priloha)]
 
-@auth.requires_membership('admin')
+@auth.requires_membership('vedeni')
 def zrus_hromadny():
     vfp.remove(planovany)
     vfp.remove(planovany2)
@@ -83,7 +83,7 @@ def __get_mailform():
                     comment=TFu('nepoužívej HTML mail, nemáš-li základní znalost HTML (snad zde časem bude inteligentnější prvek pro graficky zvýrazněný text)')),
               Field('komu', 'string', length=1, default='A',
                     label=TFu('komu'),
-                    comment=TFu('Z=všem (zákazníkům), C=členům sdružení, O=označeným organizátorům, A=adminům~radě')),
+                    comment=TFu('Z=všem (zákazníkům), C=členům sdružení, O=organizátorům, H=hlav.organizátorům, A=vedení')),
               Field('txt', 'text',
                     default='\n%s %s'
                           %(auth.user.first_name, auth.user.last_name),
@@ -92,6 +92,6 @@ def __get_mailform():
               )
 
 def __get_mailheader(form):
-    return ('H' if form.vars.is_html else 'T') + (form.vars.komu if (form.vars.komu in 'ZCO') else 'A') + (
+    return ('H' if form.vars.is_html else 'T') + (form.vars.komu if (form.vars.komu in 'ZCOH') else 'A') + (
                 ' %s\n%s'%(datetime.datetime.now().strftime('%d.%m.%Y %H:%M'),
                 form.vars.subject))

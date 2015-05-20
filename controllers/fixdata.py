@@ -29,6 +29,7 @@ proplacená faktura:
 (1555,),16.11. 2700
 '''
 
+'''
 def setnick():
     '''doplní zákazníka pohybu podle nicku; nemění zálohu'''
     if len(request.args)==2:
@@ -92,7 +93,12 @@ def mikruse():
     db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                     ode_dne=date(2013,10,XXXXXXXXXX))
 
-'''
+def grps():
+    db(db.auth_group.role.startswith('user_')).delete()
+    db.auth_group[12] = dict(role='clen sdruzeni')
+    db.auth_group[42] = dict(role='hlavni organizator')
+    del db.auth_group[47]
+
 def addu():
     db.ucet.insert(ucet='221-01', zkratka='BÚj', nazev="Jmění")
     db.ucet.insert(ucet='221-12', zkratka='d12', nazev="Odklad základu daně 2012")
