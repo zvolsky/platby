@@ -2,6 +2,7 @@
 
 import os
 import datetime
+import locale
 from decimal import Decimal
 import vfp
 
@@ -33,7 +34,7 @@ class SOUHLAS_S_VS(object):
         else:                # registrovaní později
             if intss<675:
                 return ('', 'Zadané číslo uživatele není přípustné')
-        return (value, None)    
+        return (value, None)
 
 ## if SSL/HTTPS is properly configured and you want all HTTP requests to
 ## be redirected to HTTPS, uncomment the line below:
@@ -43,9 +44,11 @@ if request.is_local:
 else:
     request.requires_https()
 
+locale.setlocale(locale.LC_ALL, 'cs_CZ.utf8')
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
     db = DAL('sqlite://platby.sqlite',pool_size=1,check_reserved=['all'])
+    db._adapter.connection.create_collation("lexical", locale.strcoll)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
     db = DAL('google:datastore')
