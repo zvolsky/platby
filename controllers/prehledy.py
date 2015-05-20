@@ -82,7 +82,7 @@ def zakaznici():
               create=auth.has_membership('pokladna'),
               csv=auth.has_membership('pokladna'),
               paginate=100,
-              orderby=db.auth_user.nick.lower(),
+              orderby=db.auth_user.nick.lower(),  # 'auth_user.nick COLLATE lexical'
               showbuttontext=False,
               maxtextlengths={'auth_user.email' : 30}
               )

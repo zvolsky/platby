@@ -309,6 +309,7 @@
 'invalid request': 'Neplatný požadavek',
 'Is Active': 'Je aktivní',
 'It is %s %%{day} today.': 'Dnes je to %s %%{den}.',
+'Jak platit': 'Jak platit',
 'Jednoduché': 'Jednoduché',
 'jednoduché': 'jednoduché',
 'JSON': 'JSON',
