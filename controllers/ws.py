@@ -25,7 +25,7 @@ def naklady():
         token = request.args[0]
         vs_akce = request.args[1]
         if token==md5(first_token+vs_akce).hexdigest():
-            pohyby = db(db.pohyb.ss==vs_akce).select(db.pohyb.castka, db.pohyb.castka)
+            pohyby = db(db.pohyb.ss==vs_akce).select()
             retval = dict(pohyby=pohyby)
             __log_res('ok')
             return retval
