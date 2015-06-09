@@ -1,1 +1,7 @@
-{{=XML(pohyby.xml())}}
+<tbl>
+{{for pohyb in pohyby:}}
+    <row>
+    <castka>{{=pohyb.castka}}</castka>
+    </row>
+    {{pass}}
+    </tbl>

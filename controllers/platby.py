@@ -10,7 +10,7 @@ def prehled():
     ss = sa_ss(auth.user.vs, auth.user.ss)[1] # spec.sym. na Jirkově
     sa_zal = __get_zaloha(ss)
     ja = db.auth_user[auth.user_id]
-    txt_clen = 'člen sdružení'
+    txt_clen = 'clen sdruzeni'
     clen_id = db(db.auth_group.role==txt_clen).select().first().id
     clenstvi = db((db.clenstvi.user_id==auth.user_id)&
           (db.clenstvi.group_id==clen_id)
