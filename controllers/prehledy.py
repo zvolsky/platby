@@ -156,9 +156,10 @@ def zalohu_vratit():
         
         if form.process().accepted:
             zaloha = form.vars.zaloha  # tj. kolik ze zálohy vzít vč. poplatku
-            if zaloha>zakaznik.zaloha:
-                session.flash = "přerušeno - zákazník nemá tolik na záloze"
-                redirect(URL('zadosti'))
+            # toto brani zpracovani po nacteni platby z banky, proto kontrolu vyhazuji 9.6.2015
+            #if zaloha>zakaznik.zaloha:
+            #    session.flash = "přerušeno - zákazník nemá tolik na záloze"
+            #    redirect(URL('zadosti'))
             if zaloha<form.vars.strhnout:
                 session.flash = "přerušeno - stržená částka nestačí na poplatek"
                 redirect(URL('zadosti'))
