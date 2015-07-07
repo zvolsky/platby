@@ -45,9 +45,9 @@ Pokud se spleteš, zavolej nebo napiš pokladníkovi: 732457966 zvolsky@seznam.c
         status=''
       elif zapis.pohyb.ks=='11':
         status='předat peníze a doklad'
-      elif zapis.pohyb.ks[0]=='1':
+      elif zapis.pohyb.ks and zapis.pohyb.ks[0]=='1':
         status='předat peníze'
-      elif zapis.pohyb.ks[1]=='1':
+      elif zapis.pohyb.ks and zapis.pohyb.ks[1]=='1':
         status='předat doklad'
       elif '?' in zapis.pohyb.ks:
         status='vyjasnit'

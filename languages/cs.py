@@ -680,6 +680,7 @@
 'web2py upgraded; please restart it': 'web2py upgraded; please restart it',
 'webová pokladna': 'webová pokladna',
 'Welcome': 'Vítejte',
+'Welcome %(username)s! Click on the link %(link)s to verify your email': 'Welcome %(username)s! Click on the link %(link)s to verify your email',
 'Welcome to web2py': 'Vitejte ve web2py',
 'Welcome to web2py!': 'Vítejte ve web2py!',
 'Which called the function %s located in the file %s': 'která zavolala funkci %s v souboru (kontroléru) %s.',
