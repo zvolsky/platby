@@ -123,7 +123,7 @@ def prijmout_clena():     # asi by to chtělo rodné číslo...?
             if not clenstvi1.do_dne:
                 session.flash = "přerušeno - má zahájené členství -> smazat žádost"
                 redirect(URL('zadosti'))
-        clen_id = db(db.auth_group.role=='člen sdružení').select().first().id 
+        clen_id = db(db.auth_group.role=='clen sdruzeni').select().first().id
         auth.add_membership(clen_id, user_id)
         db.clenstvi.insert(user_id=user_id, group_id=clen_id,
                         ode_dne=date.today())
