@@ -463,6 +463,7 @@
 'private files': 'soukromé soubory',
 'Pro organizace: Účtovat na spolecneaktivity.cz?': 'Pro organizace: Účtovat na spolecneaktivity.cz?',
 'Pro organizátory': 'Pro organizátory',
+'Pro pokladníka': 'Pro pokladníka',
 'profile': 'profil',
 'Profile': 'Profil',
 'Profile updated': 'Profil byl aktualizován',

@@ -18,5 +18,8 @@ def jp():
 def organizatori():
     return {}
 
+def pokladnik():
+    return {}
+
 def varovani():
     return {}

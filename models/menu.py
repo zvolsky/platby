@@ -38,6 +38,7 @@ response.menu.append((T('Informace'), False, URL('info', 'coajak'), [
             (T('O FungujemeAktivne'), False, URL('info', 'fungujeme'), []),
             (T('O spolecneaktivity.cz'), False, URL('info', 'jp'), []),
             (T('Pro organizátory'), False, URL('info', 'organizatori'), []),
+            (T('Pro pokladníka'), False, URL('info', 'pokladnik'), []),
             ]))
 subpostak = [
             ]
