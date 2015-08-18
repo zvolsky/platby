@@ -21,11 +21,13 @@ def prehled():
 
 @auth.requires_membership('pokladna')
 def nulovat_zalohu():
+    '''/id/vs/zustatek, pokud zustatek chybi, tak vynuluje'''
     zakaznik_id = request.args(0)
     zakaznik_vs = request.args(1)
+    zustatek = int(request.args(2) or 0)
     if zakaznik_id and zakaznik_vs:
         zakaznik = db.auth_user[zakaznik_id]
-        zakaznik.update_record(zaloha=0)
+        zakaznik.update_record(zaloha=zustatek)
         redirect(URL('pohyby', args=zakaznik_vs))
     else:
         session.flash = 'Chybné volání'
