@@ -24,7 +24,7 @@ def nulovat_zalohu():
     zakaznik_id = request.args(0)
     zakaznik_vs = request.args(1)
     if zakaznik_id and zakaznik_vs:
-        zakaznik = db.auth_user[zadost.idauth_user]
+        zakaznik = db.auth_user[zakaznik_id]
         zakaznik.update_record(zaloha=0)
         redirect(URL('pohyby', args=zakaznik_vs))
     else:

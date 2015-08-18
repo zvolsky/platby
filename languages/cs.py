@@ -472,6 +472,7 @@
 'Python': 'Python',
 'Před přihlášením': 'Před přihlášením',
 'Přehled': 'Přehled',
+'Přehled a žádost o vrácení os.zálohy': 'Přehled a žádost o vrácení os.zálohy',
 'Přehled a žádosti o převody': 'Přehled a žádosti o převody',
 'Přehledy': 'Přehledy',
 'přezdívka na častěji používaném serveru': 'přezdívka na častěji používaném serveru',
