@@ -19,6 +19,18 @@ def prehled():
           clen=auth.has_membership(txt_clen),
           clenstvi=clenstvi)
 
+@auth.requires_membership('pokladna')
+def nulovat_zalohu():
+    zakaznik_id = request.args(0)
+    zakaznik_vs = request.args(1)
+    if zakaznik_id and zakaznik_vs:
+        zakaznik = db.auth_user[zadost.idauth_user]
+        zakaznik.update_record(zaloha=0)
+        redirect(URL('pohyby', args=zakaznik_vs))
+    else:
+        session.flash = 'Chybné volání'
+        redirect(URL('default', 'index'))
+
 @auth.requires_login()
 def pohyby():
     class Celkem(object):
