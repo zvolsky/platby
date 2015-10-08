@@ -26,6 +26,7 @@ if auth.user:
             (T('Přehled a žádost o vrácení os.zálohy'), False, URL('platby', 'prehled'), []),
             (T('Pohyby na záloze'), False, URL('platby', 'pohyby'), []),
             (TFu('Věnovat peníze jiné(mu)'), False, URL('platby', 'venovat'), []),
+            (TFu('Darovat peníze sdružení'), False, URL('platby', 'darovat_sdruzeni'), []),
             ]))
 else:
     if not (request.controller=='default' and request.function=='index'):

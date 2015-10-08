@@ -657,6 +657,7 @@
 'Username': 'Přihlašovací jméno',
 'Uživatel': 'Uživatel',
 'value already in database or empty': 'Už evidovaný (nebo prázdný) údaj',
+'Value not in database': 'Value not in database',
 'value not in database': 'value not in database',
 'variables': 'variables',
 'Vedení účetnictví': 'Vedení účetnictví',

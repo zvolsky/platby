@@ -176,7 +176,6 @@ def venovat():
     if form.validate():
         dnes = date.today()
         prijemce = db.auth_user[form.vars.komu]
-        ja = db.auth_user[auth.user.id]
         ja.update_record(zaloha=ja.zaloha - form.vars.venovat)
         db.pohyb.insert(idauth_user=auth.user.id, idma_dati=Uc_sa.oz, iddal=Uc_sa.oz_presun,
                 castka=form.vars.venovat, datum=dnes,
@@ -188,6 +187,30 @@ def venovat():
                         auth.user.nick, auth.user.vs, auth.user.id))
         prijemce.update_record(zaloha=prijemce.zaloha + form.vars.venovat)
         session.flash = TFu("Příjemci bylo úspěšně předáno %s.") % (
+                        form.vars.venovat)
+        redirect(URL('platby', 'prehled'))
+    return dict(form=form)
+
+@auth.requires_login()
+def darovat_sdruzeni():
+    ja = db.auth_user[auth.user.id]
+    if ja.zaloha<=0:
+        session.flash = TFu("Momentálně na záloze nemáš žádné peníze.")
+        redirect(URL('platby', 'prehled'))
+    form = SQLFORM.factory(
+            Field('zaloha', 'decimal(11,2)', default=ja.zaloha,
+                    writable=False, label=TFu("Stav Tvé zálohy")),
+            Field('venovat', 'decimal(11,2)', default=min((400.0, ja.zaloha)),
+                    requires=IS_DECIMAL_IN_RANGE(1.0, ja.zaloha),
+                    label=TFu("Darovat pro sdružení Kč")),
+            )
+    if form.validate():
+        dnes = date.today()
+        ja.update_record(zaloha=ja.zaloha - form.vars.venovat)
+        db.pohyb.insert(idauth_user=auth.user.id, idma_dati=Uc_sa.oz, iddal=Uc_sa.dary,
+                castka=form.vars.venovat, datum=dnes,
+                popis=TFu("dar sdružení"))
+        session.flash = TFu("Sdružení jsi daroval %s Kč. Děkujeme.") % (
                         form.vars.venovat)
         redirect(URL('platby', 'prehled'))
     return dict(form=form)
