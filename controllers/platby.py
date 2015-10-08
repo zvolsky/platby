@@ -193,7 +193,16 @@ def venovat():
 
 @auth.requires_login()
 def darovat_sdruzeni():
-    ja = db.auth_user[auth.user.id]
+    zakaznik_id = request.args(0)
+    zakaznik_vs = request.args(1)
+    if zakaznik_id and zakaznik_vs and auth.has_membership('pokladna'):
+        ja = db.auth_user[zakaznik_id]
+        if ja.vs!=zakaznik_vs:
+            raise HTTP(403)
+        nick = ja.nick
+    else:
+        ja = db.auth_user[auth.user.id]
+        nick = None
     if ja.zaloha<=0:
         session.flash = TFu("Momentálně na záloze nemáš žádné peníze.")
         redirect(URL('platby', 'prehled'))
@@ -207,13 +216,13 @@ def darovat_sdruzeni():
     if form.validate():
         dnes = date.today()
         ja.update_record(zaloha=ja.zaloha - form.vars.venovat)
-        db.pohyb.insert(idauth_user=auth.user.id, idma_dati=Uc_sa.oz, iddal=Uc_sa.dary,
+        db.pohyb.insert(idauth_user=ja.id, idma_dati=Uc_sa.oz, iddal=Uc_sa.dary,
                 castka=form.vars.venovat, datum=dnes,
                 popis=TFu("dar sdružení"))
         session.flash = TFu("Sdružení jsi daroval %s Kč. Děkujeme.") % (
                         form.vars.venovat)
         redirect(URL('platby', 'prehled'))
-    return dict(form=form)
+    return dict(form=form, nick=nick)
 
 @auth.requires_membership('pokladna')
 def zaloha():  # nastaví požadovanou zálohu
