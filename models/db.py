@@ -3,6 +3,7 @@
 import os
 import datetime
 import locale
+import platform
 from decimal import Decimal
 import vfp
 
@@ -44,7 +45,10 @@ if request.is_local:
 else:
     request.requires_https()
 
-locale.setlocale(locale.LC_ALL, 'cs_CZ.utf8')
+if 'windows' in platform.system().lower():
+    locale.setlocale(locale.LC_ALL, 'Czech_Czech republic.1250')
+else:
+    locale.setlocale(locale.LC_ALL, 'cs_CZ.utf8')
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
     db = DAL('sqlite://platby.sqlite',pool_size=1,check_reserved=['all'])
