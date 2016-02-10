@@ -4,4 +4,6 @@
 
 @auth.requires_membership('pokladna')
 def index():
+    if not request.args:
+        redirect(URL('wiki', 'index', args='index'))
     return auth.wiki()
