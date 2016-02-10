@@ -676,6 +676,7 @@
 'Versioning': 'Verzování',
 'Videos': 'Videa',
 'View': 'Pohled (View)',
+'View Page': 'View Page',
 'views': 'pohledy',
 'Views': 'Pohledy',
 'Vs': 'Vs',
