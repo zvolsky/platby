@@ -11,7 +11,19 @@ podpis = Uc_sa.podpis
 def err():
     a = 1/0
 
+def addu2b():
+    db.ucet[39].update_record(zkratka='d15')
+    db.commit()
+
 '''
+def addu2():
+    db.ucet.insert(ucet='221-15', zkratka='d13', nazev="Odklad základu daně 2015")
+    db.commit()
+
+def deltina():
+    del db.clenstvi[189]
+    return 'ok'
+
 def nero():
     db.auth_user[1135] = dict(zaloha=960.0)
     db.commit()
