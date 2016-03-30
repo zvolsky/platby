@@ -101,4 +101,5 @@ sessions/*.*
 
 .installed.cfg
 pip-log.txt
+.git-ftp-tmp
 >>>>>>> 463933ba5e04d5ee9b4ea98c283bf726d1c7bb9a

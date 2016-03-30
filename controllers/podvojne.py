@@ -110,7 +110,7 @@ def _podvojne(query, fp=False, hdr=None, lnk=None, historie_uctu=None):
           db.pohyb.ALL,
           db.auth_user.nick,
           org.nick,
-          md.zkratka, dal.zkratka,
+          md.ucet, md.zkratka, dal.ucet, dal.zkratka,
           *dalsi_pole,
           left=left,
           orderby=~db.pohyb.datum)
