@@ -8,6 +8,10 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def deltina():
+    del db.clenstvi[189]
+    return 'ok'
+
 def err():
     a = 1/0
 
