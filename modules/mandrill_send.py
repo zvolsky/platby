@@ -35,7 +35,7 @@ def mandrill_send(subject, txt, prilohy=[], prijemci=
         attachments.append({
                 'filename': priloha,
                 'name': os.path.basename(priloha),
-                'type': mimetypes.guess_type(priloha)[0] or 'text/plain'
+                'type': mimetypes.guess_type(priloha)[0] or 'application/octet-stream'
         })
     #pro mandrill bylo:
     #'content': base64.b64encode(open(priloha, 'rb').read()), # pro mandrill bylo 'content'
