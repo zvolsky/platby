@@ -43,11 +43,11 @@ def zakaznikum():
                                                       str_encoding='utf8')
         vfp.strtoutf8file(form.vars.txt, planovany2, str_encoding='utf8')
         planovano = True
+        mandrill_send(form.vars.subject, form.vars.txt,
+                prijemci=[{'email': auth.user.email}, {'email': 'myum@seznam.cz'}],
+                prilohy=prilohy,
+                styl='html' if form.vars.is_html else 'text')
         try:
-            mandrill_send(form.vars.subject, form.vars.txt,
-                    prijemci=[{'email': auth.user.email}, {'email': 'myum@seznam.cz'}],
-                    prilohy=prilohy,
-                    styl='html' if form.vars.is_html else 'text')
             session.flash = TFu('Zkušební odeslán na %s')%auth.user.email
         except:
             session.flash = TFu(
