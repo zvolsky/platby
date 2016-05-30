@@ -289,7 +289,7 @@ def dp():
                 zustatek_jedne = form.vars.get('permice%s' % idx)
                 if zustatek_jedne is None:
                     break
-                zustatek_permic += int(zustatek_jedne)
+                zustatek_permic += int(zustatek_jedne or 0)
             if zustatek_permic>permice_max:
                 problem = 'NELZE - permanentky: %s > %s' % (zustatek_permic, int(round(permice_max)))
             elif prednastaveno>zustatek_permic:
