@@ -639,6 +639,7 @@
 'Uložit změny': 'Uložit změny',
 'Unable to check for upgrades': 'Nelze zjistit informaci o aktualizacích',
 'unable to parse csv file': 'csv soubor nedá sa zpracovat',
+'Unable to send email': 'Unable to send email',
 'uncheck all': 'vše odznačit',
 'Uninstall': 'Odinstalovat',
 'update': 'aktualizovat',

@@ -8,6 +8,20 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def solarcasa():
+    del db.clenstvi[192]
+    del db.zadost[64]
+    del db.zadost[65]
+    del db.zadost[66]
+    del db.zadost[68]
+
+'''
+def mysaci():
+    db.pohyb[9049].update_record(zakaznik=80141, idauth_user=1288)
+    db.auth_user[947].update_record(zaloha=0.0)
+    db.auth_user[1288].update_record(zaloha=130.0)
+    db.commit()
+
 def deltina():
     del db.clenstvi[189]
     return 'ok'
@@ -19,7 +33,6 @@ def addu2b():
     db.ucet[39].update_record(zkratka='d15')
     db.commit()
 
-'''
 def addu2():
     db.ucet.insert(ucet='221-15', zkratka='d13', nazev="Odklad základu daně 2015")
     db.commit()
