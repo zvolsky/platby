@@ -8,6 +8,11 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def addufiktivni():
+    db.ucet.insert(ucet='221-00', zkratka='000', nazev="Pro navýšení kreditu, nemění stav BU")
+    db.commit()
+
+'''
 def solarcasa():
     del db.clenstvi[192]
     del db.zadost[64]
@@ -15,7 +20,6 @@ def solarcasa():
     del db.zadost[66]
     del db.zadost[68]
 
-'''
 def mysaci():
     db.pohyb[9049].update_record(zakaznik=80141, idauth_user=1288)
     db.auth_user[947].update_record(zaloha=0.0)

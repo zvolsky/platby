@@ -313,11 +313,11 @@ def dp():
                     scitadlo['602'] = [scitadlo['602'][0], scitadlo['602'][1]+castka, scitadlo['602'][2]-castka]
                     scitadlo2['379-12'] = [scitadlo2['379-12'][0]+castka, scitadlo2['379-12'][1], scitadlo2['379-12'][2]+castka]
                     scitadlo2['602'] = [scitadlo2['602'][0], scitadlo2['602'][1]+castka, scitadlo2['602'][2]-castka]
-            if form.vars.zapsat:
-                db.commit()
             pred_pulnoc = datetime.datetime(form.vars.k_datu.year, form.vars.k_datu.month, form.vars.k_datu.day, 23, 59)
             pohyby = db((db.pohyb.datum>=iniciovano_ke_dni) & (db.pohyb.datum<=pred_pulnoc)).select(orderby=db.pohyb.datum)
             for pohyb in pohyby:
+                if pohyb.idma_dati is None or pohyb.iddal is None:
+                    return "Nektera transakce nema uveden ucet MD/Dal. Nejprve dopln."
                 ucno2 = ucty2[pohyb.idma_dati]
                 ucno = ucno2[:3]
                 scitadlo[ucno] = scitadlo[ucno][0]+pohyb.castka, scitadlo[ucno][1], scitadlo[ucno][2]+pohyb.castka
@@ -329,6 +329,8 @@ def dp():
             vypis_uctu = sorted(list(scitadlo))
             vypis_uctu2 = sorted(list(scitadlo2))
             
+            if form.vars.zapsat:
+                db.commit()
             if form.vars.zavrit:
                 dalsi_den = form.vars.k_datu + datetime.timedelta(days=1)
                 for ucet in vypis_uctu2:
