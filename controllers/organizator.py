@@ -17,10 +17,11 @@ def pokladna():
                 orderby=~db.pohyb.datum)
     mam = 0
     for zapis in zapisy:
-        if zapis.pohyb.iddal==Uc_sa.org:   # organizátor vydal
+        if zapis.pohyb.iddal == Uc_sa.org:   # organizátor vydal
             mam -= zapis.pohyb.castka
         else:                        # organizátor získal
             mam += zapis.pohyb.castka
+
     return dict(zapisy=zapisy, mam=mam,
               adm=adm, pokladnik=auth.has_membership('pokladna'),
               arg=request.args(0) or '')
