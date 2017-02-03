@@ -100,9 +100,9 @@ def udaje():
         regist_token = first_token
         if token==md5(regist_token+dotaz).hexdigest():
             if '@' in dotaz:
-                uzivatel = db(db.auth_user.email==dotaz).select().first()
+                uzivatel = db(db.auth_user.email.lower() == dotaz.lower()).select().first()
             else:
-                uzivatel = db(db.auth_user.vs==dotaz).select().first()
+                uzivatel = db(db.auth_user.vs == dotaz).select().first()
             if uzivatel:
                 retval = dict(vs=uzivatel.vs or '',
                               email=uzivatel.email or '',
