@@ -19,7 +19,7 @@ def _clenove(skupina, hlavni):
     response.view = 'prehledy/clenove.html'
     clen_id = _getgrpid(skupina)
     clenove = db(db.clenstvi.group_id==clen_id).select(
-          db.clenstvi.ALL, db.auth_user.nick,
+          db.clenstvi.ALL, db.auth_user.nick, db.auth_user.email,
           left=db.auth_user.on(db.auth_user.id==db.clenstvi.user_id),
           orderby=db.auth_user.nick.lower())
     return dict(clenove=clenove, hlavni=hlavni)
