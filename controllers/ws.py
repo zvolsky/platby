@@ -69,15 +69,14 @@ def novy():
             nickL = nick.lower()
             mailL = mail.lower()
             uzivatel = db(db.auth_user.email.lower()==mailL).select().first()
-            if uzivatel:    
+            if uzivatel:
                 retval = dict(vs=uzivatel.vs, problem='email existuje')
                 __log_res('mail_dupl')
                 return retval
             uzivatel = db(db.auth_user.nick.lower()==nickL).select().first()
-            if uzivatel:    
-                retval = dict(vs=uzivatel.vs, problem='nick existuje')
-                __log_res('nick_dupl')
-                return retval
+            if uzivatel:
+                __log_res('nick_dupl-rename (sa_%s)' % uzivatel.nick)
+                uzivatel.update_record(nick='sa_' + uzivatel.nick)
             new_vs = get_new_vs(db, vs_default)  # vs_default je definován v db.py
             new_id = db.auth_user.insert(nick=nick, email=mail, vs=new_vs)
             retval = dict(vs=new_vs, problem='')
