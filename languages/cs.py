@@ -211,6 +211,7 @@
 'Email sent': 'Email byl odeslán',
 'Email verification': 'Ověření e-mailové adresy',
 'Enable': 'Odblokovat',
+'Enter a number': 'Enter a number',
 'enter a number between %(min)g and %(max)g': 'zadejte číslo mezi %(min)g a %(max)g',
 'Enter a number between %(min)g and %(max)g': 'Enter a number between %(min)g and %(max)g',
 'enter a value': 'zadejte požadovaný údaj',
