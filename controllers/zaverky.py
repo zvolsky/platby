@@ -335,16 +335,25 @@ def dp():
             if form.vars.zavrit:
                 dalsi_den = form.vars.k_datu + datetime.timedelta(days=1)  # 3.2017: zatím nepřecházím na 702/701, nechávám 702/702
                 for ucet in vypis_uctu2:
+                    if ucet[0]>'6':      # divné / nezajímavé ?
+                        continue
+                    secteny = scitadlo2[ucet]
+                    prevod = int(round(secteny[2]))
                     if ucet[0]<'5':      # ne náklady a výnosy
-                        secteny = scitadlo2[ucet]
-                        prevod = int(round(secteny[2]))
-                        if prevod>0:
-                            db.pohyb.insert(idma_dati=ucty['702'], iddal=ucty[ucet], datum=form.vars.k_datu, castka=prevod)
-                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['702'], datum=dalsi_den, castka=prevod)
-                        elif prevod<0:
-                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['702'], datum=form.vars.k_datu, castka= - prevod)
-                            db.pohyb.insert(idma_dati=ucty['702'], iddal=ucty[ucet], datum=dalsi_den, castka= - prevod)
-            
+                        sber = '702'
+                        next_year = True
+                    else:
+                        sber = '710'     # 5,6: náklady a výnosy
+                        next_year = False
+                    if prevod>0:
+                        db.pohyb.insert(idma_dati=ucty[sber], iddal=ucty[ucet], datum=form.vars.k_datu, castka=prevod)
+                        if next_year:
+                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty[sber], datum=dalsi_den, castka=prevod)
+                    elif prevod<0:
+                        db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty[sber], datum=form.vars.k_datu, castka= - prevod)
+                        if next_year:
+                            db.pohyb.insert(idma_dati=ucty[sber], iddal=ucty[ucet], datum=dalsi_den, castka= - prevod)
+
             response.view = 'zaverky/dp2.html'
             return dict(vypis_uctu=vypis_uctu, scitadlo=scitadlo, vypis_uctu2=vypis_uctu2, scitadlo2=scitadlo2)
 

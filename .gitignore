@@ -2,6 +2,7 @@
 # mz updates
 .pythonhistory
 _bk/
+*_bk/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
