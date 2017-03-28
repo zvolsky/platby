@@ -363,3 +363,13 @@ def dp():
             permice_max=permice_max, out_celkem = out_celkem,
             form=form, problem=problem,
             iniciovano_ke_dni=iniciovano_ke_dni)
+
+
+@auth.requires_membership('pokladna')
+def editovat_osnovu():
+    grid = SQLFORM.grid(db.ucet,
+                        showbuttontext=False,
+                        )
+    search_input = grid.element('#w2p_keywords')
+    search_input and search_input.attributes.pop('_onfocus')
+    return dict(grid=grid)
