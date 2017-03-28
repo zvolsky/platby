@@ -219,6 +219,7 @@
 'Enter an integer between %(min)g and %(max)g': 'Enter an integer between %(min)g and %(max)g',
 'enter an integer between %(min)g and %(max)g': 'zadejte celé číslo mezi %(min)g a %(max)g',
 'enter date and time as %(format)s': 'zadejte datum a čas takto: %(format)s',
+'Enter date and time as %(format)s': 'Enter date and time as %(format)s',
 'enter email or its starting characters': 'enter email or its starting characters',
 'Enter from %(min)g to %(max)g characters': 'Enter from %(min)g to %(max)g characters',
 'enter from %(min)g to %(max)g characters': 'enter from %(min)g to %(max)g characters',

@@ -202,7 +202,8 @@ def dp():
                 akt_mesic = dne.month
         return akt_rok, akt_mesic
 
-    preklenovaci_ucet = db(db.ucet.ucet=='96').select().first().id
+    preklenovaci_ucet = db(db.ucet.ucet=='702').select().first().id
+    #preklenovaci_ucet_2 = db(db.ucet.ucet=='701').select().first().id   # 3.2017 zatím všude nechávám 702
     permice_ucet = db(db.ucet.ucet=='213').select().first().id
     vynosy_akci_ucet = db(db.ucet.ucet=='602').select().first().id
     fungujeme_ucet = db(db.ucet.ucet=='379-12').select().first().id
@@ -247,7 +248,7 @@ def dp():
         if datetime.date(permice.datum.year, permice.datum.month, permice.datum.day)<=k_datu_default:
             out_do_rozhodneho += permice.castka
     if auth.has_membership('pokladna'):
-        inputy = [Field('zavrit', 'boolean', default=False, label='uzavřít', comment="zapsat převáděcí účet 96 do databáze?"),
+        inputy = [Field('zavrit', 'boolean', default=False, label='uzavřít', comment="zapsat převáděcí účet 702/701 do databáze?"),
                 Field('zapsat', 'boolean', default=False, label='zapsat', comment="fyzicky zapsat změny 213 a 602 do databáze?")]
     else:
         inputy = []
@@ -332,17 +333,17 @@ def dp():
             if form.vars.zapsat:
                 db.commit()
             if form.vars.zavrit:
-                dalsi_den = form.vars.k_datu + datetime.timedelta(days=1)
+                dalsi_den = form.vars.k_datu + datetime.timedelta(days=1)  # 3.2017: zatím nepřecházím na 702/701, nechávám 702/702
                 for ucet in vypis_uctu2:
                     if ucet[0]<'5':      # ne náklady a výnosy
                         secteny = scitadlo2[ucet]
                         prevod = int(round(secteny[2]))
                         if prevod>0:
-                            db.pohyb.insert(idma_dati=ucty['96'], iddal=ucty[ucet], datum=form.vars.k_datu, castka=prevod)
-                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['96'], datum=dalsi_den, castka=prevod)
+                            db.pohyb.insert(idma_dati=ucty['702'], iddal=ucty[ucet], datum=form.vars.k_datu, castka=prevod)
+                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['702'], datum=dalsi_den, castka=prevod)
                         elif prevod<0:
-                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['96'], datum=form.vars.k_datu, castka= - prevod)
-                            db.pohyb.insert(idma_dati=ucty['96'], iddal=ucty[ucet], datum=dalsi_den, castka= - prevod)
+                            db.pohyb.insert(idma_dati=ucty[ucet], iddal=ucty['702'], datum=form.vars.k_datu, castka= - prevod)
+                            db.pohyb.insert(idma_dati=ucty['702'], iddal=ucty[ucet], datum=dalsi_den, castka= - prevod)
             
             response.view = 'zaverky/dp2.html'
             return dict(vypis_uctu=vypis_uctu, scitadlo=scitadlo, vypis_uctu2=vypis_uctu2, scitadlo2=scitadlo2)

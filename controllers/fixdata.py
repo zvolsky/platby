@@ -8,11 +8,11 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+'''
 def zaverkoveucty2():
     db.ucet[42] = dict(ucet='702-14')
     db.commit()
 
-'''
 def zaverkoveucty():
     '701-Počáteční účet rozvažný, 702-Konečný účet rozvažný, 710-Účet zisků a ztrát'
     db.ucet[0] = dict(ucet='701', zkratka='ZvP', nazev="Počáteční účet rozvažný")
