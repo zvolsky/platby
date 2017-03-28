@@ -8,11 +8,19 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def zaverkoveucty():
+    '701-Počáteční účet rozvažný, 702-Konečný účet rozvažný, 710-Účet zisků a ztrát'
+    db.ucet[0] = dict(ucet='701', zkratka='ZvP', nazev="Počáteční účet rozvažný")
+    db.ucet[33] = dict(ucet='702', zkratka='ZvK', nazev="Konečný účet rozvažný")
+    db.ucet[0] = dict(ucet='703', zkratka='ZvU', nazev="Konečný účet rozvažný - přechod závěrek na PC/web")
+    db.ucet[0] = dict(ucet='710', zkratka='Zzz', nazev="Účet zisků a ztrát")
+    db.commit()
+
+'''
 def addufiktivni():
     db.ucet.insert(ucet='221-00', zkratka='000', nazev="Pro navýšení kreditu, nemění stav BU")
     db.commit()
 
-'''
 def solarcasa():
     del db.clenstvi[192]
     del db.zadost[64]
