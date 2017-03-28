@@ -110,6 +110,8 @@ if auth.has_membership('vedeni'):
                         URL('zaverky', 'dp'), []),
               (T('závěrky (původní verze)'), False,
                         URL('zaverky', 'obdobi'), []),
+              (T('zálohy'), False,
+                        URL('zaverky', 'zalohy'), []),
             ]
     if auth.has_membership('pokladna'):
         podvojne.append((TFu('Přidat záznam'), False, URL('prehledy', 'pridat_pohyb'), []))

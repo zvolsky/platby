@@ -299,6 +299,7 @@ def edit_pohyb():
             redirect(URL(request.vars['section'], request.vars['next']))
         return dict(form=form)
 
+
 # ponecháno zde, protože potenciálně může sloužit pro "jednoduche" i "podvojne"
 @auth.requires_membership('pokladna')
 def del_pohyb():

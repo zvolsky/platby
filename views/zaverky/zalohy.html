@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+<div class="obly modry">
+    <p>Zálohy součtem v seznamu uživatelů: <b>{{=zalohy}}</b></p>
+</div>
+
+<div class="obly modry">
+    <p>Zálohy z pohybů (Dal - MD)</p>
+    <p>{{=dal}} - {{=md}} = <b>{{=dal - md}}</b></p>
+</div>
+
+{{if auth.has_membership('pokladna'):}}
+    <a href="{{=URL('zalohy2')}}">zkontrolovat jednotlivé uživatele</a>
+{{pass}}

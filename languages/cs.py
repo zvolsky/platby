@@ -725,6 +725,7 @@
 'Zákazníci': 'Zákazníci',
 'Zákazník': 'Zákazník',
 'Záloha': 'Záloha',
+'zálohy': 'zálohy',
 'Závěrky': 'Závěrky',
 'závěrky (původní verze)': 'závěrky (původní verze)',
 'Záznamy do pokladny': 'Záznamy do pokladny',

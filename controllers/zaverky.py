@@ -373,3 +373,55 @@ def editovat_osnovu():
     search_input = grid.element('#w2p_keywords')
     search_input and search_input.attributes.pop('_onfocus')
     return dict(grid=grid)
+
+
+@auth.requires_membership('vedeni')
+def zalohy():
+    sum_auth_user = db.auth_user.zaloha.sum()
+    zalohy = db().select(sum_auth_user).first()[sum_auth_user]
+
+    ucet_zaloh = db(db.ucet.ucet == '379-09').select().first().id
+    sum_pohyby = db.pohyb.castka.sum()
+    md = db(db.pohyb.idma_dati == ucet_zaloh).select(sum_pohyby).first()[sum_pohyby]
+    dal = db(db.pohyb.iddal == ucet_zaloh).select(sum_pohyby).first()[sum_pohyby]
+
+    return dict(zalohy=zalohy, dal=dal, md=md)
+
+
+@auth.requires_membership('pokladna')
+def zalohy2():
+    """
+        po jednotlivých uživatelích
+    """
+    from collections import defaultdict
+
+    pohyby = defaultdict(lambda: [0, 0])   # dal, md
+    ucet_zaloh = db(db.ucet.ucet == '379-09').select().first().id
+    md = db(db.pohyb.idma_dati == ucet_zaloh).select(db.pohyb.castka, db.pohyb.idauth_user)
+    dal = db(db.pohyb.iddal == ucet_zaloh).select(db.pohyb.castka, db.pohyb.idauth_user)
+    for pohyb in dal:
+        pohyby[pohyb.idauth_user][0] += pohyb.castka
+    for pohyb in md:
+        pohyby[pohyb.idauth_user][1] += pohyb.castka
+
+    shoda = neshoda = manko = s_user = s_pohyb = 0
+    neshodni = []
+    uzivatele = db().select(db.auth_user.id, db.auth_user.vs, db.auth_user.nick, db.auth_user.email, db.auth_user.zaloha,
+                                 orderby=db.auth_user.id)
+    for uzivatel in uzivatele:
+        z_pohybu = pohyby[uzivatel.id][0] - pohyby[uzivatel.id][1]
+        s_user += uzivatel.zaloha
+        s_pohyb += z_pohybu
+        if uzivatel.zaloha == z_pohybu:
+            shoda += 1
+        else:
+            neshoda += 1
+            manko1 = uzivatel.zaloha - z_pohybu
+            manko += manko1
+            neshodni.append((uzivatel.id, uzivatel.vs, uzivatel.nick, uzivatel.email, uzivatel.zaloha, z_pohybu, manko1))
+
+    divne = db(~(db.pohyb.idauth_user > 0) & ((db.pohyb.idma_dati == ucet_zaloh) | (db.pohyb.iddal == ucet_zaloh))).select(
+            db.pohyb.id, db.pohyb.datum, db.pohyb.castka, orderby=~db.pohyb.datum)
+
+    neshodni.sort(key=lambda r: r[-1], reverse=True)
+    return dict(shoda=shoda, neshoda=neshoda, manko=manko, neshodni=neshodni, s_user=s_user, s_pohyb=s_pohyb, divne=divne)
