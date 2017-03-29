@@ -34,20 +34,24 @@
 <table>
     <tr><td>z uživatelů</td><td><b>{{=s_user}}</b></td></tr>
     <tr><td>z pohybů</td><td><b>{{=s_pohyb}}</b></td></tr>
+    <tr><td><b>rozdíl</b></td><td><b>{{=s_user - s_pohyb}}</b></td></tr>
 </table>
 
 <div class="obly modry">
-    <h4>Divné:</h4>
-    <table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>datum</th>
-            <th>castka</th>
-        </tr>
-    </thead>
-    {{for divny in divne:}}
-        <tr><td>divny.id</td><td>divny.datum</td><td>divny.castka</td></tr>
-    {{pass}}
-    </table>
+    <h4>Pohyby (s účtem os.záloh) bez uvedení uživatele:</h4>
+    {{if divne:}}
+        <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>datum</th>
+                <th>castka</th>
+            </tr>
+        </thead>
+        {{for pos, divny in enumerate(divne):}}
+            <tr><td>{{=divny.id}}</td><td>{{=divny.datum.strftime('%d.%m.%Y')}}</td><td>{{=castky[pos]}}</td><td><small>{{=divny.popis}}</small></td></tr>
+        {{pass}}
+        </table>
+        Celkem za divné: {{=sum(castky)}}
+    {{else:}} .. nejsou {{pass}}
 </div>

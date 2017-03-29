@@ -382,10 +382,14 @@ def zalohy():
 
     ucet_zaloh = db(db.ucet.ucet == '379-09').select().first().id
     sum_pohyby = db.pohyb.castka.sum()
-    md = db(db.pohyb.idma_dati == ucet_zaloh).select(sum_pohyby).first()[sum_pohyby]
     dal = db(db.pohyb.iddal == ucet_zaloh).select(sum_pohyby).first()[sum_pohyby]
+    md = db(db.pohyb.idma_dati == ucet_zaloh).select(sum_pohyby).first()[sum_pohyby]
 
-    return dict(zalohy=zalohy, dal=dal, md=md)
+    preklenovaci_ucet = db(db.ucet.ucet == '702').select().first().id
+    prevody0 = db((db.pohyb.iddal == ucet_zaloh) & (db.pohyb.idma_dati == preklenovaci_ucet)).select(sum_pohyby).first()[sum_pohyby]
+    prevody1 = db((db.pohyb.idma_dati == ucet_zaloh) & (db.pohyb.iddal == preklenovaci_ucet)).select(sum_pohyby).first()[sum_pohyby]
+
+    return dict(zalohy=zalohy, dal=dal, md=md, prevody=(prevody0, prevody1))
 
 
 @auth.requires_membership('pokladna')
@@ -396,7 +400,10 @@ def zalohy2():
     from collections import defaultdict
 
     pohyby = defaultdict(lambda: [0, 0])   # dal, md
+    preklenovaci_ucet = db(db.ucet.ucet == '702').select().first().id
+
     ucet_zaloh = db(db.ucet.ucet == '379-09').select().first().id
+
     md = db(db.pohyb.idma_dati == ucet_zaloh).select(db.pohyb.castka, db.pohyb.idauth_user)
     dal = db(db.pohyb.iddal == ucet_zaloh).select(db.pohyb.castka, db.pohyb.idauth_user)
     for pohyb in dal:
@@ -420,8 +427,16 @@ def zalohy2():
             manko += manko1
             neshodni.append((uzivatel.id, uzivatel.vs, uzivatel.nick, uzivatel.email, uzivatel.zaloha, z_pohybu, manko1))
 
-    divne = db(~(db.pohyb.idauth_user > 0) & ((db.pohyb.idma_dati == ucet_zaloh) | (db.pohyb.iddal == ucet_zaloh))).select(
-            db.pohyb.id, db.pohyb.datum, db.pohyb.castka, orderby=~db.pohyb.datum)
+    divne = db(((db.pohyb.idauth_user == None) | (db.pohyb.idauth_user <= 0)) &
+               ((db.pohyb.idma_dati == ucet_zaloh) | (db.pohyb.iddal == ucet_zaloh)) &
+               (db.pohyb.idma_dati != preklenovaci_ucet) & (db.pohyb.iddal != preklenovaci_ucet)).select(
+            db.pohyb.id, db.pohyb.datum, db.pohyb.castka, db.pohyb.iddal, db.pohyb.popis, orderby=~db.pohyb.datum)
+    castky = []
+    for divny in divne:
+        if divny.iddal == ucet_zaloh:  # nelze update_record(), protože se commitne
+            castky.append(-divny.castka)
+        else:
+            castky.append(divny.castka)
 
     neshodni.sort(key=lambda r: r[-1], reverse=True)
-    return dict(shoda=shoda, neshoda=neshoda, manko=manko, neshodni=neshodni, s_user=s_user, s_pohyb=s_pohyb, divne=divne)
+    return dict(shoda=shoda, neshoda=neshoda, manko=manko, neshodni=neshodni, s_user=s_user, s_pohyb=s_pohyb, divne=divne, castky=castky)
