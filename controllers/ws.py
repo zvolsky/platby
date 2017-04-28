@@ -235,7 +235,7 @@ def __valid_params(args, db):
                     popis += '/' + args[za_lomitkem]
                 uzivatel = db(db.auth_user.vs==vs).select().first()
                 if (castka and popis and uzivatel
-                                    and uzivatel.email==args[3]):
+                                    and uzivatel.email.lower()==args[3].lower()):
                     akce = args[4] or ''
                     is_valid = True
     return is_valid, castka, popis, uzivatel, akce
