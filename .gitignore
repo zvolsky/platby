@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # mz updates
 .pythonhistory
 _bk/
@@ -92,7 +91,7 @@ develop-eggs/
 
 uploads/
 downloads/
-databases/
+databases*/
 cache/
 private/
 errors/
@@ -103,4 +102,3 @@ sessions/*.*
 .installed.cfg
 pip-log.txt
 .git-ftp-tmp
->>>>>>> 463933ba5e04d5ee9b4ea98c283bf726d1c7bb9a

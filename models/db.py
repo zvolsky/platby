@@ -51,7 +51,8 @@ else:
     locale.setlocale(locale.LC_ALL, 'cs_CZ.utf8')
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL('sqlite://platby.sqlite',pool_size=1,check_reserved=['all'])
+    db = DAL('sqlite://platby.sqlite', pool_size=1, check_reserved=['all'])
+            #, fake_migrate_all=True)
     db._adapter.connection.create_collation("lexical", locale.strcoll)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
