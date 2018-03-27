@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
+import os
 from datetime import datetime, timedelta, time, date
+
+try:
+    with open("aktualne") as f:
+        AKTUALITA = f.read()
+except IOError:
+    AKTUALITA = "(aktualita nebyla nalezena v %s)" % os.path.join(os.getcwd(), 'aktualne')
 
 def zpatky(dni):
     datum_od = datetime.now()-timedelta(days=dni)

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-aktualita = "Naše Rada: Dandee, cz.Radka, Mára"
+from mz_wkasa_platby import AKTUALITA
+
+aktualita = AKTUALITA
 
 response.title = T('wKasa')
 response.subtitle = T('webová pokladna')
-response.logo = A(B("Společné aktivity o.s.")+' - '+response.subtitle,
+response.logo = A(B("Společné aktivity z.s.")+' - '+response.subtitle,
                   _class="brand",_href=URL('default', 'index'))
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
