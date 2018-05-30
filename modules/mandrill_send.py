@@ -66,13 +66,13 @@ def mandrill_send(subject, txt, prilohy=[], prijemci=
         #
         #    def filetobase64(self, inputfilename):
         # return base64.b64encode(open(inputfilename, 'rb').read())
-        
+
     #m.messages.send(message=msg)
 
 # společné pro plánované maily
 #  -v controléru postak.py i ve scriptu pro odesílání scripts/send_plan_maily.py
 
-def __init_plan_maily(): 
+def __init_plan_maily():
     maildir = os.path.join(appdir, 'maily')
     planovany = os.path.join(maildir, 'chystany.hlavicka')
     planovany2 = os.path.join(maildir, 'chystany.obsah')

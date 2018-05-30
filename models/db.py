@@ -130,10 +130,15 @@ db.auth_user.password.comment = TFu("raději NEPOUŽÍVEJ stejné heslo jako na 
 
 ## configure email
 mail = auth.settings.mailer
-mail.settings.server = 'smtp.gmail.com:587'  # 'logging' or ...
-mail.settings.sender = 'spolecneaktivityos@gmail.com'
-mail.settings.login = 'spolecneaktivityos@gmail.com:'+vfp.filetostr(
-        os.path.join(request.folder, 'private', 'saos_gmail.smtp'))
+#mail.settings.server = 'smtp.gmail.com:587'  # 'logging' or ...
+#mail.settings.sender = 'spolecneaktivityos@gmail.com'
+#mail.settings.login = 'spolecneaktivityos@gmail.com:'+vfp.filetostr(
+#        os.path.join(request.folder, 'private', 'saos_gmail.smtp'))
+# neuspel jsem: https://serverfault.com/questions/635139/how-to-fix-send-mail-authorization-failed-534-5-7-14
+mail.settings.server = 'smtp.seznam.cz:587'  # 'logging' or ...     :465 v dokumentaci seznam.cz je špatně
+mail.settings.sender = 'spolecneaktivityzs@seznam.cz'
+mail.settings.login = 'spolecneaktivityzs@seznam.cz:'+vfp.filetostr(
+        os.path.join(request.folder, 'private', 'sazs_seznam.smtp'))
 #mail.settings.server = 'smtp.mandrillapp.com:587'
 #mail.settings.sender = 'mirek@zvolsky@gmail.com'
 #mail.settings.login = 'mirek@zvolsky@gmail.com:'+vfp.filetostr(
