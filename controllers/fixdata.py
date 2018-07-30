@@ -8,6 +8,10 @@ pridat admin prava Marovi a sebrat je Potapkovi
 mail_subj = Uc_sa.mail_subj
 podpis = Uc_sa.podpis
 
+def xgaba():
+    db.auth_user[1181].update_record(nick='1xgaba/1gb1')
+    db.commit()
+
 '''
 def zaverkoveucty2():
     db.ucet[42] = dict(ucet='702-14')
