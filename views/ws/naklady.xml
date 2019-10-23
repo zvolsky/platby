@@ -2,6 +2,7 @@
 {{for pohyb in pohyby:}}
     <row>
     <castka>{{=pohyb.castka}}</castka>
+    <popis>{{=pohyb.popis}}</popis>
     </row>
     {{pass}}
     </tbl>

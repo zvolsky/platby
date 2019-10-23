@@ -1,0 +1,4 @@
+1. (Backup and) delete databases/*.table files
+2. Into db=DAL(..) command add db=DAL(..., fake_migrate_all=True), then run 
+once: app/appadmin/ or some other page
+3. Remove fake_migrate_all=.. 

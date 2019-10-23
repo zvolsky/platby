@@ -19,14 +19,32 @@ def naklady():
     token = hash(token+vs_akce)
     vs_akce
     '''
+    def bezproblemove(row):
+        if row.idma_dati == u21101 and row.iddal in (u211, u221, u21101):
+            return False
+        if row.iddal == u21101 and row.idma_dati in (u211, u221, u21101):
+            return False
+        return True
+
     __log_ws('naklady')
 
     if len(request.args)==2:
         token = request.args[0]
         vs_akce = request.args[1]
-        if token==md5(first_token+vs_akce).hexdigest():
-            pohyby = db(db.pohyb.ss==vs_akce).select()
+        if token == md5(first_token+vs_akce).hexdigest():
+            u211 = db(db.ucet.ucet == '211').select().first().id
+            u21101 = db(db.ucet.ucet == '211-01').select().first().id
+            u221 = db(db.ucet.ucet == '221').select().first().id
+
+            pohyby = db(db.pohyb.ss == vs_akce).select()
+            pohyby = filter(bezproblemove, pohyby)
+            for pohyb in pohyby:
+                pohyb.popis = pohyb.popis.strip().replace('\n', '; ')  # ne moc ověřeno
+                if pohyb.iddal in (u211, u221, u21101):
+                    pohyb.castka = - pohyb.castka
+
             retval = dict(pohyby=pohyby)
+
             __log_res('ok')
             return retval
     __log_res('failed')
@@ -43,7 +61,8 @@ def zakaznici():
     if len(request.args)==2:
         token = request.args[0]
         dummy = request.args[1]
-        if token==md5(first_token+dummy).hexdigest():
+        if token == md5(first_token+dummy).hexdigest():
+            # TODO: tady chybí retval=... !!??
             __log_res('ok')
             return retval
     __log_res('failed')

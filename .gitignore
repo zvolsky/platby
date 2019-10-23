@@ -102,3 +102,5 @@ sessions/*.*
 .installed.cfg
 pip-log.txt
 .git-ftp-tmp
+
+.idea/
