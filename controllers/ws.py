@@ -32,15 +32,16 @@ def naklady():
         token = request.args[0]
         vs_akce = request.args[1]
         if token == md5(first_token+vs_akce).hexdigest():
-            u211 = db(db.ucet.ucet == '211').select().first().id
-            u21101 = db(db.ucet.ucet == '211-01').select().first().id
-            u221 = db(db.ucet.ucet == '221').select().first().id
+            u211 = db(db.ucet.ucet == '211').select().first().id        # pokladna
+            u21101 = db(db.ucet.ucet == '211-01').select().first().id   # u organizátorů
+            u221 = db(db.ucet.ucet == '221').select().first().id        # bú
+            u37909 = db(db.ucet.ucet == '379-09').select().first().id   # osobní účty
 
             pohyby = db(db.pohyb.ss == vs_akce).select()
             pohyby = filter(bezproblemove, pohyby)
             for pohyb in pohyby:
                 pohyb.popis = pohyb.popis.strip().replace('\n', '; ')  # ne moc ověřeno
-                if pohyb.iddal in (u211, u221, u21101):
+                if pohyb.iddal in (u211, u221, u21101, u37909):
                     pohyb.castka = - pohyb.castka
 
             retval = dict(pohyby=pohyby)
@@ -50,7 +51,7 @@ def naklady():
     __log_res('failed')
     raise HTTP(403)
 
-def zakaznici():
+def zakaznici():   # TODO: nedokončeno
     '''vrací přehled zákazníků a jejich záloh
     ws/zakaznici/<args>, args:
     token = hash(token+YYYYmmddHHMMSS)
