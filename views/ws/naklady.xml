@@ -1,8 +1,12 @@
 <tbl>
 {{for pohyb in pohyby:}}
+    {{md = ucty[pohyb.pohyb.idma_dati]}}
+    {{dal = ucty[pohyb.pohyb.iddal]}}
     <row>
     <castka>{{=pohyb.pohyb.castka}}</castka>
     <popis>{{=pohyb.pohyb.popis}}</popis>
+    <md>{{='%s %s' % (md[0], md[1])}}</md>
+    <dal>{{='%s %s' % (dal[0], dal[1])}}</dal>
     <vs>{{=pohyb.auth_user.vs or ''}}</vs>
     </row>
     {{pass}}

@@ -21,7 +21,8 @@ def naklady():
     '''
     def bezproblemove(row):
         row = row.pohyb
-        if row.idma_dati == u21101 and row.iddal in (u211, u221, u21101):
+        # 211-01/379-09 vyhazujeme na základě úvah, viz mail Mirek->Dušan 25.10.2019
+        if row.idma_dati == u21101 and row.iddal in (u211, u221, u21101, u37909):
             return False
         if row.iddal == u21101 and row.idma_dati in (u211, u221, u21101):
             return False
@@ -38,6 +39,8 @@ def naklady():
             u221 = db(db.ucet.ucet == '221').select().first().id        # bú
             u37909 = db(db.ucet.ucet == '379-09').select().first().id   # osobní účty
 
+            ucty = db(db.ucet).select()  # protoze s left=[db.ucet.with_alias('md').on, db.ucet.with_alias('dal').on] jsem neuspel
+            ucty_map = {ucet.id: (ucet.ucet, ucet.nazev) for ucet in ucty}
             pohyby = db(db.pohyb.ss == vs_akce).select(db.pohyb.ALL, db.auth_user.vs,
                                                        left=db.auth_user.on(db.auth_user.id == db.pohyb.idauth_user))
             pohyby = filter(bezproblemove, pohyby)
@@ -47,7 +50,7 @@ def naklady():
                 if pohyb.iddal in (u211, u221, u21101, u37909):
                     pohyb.castka = - pohyb.castka
 
-            retval = dict(pohyby=pohyby)
+            retval = dict(pohyby=pohyby, ucty=ucty_map)
 
             __log_res('ok')
             return retval
