@@ -20,6 +20,7 @@ def naklady():
     vs_akce
     '''
     def bezproblemove(row):
+        row = row.pohyb
         if row.idma_dati == u21101 and row.iddal in (u211, u221, u21101):
             return False
         if row.iddal == u21101 and row.idma_dati in (u211, u221, u21101):
@@ -28,7 +29,7 @@ def naklady():
 
     __log_ws('naklady')
 
-    if len(request.args)==2:
+    if len(request.args) == 2:
         token = request.args[0]
         vs_akce = request.args[1]
         if token == md5(first_token+vs_akce).hexdigest():
@@ -37,9 +38,11 @@ def naklady():
             u221 = db(db.ucet.ucet == '221').select().first().id        # bú
             u37909 = db(db.ucet.ucet == '379-09').select().first().id   # osobní účty
 
-            pohyby = db(db.pohyb.ss == vs_akce).select()
+            pohyby = db(db.pohyb.ss == vs_akce).select(db.pohyb.ALL, db.auth_user.vs,
+                                                       left=db.auth_user.on(db.auth_user.id == db.pohyb.idauth_user))
             pohyby = filter(bezproblemove, pohyby)
-            for pohyb in pohyby:
+            for row in pohyby:
+                pohyb = row.pohyb
                 pohyb.popis = pohyb.popis.strip().replace('\n', '; ')  # ne moc ověřeno
                 if pohyb.iddal in (u211, u221, u21101, u37909):
                     pohyb.castka = - pohyb.castka

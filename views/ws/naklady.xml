@@ -1,8 +1,9 @@
 <tbl>
 {{for pohyb in pohyby:}}
     <row>
-    <castka>{{=pohyb.castka}}</castka>
-    <popis>{{=pohyb.popis}}</popis>
+    <castka>{{=pohyb.pohyb.castka}}</castka>
+    <popis>{{=pohyb.pohyb.popis}}</popis>
+    <vs>{{=pohyb.auth_user.vs or ''}}</vs>
     </row>
     {{pass}}
     </tbl>
